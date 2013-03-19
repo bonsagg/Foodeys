@@ -17,7 +17,7 @@ import javax.persistence.Id;
  * Thus, a recipe migt be a simple recipe or a composition of recipes.
  * For general, any recipe is build upon a list of parts. 
  * A simple recipe contains just one part.
- * Other attributes: portions count, nutrition facts
+ * Other attributes: portions count, nutrition facts, picture(s)
  */
 @Entity
 public class Recipe implements Serializable {
