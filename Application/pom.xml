@@ -23,6 +23,10 @@
             <id>maven.java.net</id>
             <url>https://maven.java.net/content/groups/promoted/</url>
         </repository>
+        <repository>
+			<id>JBOSS_NEXUS</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
     </repositories>
 
     <dependencies>
