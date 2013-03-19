@@ -15,6 +15,9 @@ import javax.persistence.Id;
  * and then merged together. Or a complete meal consists of parts (meat, vegetables, ...), 
  * which might consists of sub-parts. Every part might be created following it's own recipe.
  * Thus, a recipe migt be a simple recipe or a composition of recipes.
+ * For general, any recipe is build upon a list of parts. 
+ * A simple recipe contains just one part.
+ * Other attributes: portions count, nutrition facts
  */
 @Entity
 public class Recipe implements Serializable {
