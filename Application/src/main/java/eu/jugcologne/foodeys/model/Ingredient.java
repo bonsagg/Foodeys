@@ -13,7 +13,7 @@ import javax.persistence.Id;
  * For example, a recipe needs 1 (piece of) tomato or 3 tomatoes.
  * A name must be provided in a singular as well as in plural form.
  * The unit might be a different one, e.g. 500 g tomatoes.
- * The author a a recipe may use a unit of her choice,
+ * The author of a recipe may use a unit of her choice,
  * out of a list of possible units. 
  * For example "liter" milk is permmited, alike "fl. Oz.",
  * whilst "piece" does not make any sence here.
