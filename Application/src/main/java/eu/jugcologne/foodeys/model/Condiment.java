@@ -1,4 +1,4 @@
-package eu.jugcologne.foodeys.entities;
+package eu.jugcologne.foodeys.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -8,19 +8,20 @@ import javax.persistence.Id;
 
 /**
  * @author mmueller
- * This class represents a recipe.
- * A recipe may simply consists of a couple of condiments and processing instructions.
- * But, taking a closer look, such an aproach is too simple.
- * Maybe a cake consists of a flan cake and a topping. Both have to created separate 
- * and then merged together. Or a complete meal consists of parts (meat, vegetables, ...), 
- * which might consists of sub-parts. Every part might be created following it's own recipe.
- * Thus, a recipe migt be a simple recipe or a composition of recipes.
- * For general, any recipe is build upon a list of parts. 
- * A simple recipe contains just one part.
- * Other attributes: portions count, nutrition facts, picture(s)
+ * Every condiment for a recipe has an amount, a unit and a name.
+ * For example, a recipe needs 1 (piece of) tomato or 3 tomatoes.
+ * A name must be provided in a singular as well as in plural form.
+ * The unit might be a different one, e.g. 500 g tomatoes.
+ * The author a a recipe may use a unit of her choice,
+ * out of a list of possible units. 
+ * For expample "liter" milk is permited, alike "fl. Oz.",
+ * whilst "piece" does not make any sence here.
+ * Some units may be converted exactly by a mathematics formula,
+ * whilst others may be converted approximately only,
+ * e.g. 2 eggs, 150 ml egg.
  */
 @Entity
-public class Recipe implements Serializable {
+public class Condiment implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,10 +45,10 @@ public class Recipe implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Recipe)) {
+        if (!(object instanceof Condiment)) {
             return false;
         }
-        Recipe other = (Recipe) object;
+        Condiment other = (Condiment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -56,7 +57,7 @@ public class Recipe implements Serializable {
 
     @Override
     public String toString() {
-        return "eu.jugcologne.foodeys.entities.Recipe[ id=" + id + " ]";
+        return "eu.jugcologne.foodeys.entities.Condiment[ id=" + id + " ]";
     }
     
 }
