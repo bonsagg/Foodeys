@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package eu.jugcologne.foodeys.model;
 
@@ -18,16 +18,15 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class RecipeTest {
 
-	@Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-            .addClass(Recipe.class)
-            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+//    @Deployment
+//    public static JavaArchive createDeployment() {
+//        return ShrinkWrap.create(JavaArchive.class)
+//                .addClass(Recipe.class)
+//                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+//    }
+
+    @Test
+    public void test() {
+        //fail("Not yet implemented");
     }
-
-	@Test
-	public void test() {
-		//fail("Not yet implemented");
-	}
-
 }
