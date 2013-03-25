@@ -1,4 +1,4 @@
-package eu.jugcologne.foodeys.model;
+package eu.jugcologne.foodeys.entities;
 
 import java.io.Serializable;
 import java.util.Date;

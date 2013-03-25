@@ -1,7 +1,7 @@
 /**
  *
  */
-package eu.jugcologne.foodeys.model;
+package eu.jugcologne.foodeys.entities;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;

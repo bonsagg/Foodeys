@@ -1,4 +1,4 @@
-package eu.jugcologne.foodeys.model;
+package eu.jugcologne.foodeys.entities;
 
 import javax.persistence.Entity;
 
