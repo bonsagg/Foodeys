@@ -56,7 +56,7 @@ import eu.jugcologne.foodeys.util.DbConst;
 public class Recipe extends AbstractEntity {
     private static final long serialVersionUID = 2476888974204976237L;
     
-    @Column(name="name")
+    @Column(name="name", nullable=false, length=50)
     @NotNull
     @Size(max=50)
     private String name;

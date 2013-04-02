@@ -33,7 +33,7 @@ public class Ingredient extends AbstractEntity {
     @Column(name="amount", nullable=false, precision=8, scale=2)
     private BigDecimal amount;
     
-    @Column(name="unit", nullable=false)
+    @Column(name="unit", nullable=false, length=10)
     @Enumerated(EnumType.STRING)
     private Unit unit;
     
