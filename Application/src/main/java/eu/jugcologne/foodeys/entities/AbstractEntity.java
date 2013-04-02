@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.PersistenceException;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -21,6 +22,7 @@ import javax.persistence.Version;
  * @author Daniel Sachse a.k.a. w0mbat
  * 
  */
+@MappedSuperclass
 public class AbstractEntity implements Serializable {
     private static final long serialVersionUID = 5874026098285563101L;
 
