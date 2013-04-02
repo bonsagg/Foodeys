@@ -2,6 +2,7 @@ package eu.jugcologne.foodeys.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -51,7 +52,7 @@ import eu.jugcologne.foodeys.util.DbConst;
  * 
  * A more complex recipe may be composed of more parts or ohter recipes.
  */
-@Entity(name=DbConst.Receipe)
+@Entity(name=DbConst.Recipe)
 public class Recipe extends AbstractEntity {
     private static final long serialVersionUID = 2476888974204976237L;
     
@@ -63,7 +64,7 @@ public class Recipe extends AbstractEntity {
     @Column(name="instructions")
 	private String instructions;
 
-    @OneToMany(orphanRemoval=true, mappedBy="recipe")
+    @OneToMany(orphanRemoval=true, mappedBy="recipe", cascade=CascadeType.ALL)
 	private Set<Ingredient> ingredients;
     
     public String getName() {

@@ -41,7 +41,7 @@ public class RecipeTest {
 	private EntityManager em ;
 
 	@Inject
-	UserTransaction utx;
+	private UserTransaction utx;
 
 	@Before
 	public void prepare() throws Exception {
@@ -55,7 +55,7 @@ public class RecipeTest {
 		em.joinTransaction();
 
 		System.out.println("Clearing the database...");
-		em.createQuery("delete from "+DbConst.Receipe).executeUpdate();
+		em.createQuery("delete from "+DbConst.Recipe).executeUpdate();
 
 		utx.commit();
 	}

@@ -38,7 +38,7 @@ public class Ingredient extends AbstractEntity {
     private Unit unit;
     
     @ManyToOne(optional=false)
-    @JoinColumn(name="name", nullable=false)
+    @JoinColumn(name="food_id", nullable=false)
     private Food name;
     
     @ManyToOne
