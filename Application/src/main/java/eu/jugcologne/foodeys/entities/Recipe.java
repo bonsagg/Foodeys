@@ -1,6 +1,14 @@
 package eu.jugcologne.foodeys.entities;
 
+import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import eu.jugcologne.foodeys.util.DbConst;
 
 /**
  * @author mmueller
@@ -43,7 +51,42 @@ import javax.persistence.Entity;
  * 
  * A more complex recipe may be composed of more parts or ohter recipes.
  */
-@Entity
+@Entity(name=DbConst.Receipe)
 public class Recipe extends AbstractEntity {
     private static final long serialVersionUID = 2476888974204976237L;
+    
+    @Column(name="name")
+    @NotNull
+    @Size(max=50)
+    private String name;
+
+    @Column(name="instructions")
+	private String instructions;
+
+    @OneToMany(orphanRemoval=true, mappedBy="recipe")
+	private Set<Ingredient> ingredients;
+    
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(String instructions) {
+		this.instructions = instructions;
+	}
+
+	public Set<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(Set<Ingredient> ingredients) {
+		this.ingredients = ingredients;
+	}
 }
