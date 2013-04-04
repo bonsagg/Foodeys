@@ -55,39 +55,39 @@ import eu.jugcologne.foodeys.util.DbConst;
 @Entity(name=DbConst.Recipe)
 public class Recipe extends AbstractEntity {
     private static final long serialVersionUID = 2476888974204976237L;
-    
-    @Column(name="name", nullable=false, length=50)
+
+    @Column(name = "name", nullable = false, length = 50)
     @NotNull
-    @Size(max=50)
+    @Size(max = 50)
     private String name;
 
-    @Column(name="instructions")
-	private String instructions;
+    @Column(name = "instructions")
+    private String instructions;
 
-    @OneToMany(orphanRemoval=true, mappedBy="recipe", cascade=CascadeType.ALL)
-	private Set<Ingredient> ingredients;
-    
+    @OneToMany(orphanRemoval = true, mappedBy = "recipe", cascade = CascadeType.ALL)
+    private Set<Ingredient> ingredients;
+
     public String getName() {
-		return name;
-	}
+	return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public String getInstructions() {
-		return instructions;
-	}
+    public String getInstructions() {
+	return instructions;
+    }
 
-	public void setInstructions(String instructions) {
-		this.instructions = instructions;
-	}
+    public void setInstructions(String instructions) {
+	this.instructions = instructions;
+    }
 
-	public Set<Ingredient> getIngredients() {
-		return ingredients;
-	}
+    public Set<Ingredient> getIngredients() {
+	return ingredients;
+    }
 
-	public void setIngredients(Set<Ingredient> ingredients) {
-		this.ingredients = ingredients;
-	}
+    public void setIngredients(Set<Ingredient> ingredients) {
+	this.ingredients = ingredients;
+    }
 }

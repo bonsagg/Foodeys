@@ -29,51 +29,51 @@ import eu.jugcologne.foodeys.util.DbConst;
 @Entity(name=DbConst.Ingredient)
 public class Ingredient extends AbstractEntity {
     private static final long serialVersionUID = -8705211020401289741L;
-    
-    @Column(name="amount", nullable=false, precision=8, scale=2)
+
+    @Column(name = "amount", nullable = false, precision = 8, scale = 2)
     private BigDecimal amount;
-    
-    @Column(name="unit", nullable=false, length=10)
+
+    @Column(name = "unit", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Unit unit;
-    
-    @ManyToOne(optional=false)
-    @JoinColumn(name="food_id", nullable=false)
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "food_id", nullable = false)
     private Food name;
-    
+
     @ManyToOne
-    @JoinColumn(name="recipe_id", nullable=false)
+    @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
-	public Recipe getRecipe() {
-		return recipe;
-	}
+    public Recipe getRecipe() {
+	return recipe;
+    }
 
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
+    public void setRecipe(Recipe recipe) {
+	this.recipe = recipe;
+    }
 
-	public BigDecimal getAmount() {
-		return amount;
-	}
+    public BigDecimal getAmount() {
+	return amount;
+    }
 
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
+    public void setAmount(BigDecimal amount) {
+	this.amount = amount;
+    }
 
-	public Unit getUnit() {
-		return unit;
-	}
+    public Unit getUnit() {
+	return unit;
+    }
 
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
+    public void setUnit(Unit unit) {
+	this.unit = unit;
+    }
 
-	public Food getName() {
-		return name;
-	}
+    public Food getName() {
+	return name;
+    }
 
-	public void setName(Food name) {
-		this.name = name;
-	}
+    public void setName(Food name) {
+	this.name = name;
+    }
 }

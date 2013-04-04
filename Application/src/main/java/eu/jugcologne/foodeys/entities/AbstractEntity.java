@@ -19,7 +19,7 @@ import javax.persistence.Version;
  * This class provides the basic properties and methods each entity in Foodeys
  * needs.
  * 
- * @author Daniel Sachse a.k.a. w0mbat
+ * @author Daniel Sachse <mail@wombatsoftware.de>
  * 
  */
 @MappedSuperclass
