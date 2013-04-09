@@ -6,35 +6,59 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="bootstrap-responsive.min.css"/>
+        <h:outputStylesheet library="css" name="foodeys.css"/>
+
         <title>Foodeys - Eat what you have</title>
     </h:head>
 
     <h:body>
-		<div class="navbar navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="brand" href="#">Foodeys</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<li class="active">
-								<a href="#"><i class="icon-search"></i> Discover</a>
-							</li>
-							<li>
-								<a href="#cookbook"><i class="icon-book"></i> Cookbook</a>
-							</li>
-						</ul>
+    	<ui:insert name="header">
+			<div class="navbar navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="brand" href="#">Foodeys</a>
+						<div class="nav-collapse collapse">
+							<ul class="nav">
+								<li class="active">
+									<a href="#"><i class="icon-search"></i> Discover</a>
+								</li>
+								<li>
+									<a href="#cookbook"><i class="icon-book"></i> Cookbook</a>
+								</li>
+							</ul>
+						</div>
+						<!--/.nav-collapse -->
 					</div>
-					<!--/.nav-collapse -->
 				</div>
 			</div>
+		</ui:insert>
+		
+		<div id="wrap">
+			<div class="container">
+				<ui:insert name="content"/>
+			</div>
 		</div>
+
+		<ui:insert name="footer">
+			<div id="footer">
+				<div class="container">
+					<p class="muted credit">
+						Copyright &#169; 2013 by 
+						<a href="http://JUGCologne.eu">JUGCologne.eu</a>
+						.
+					</p>
+				</div>
+			</div>
+		</ui:insert>
+		
 
 		<h:outputScript library="js" name="jquery-1.9.1.min.js"/>
 		<h:outputScript library="js" name="bootstrap.min.js"/>

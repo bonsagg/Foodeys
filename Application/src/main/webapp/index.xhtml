@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="WEB-INF/templates/template.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:jsf="http://java.sun.com/jsf">
-</ui:composition>
 
+	<ui:define name="content">
+
+		<div class="jumbotron">
+			<h3>What do you have in your fridge?</h3>
+			<div class="input-append">
+				<input class="span10" id="appendedInputButton" type="text"/>
+				<button class="btn" type="button">Search!</button>
+			</div>
+		</div>
+
+		<hr />
+	</ui:define>
+</ui:composition>
