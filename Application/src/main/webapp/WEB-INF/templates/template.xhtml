@@ -12,6 +12,7 @@
         <h:outputStylesheet library="css" name="foodeys.css"/>
 
         <title>Foodeys - Eat what you have</title>
+        <h:outputScript library="js" name="jquery-1.9.1.min.js"/>
     </h:head>
 
     <h:body>
@@ -40,7 +41,7 @@
 				</div>
 			</div>
 		</ui:insert>
-		
+
 		<div id="wrap">
 			<div class="container">
 				<ui:insert name="content"/>
@@ -58,9 +59,8 @@
 				</div>
 			</div>
 		</ui:insert>
-		
 
-		<h:outputScript library="js" name="jquery-1.9.1.min.js"/>
+		
 		<h:outputScript library="js" name="bootstrap.min.js"/>
 	</h:body>
 </html>

@@ -22,9 +22,23 @@
 			<id>JBOSS_NEXUS</id>
 			<url>http://repository.jboss.org/nexus/content/groups/public</url>
 		</repository>
+
+		<repository>
+			<id>snapshot-repository.java.net</id>
+			<name>Java.net Snapshot Repository for Maven</name>
+			<url>https://maven.java.net/content/repositories/snapshots/</url>
+			<layout>default</layout>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
+		<pluginRepository>
+			<id>maven.java.de</id>
+			<url>https://maven.java.net/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
 		<pluginRepository>
 			<id>maven.java.net</id>
 			<url>https://maven.java.net/content/groups/promoted/</url>
@@ -47,7 +61,7 @@
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
-			<version>7.0-b80</version>
+			<version>7.0-b84</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -61,6 +75,7 @@
 			<artifactId>arquillian-junit-container</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<profiles>
@@ -168,6 +183,26 @@
 						<groupId>org.glassfish.main.extras</groupId>
 						<artifactId>glassfish-embedded-all</artifactId>
 						<version>4.0-b84</version>
+					</dependency>
+					<dependency>
+						<groupId>javax.json</groupId>
+						<artifactId>javax.json-api</artifactId>
+						<version>1.0-b06</version>
+					</dependency>
+					<dependency>
+						<groupId>org.glassfish</groupId>
+						<artifactId>jsonp-jaxrs</artifactId>
+						<version>1.0-b06</version>
+					</dependency>
+					<dependency>
+						<groupId>org.glassfish</groupId>
+						<artifactId>javax.json</artifactId>
+						<version>1.0-b06</version>
+					</dependency>
+					<dependency>
+						<groupId>org.glassfish.jersey.core</groupId>
+						<artifactId>jersey-server</artifactId>
+						<version>2.0-rc1</version>
 					</dependency>
 				</dependencies>
 			</plugin>

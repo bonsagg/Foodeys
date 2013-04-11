@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 				xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="WEB-INF/templates/template.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:jsf="http://java.sun.com/jsf">
+                xmlns:jsf="http://java.sun.com/jsf"
+                template="WEB-INF/templates/template.xhtml">
 
 	<ui:define name="content">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#searchField').typeahead({
+					mode: 'multiple',
+				    source: function (query, process) {
+				        return $.get('rest/search/autocomplete/', { query: query }, function (data) {
+				            return process(data.options);
+				        });
+				    }
+				});
+			});
+		</script>
 
 		<div class="jumbotron">
 			<h3>What do you have in your fridge?</h3>
 			<div class="input-append">
-				<input class="span10" id="appendedInputButton" type="text"/>
+				<input class="span10" id="searchField" type="text" data-provide="typeahead" autocomplete="off"/>
 				<button class="btn" type="button">Search!</button>
 			</div>
 		</div>
