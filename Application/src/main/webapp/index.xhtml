@@ -9,14 +9,29 @@
 
 	<ui:define name="content">
 		<script type="text/javascript">
+			function extractor(query) {
+		        var result = /([^,]+)$/.exec(query);
+		        if(result &#38;&#38; result[1])
+		            return result[1].trim();
+		        return '';
+		    }
+
 			$(document).ready(function() {
 				$('#searchField').typeahead({
-					mode: 'multiple',
 				    source: function (query, process) {
 				        return $.get('rest/search/autocomplete/', { query: query }, function (data) {
 				            return process(data.options);
 				        });
-				    }
+				    },
+
+					updater: function(item) {
+						var ul = document.getElementById("selection");
+						var li = document.createElement("li");
+						li.appendChild(document.createTextNode(item));
+						ul.appendChild(li);
+			            return '';
+			        }
+				    
 				});
 			});
 		</script>
@@ -27,6 +42,10 @@
 				<input class="span10" id="searchField" type="text" data-provide="typeahead" autocomplete="off"/>
 				<button class="btn" type="button">Search!</button>
 			</div>
+
+			<ul id="selection" class="nav nav-list">
+				<li class="nav-header">Selected Ingredients</li>
+			</ul>
 		</div>
 
 		<hr />
