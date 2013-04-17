@@ -2,7 +2,8 @@
 
 # Run it
 * ```git clone https://github.com/JUGCologne/Foodeys.git```
-* ```cd Foodeys```
+* ```cd Foodeys/Application```
+* ```mvn clean install```
 * ```mvn embedded-glassfish:run```
 * Checkout your browser at [http://localhost:8080/Foodeys](http://localhost:8080/Foodeys)
 
