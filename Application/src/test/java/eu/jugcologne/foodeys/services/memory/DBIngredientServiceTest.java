@@ -1,7 +1,8 @@
 package eu.jugcologne.foodeys.services.memory;
 
-import javax.inject.Inject;
-
+import eu.jugcologne.foodeys.services.AbstractService;
+import eu.jugcologne.foodeys.services.api.IngredientService;
+import eu.jugcologne.foodeys.services.api.Service;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -11,9 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import eu.jugcologne.foodeys.services.AbstractService;
-import eu.jugcologne.foodeys.services.api.IngredientService;
-import eu.jugcologne.foodeys.services.api.Service;
+import javax.inject.Inject;
 
 @RunWith(Arquillian.class)
 public class DBIngredientServiceTest {
@@ -22,20 +21,20 @@ public class DBIngredientServiceTest {
 
     @Deployment
     public static WebArchive createDeployment() {
-	return ShrinkWrap.create(WebArchive.class, "test.war")
-		.addClass(DBIngredientService.class)
-		.addClass(AbstractInMemoryService.class)
-		.addClass(AbstractService.class)
+        return ShrinkWrap.create(WebArchive.class, "test.war")
+                .addClass(DBIngredientService.class)
+                .addClass(AbstractInMemoryService.class)
+                .addClass(AbstractService.class)
 
-		.addClass(IngredientService.class)
-		.addClass(Service.class)
+                .addClass(IngredientService.class)
+                .addClass(Service.class)
 
-		.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
-		.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+                .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
     @Test
     public void testIsDeployed() {
-	Assert.assertNotNull(ingredientService);
+        Assert.assertNotNull(ingredientService);
     }
 }
