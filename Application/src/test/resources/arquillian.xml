@@ -7,7 +7,7 @@
     <property name="deploymentExportPath">target/deployment</property>
   </engine>
 
-  <container qualifier="glassfish-embedded" default="true">
+  <container qualifier="arq-glassfish-embedded">
     <configuration>
       <property name="resourcesXml">src/test/resources-glassfish-embedded/glassfish-resources.xml</property>
     </configuration>

@@ -1,5 +1,6 @@
 package eu.jugcologne.foodeys.services.memory;
 
+import eu.jugcologne.foodeys.entities.AbstractEntity;
 import eu.jugcologne.foodeys.services.AbstractService;
 import eu.jugcologne.foodeys.services.api.IngredientService;
 import eu.jugcologne.foodeys.services.api.Service;
@@ -28,6 +29,8 @@ public class DBIngredientServiceTest {
 
                 .addClass(IngredientService.class)
                 .addClass(Service.class)
+
+                .addClass(AbstractEntity.class)
 
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");

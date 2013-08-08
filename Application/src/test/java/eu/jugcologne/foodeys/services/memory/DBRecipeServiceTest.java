@@ -1,9 +1,6 @@
-/*
-
-TODO: FIX UNKNOWN TESTS errors
-
 package eu.jugcologne.foodeys.services.memory;
 
+import eu.jugcologne.foodeys.entities.AbstractEntity;
 import eu.jugcologne.foodeys.services.AbstractService;
 import eu.jugcologne.foodeys.services.api.RecipeService;
 import eu.jugcologne.foodeys.services.api.Service;
@@ -26,15 +23,15 @@ public class DBRecipeServiceTest {
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                */
-/*.addClass(DBRecipeService.class)
+
+.addClass(DBRecipeService.class)
                 .addClass(AbstractInMemoryService.class)
                 .addClass(AbstractService.class)
 
                 .addClass(RecipeService.class)
-                .addClass(Service.class)*//*
+                .addClass(Service.class)
 
-                .addPackages(true, "eu.jugcologne.foodeys")
+                .addClass(AbstractEntity.class)
 
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -44,4 +41,4 @@ public class DBRecipeServiceTest {
     public void testIsDeployed() {
         Assert.assertNotNull(recipeService);
     }
-}*/
+}

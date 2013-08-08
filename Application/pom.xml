@@ -132,16 +132,55 @@
                         <version>2.12</version>
                         <configuration>
                             <systemPropertyVariables>
-                                <java.util.logging.config.file>
-                                    ${project.build.testOutputDirectory}/logging.properties
-                                </java.util.logging.config.file>
-                                <derby.stream.error.file>
-                                    ${project.build.directory}/derby.log
-                                </derby.stream.error.file>
+                                <arquillian.launch>arq-glassfish-embedded</arquillian.launch>
+                                <java.util.logging.config.file>${project.build.testOutputDirectory}/logging.properties</java.util.logging.config.file>
+                                <derby.stream.error.file>${project.build.directory}/derby.log</derby.stream.error.file>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>jbossas-remote-wildfly-8</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-spec-api</artifactId>
+                    <version>8.0.0.Alpha3</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-remote</artifactId>
+                    <version>8.0.0.Alpha3</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-protocol-jmx</artifactId>
+                    <version>8.0.0.Alpha3</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-common</artifactId>
+                    <version>8.0.0.Alpha3</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                    <testResource>
+                        <directory>src/test/resources-jboss-wildfly-remote</directory>
+                    </testResource>
+                </testResources>
             </build>
         </profile>
     </profiles>

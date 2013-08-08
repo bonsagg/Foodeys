@@ -1,9 +1,6 @@
-/*
-
-TODO: FIX UNKNOWN TESTS errors
-
 package eu.jugcologne.foodeys.services.memory;
 
+import eu.jugcologne.foodeys.entities.AbstractEntity;
 import eu.jugcologne.foodeys.services.AbstractService;
 import eu.jugcologne.foodeys.services.api.Service;
 import eu.jugcologne.foodeys.services.api.UnitService;
@@ -33,6 +30,8 @@ public class DBUnitServiceTest {
                 .addClass(UnitService.class)
                 .addClass(Service.class)
 
+                .addClass(AbstractEntity.class)
+
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
@@ -42,4 +41,3 @@ public class DBUnitServiceTest {
         Assert.assertNotNull(unitService);
     }
 }
-*/
