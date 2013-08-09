@@ -21,5 +21,5 @@
 
 
 # Build environment
-The Jenkins server can be reached via [http://ci.wombatsoftware.de/](http://ci.wombatsoftware.de/)
+The Jenkins server can be reached via [http://ci.wombatsoftware.de/](http://ci.wombatsoftware.de/).
 The Jenkins server polls Github for changes every 5 minutes. So be a little patient until you can see you commits building.
