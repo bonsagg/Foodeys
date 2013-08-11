@@ -4,8 +4,9 @@
 * ```git clone https://github.com/JUGCologne/Foodeys.git```
 
 ## Glassfish 4
-* cd into Glassfish 4 directory
-* ```asadmin start-domain start-database```
+* cd into Glassfish 4\bin directory
+* ```./asadmin start-domain```
+* ```./asadmin start-database```
 * cd into „Foodeys/Application“
 * ```mvn clean install```
 * ```mvn embedded-glassfish:run```
@@ -18,7 +19,6 @@
 * ```mvn clean install -Pjbossas-remote-wildfly-8```
 * ```mvn jboss-as:deploy -Pjbossas-remote-wildfly-8```
 * Checkout your browser at [http://localhost:8080/Foodeys](http://localhost:8080/Foodeys)
-
 
 # Build environment
 The Jenkins server can be reached via [http://ci.wombatsoftware.de/](http://ci.wombatsoftware.de/).

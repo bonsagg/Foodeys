@@ -3,3 +3,6 @@ Application/src/main/webapp/WEB-INF/.faces-config.xml.jsfdia
 Application/derby.log
 Application/Foodeys.iml
 Application/.idea/
+Application/.forge_settings
+*.iml
+**/target

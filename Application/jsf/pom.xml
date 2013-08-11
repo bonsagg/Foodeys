@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>jsf</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <parent>
+        <groupId>eu.jugcologne.foodeys</groupId>
+        <artifactId>foodeys-parent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>eu.jugcologne.foodeys</groupId>
+            <artifactId>services</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.glassfish.embedded</groupId>
+                <artifactId>maven-embedded-glassfish-plugin</artifactId>
+                <version>3.1.2.2</version>
+
+                <configuration>
+                    <app>target/${project.artifactId}-${project.version}</app>
+                    <port>8080</port>
+                    <contextRoot>Foodeys</contextRoot>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.main</groupId>
+                        <artifactId>simple-glassfish-api</artifactId>
+                        <version>4.0-b72</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish.main.extras</groupId>
+                        <artifactId>glassfish-embedded-all</artifactId>
+                        <version>4.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.json</groupId>
+                        <artifactId>javax.json-api</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish</groupId>
+                        <artifactId>jsonp-jaxrs</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish</groupId>
+                        <artifactId>javax.json</artifactId>
+                        <version>1.0.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish.jersey.core</groupId>
+                        <artifactId>jersey-server</artifactId>
+                        <version>2.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>7.3.Final</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
