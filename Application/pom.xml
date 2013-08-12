@@ -184,6 +184,45 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.3</version>
+                <configuration>
+                    <container>
+                        <containerId>glassfish4x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.hostname>localhost</cargo.hostname>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password></cargo.remote.password>
+                            <cargo.remote.port>58629</cargo.remote.port>
+                            <cargo.glassfish.domain.name>/foodeys</cargo.glassfish.domain.name>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>jsf</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/foodeys-jsf</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.deployment</groupId>
+                        <artifactId>deployment-client</artifactId>
+                        <version>3.2-b06</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 
