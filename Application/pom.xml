@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <wildfly-version>8.0.0.Alpha3</wildfly-version>
+        <wildfly-version>8.0.0.Alpha4</wildfly-version>
     </properties>
 
     <dependencyManagement>
@@ -124,6 +124,41 @@
 
         <profile>
             <id>jbossas-remote-wildfly-8</id>
+
+            <repositories>
+                <repository>
+                    <id>jboss-public-repository-group</id>
+                    <name>JBoss Public Maven Repository Group</name>
+                    <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>jboss-public-repository-group</id>
+                    <name>JBoss Public Maven Repository Group</name>
+                    <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+
             <dependencies>
                 <dependency>
                     <groupId>org.wildfly</groupId>
@@ -150,6 +185,7 @@
                     <version>${wildfly-version}</version>
                     <scope>test</scope>
                 </dependency>
+
             </dependencies>
 
             <build>
