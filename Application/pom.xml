@@ -11,6 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <wildfly-version>8.0.0.Alpha3</wildfly-version>
     </properties>
 
     <dependencyManagement>
@@ -127,26 +128,26 @@
                 <dependency>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-spec-api</artifactId>
-                    <version>8.0.0.Alpha3</version>
+                    <version>${wildfly-version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>8.0.0.Alpha3</version>
+                    <version>${wildfly-version}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-arquillian-protocol-jmx</artifactId>
-                    <version>8.0.0.Alpha3</version>
+                    <version>${wildfly-version}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-arquillian-common</artifactId>
-                    <version>8.0.0.Alpha3</version>
+                    <version>${wildfly-version}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
