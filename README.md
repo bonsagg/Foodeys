@@ -1,4 +1,6 @@
-# Foodeys [![Build Status](http://ci.wombatsoftware.de/job/Foodeys%20-%20Glassfish%204/badge/icon)](http://ci.wombatsoftware.de/job/Foodeys%20-%20Glassfish%204/)
+# Foodeys
+* Glassfish 4 Build and Test: [![Build Status](http://ci.wombatsoftware.de/job/Foodeys%20-%20Glassfish%204/badge/icon)](http://ci.wombatsoftware.de/job/Foodeys%20-%20Glassfish%204/)
+* Glassfish 4 Deploy: [![Build Status](http://ci.wombatsoftware.de/job/Foodeys%20-%20Glassfish%204%20Deployment/badge/icon)](http://ci.wombatsoftware.de/job/Foodeys%20-%20Glassfish%204%20Deployment/)
 
 # Build and Run it
 * ```git clone https://github.com/JUGCologne/Foodeys.git```
