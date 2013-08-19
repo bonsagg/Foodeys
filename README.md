@@ -1,4 +1,4 @@
-# Foodeys [![Build Status](http://ci.wombatsoftware.de/job/Foodeys/badge/icon)](http://ci.wombatsoftware.de/job/Foodeys/)
+# Foodeys [![Build Status](http://ci.wombatsoftware.de/job/Foodeys%20-%20Glassfish%204/badge/icon)](http://ci.wombatsoftware.de/job/Foodeys%20-%20Glassfish%204/)
 
 # Build and Run it
 * ```git clone https://github.com/JUGCologne/Foodeys.git```
