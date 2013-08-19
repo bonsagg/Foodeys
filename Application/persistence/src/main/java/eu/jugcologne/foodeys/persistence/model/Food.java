@@ -1,15 +1,14 @@
 package eu.jugcologne.foodeys.persistence.model;
 
+import eu.jugcologne.foodeys.persistence.util.DbConst;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import eu.jugcologne.foodeys.persistence.util.DbConst;
-
 /**
  * Food stores all properties related to a food object used in recipes
- * 
- * @author Daniel Sachse <mail@wombatsoftware.de>
  *
+ * @author Daniel Sachse <mail@wombatsoftware.de>
  */
 
 @Entity(name = DbConst.Food)
@@ -20,10 +19,10 @@ public class Food extends AbstractEntity {
     private String name;
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 }

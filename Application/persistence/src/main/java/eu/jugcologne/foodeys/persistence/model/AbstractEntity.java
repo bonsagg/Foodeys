@@ -1,26 +1,14 @@
 package eu.jugcologne.foodeys.persistence.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PersistenceException;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
 
 /**
  * This class provides the basic properties and methods each entity in Foodeys
  * needs.
- * 
+ *
  * @author Daniel Sachse <mail@wombatsoftware.de>
- * 
  */
 @MappedSuperclass
 public class AbstractEntity implements Serializable {
@@ -45,79 +33,79 @@ public class AbstractEntity implements Serializable {
 
     @Override
     public boolean equals(Object that) {
-	if (this == that) {
-	    return true;
-	}
-	if (that == null) {
-	    return false;
-	}
-	if (getClass() != that.getClass()) {
-	    return false;
-	}
-	if (id != null) {
-	    return id.equals(((AbstractEntity) that).id);
-	}
-	return super.equals(that);
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        if (id != null) {
+            return id.equals(((AbstractEntity) that).id);
+        }
+        return super.equals(that);
     }
 
     public Date getCreatedOn() {
-	return createdOn;
+        return createdOn;
     }
 
     public Long getId() {
-	return this.id;
+        return this.id;
+    }
+
+    public void setId(final Long id) {
+        if (this.id != null) {
+            throw new PersistenceException("Cannot alter immutable ID of persistent object with id: " + id);
+        }
+
+        this.id = id;
     }
 
     public Date getLastUpdate() {
-	return lastUpdate;
+        return lastUpdate;
     }
 
     public int getVersion() {
-	return this.version;
+        return this.version;
+    }
+
+    public void setVersion(final int version) {
+        this.version = version;
     }
 
     @Override
     public int hashCode() {
-	if (id != null) {
-	    return id.hashCode();
-	}
-	return super.hashCode();
+        if (id != null) {
+            return id.hashCode();
+        }
+        return super.hashCode();
     }
 
     public boolean isPersistent() {
-	return getId() != null;
+        return getId() != null;
     }
 
     @PrePersist
     void prePersist() {
-	createdOn = new Date();
+        createdOn = new Date();
     }
 
     @PreUpdate
     void preUpdate() {
-	lastUpdate = new Date();
-    }
-
-    public void setId(final Long id) {
-	if (this.id != null) {
-	    throw new PersistenceException("Cannot alter immutable ID of persistent object with id: " + id);
-	}
-
-	this.id = id;
-    }
-
-    public void setVersion(final int version) {
-	this.version = version;
+        lastUpdate = new Date();
     }
 
     @Override
     public String toString() {
-	String result = getClass().getName();
+        String result = getClass().getName();
 
-	if (id != null) {
-	    result += "[ id: " + id + " ]";
-	}
+        if (id != null) {
+            result += "[ id: " + id + " ]";
+        }
 
-	return result;
+        return result;
     }
 }

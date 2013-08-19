@@ -13,32 +13,32 @@ import eu.jugcologne.foodeys.persistence.util.DbConst;
 
 /**
  * @author mmueller
- * 
+ *
  * This class represents a recipe.
  * A recipe may simply consists of a couple of ingredients and processing instructions.
  * But, taking a closer look, such an approach is too simple.
- * Maybe a cake consists of a flan cake and a topping. Both have to created separate 
- * and then merged together. Or a complete meal consists of parts (meat, vegetables, ...), 
+ * Maybe a cake consists of a flan cake and a topping. Both have to created separate
+ * and then merged together. Or a complete meal consists of parts (meat, vegetables, ...),
  * which might consists of sub-parts. Every part might be created following it's own recipe.
  * Thus, a recipe migt be a simple recipe or a composition of recipes.
- * For general, any recipe is build upon a list of parts. 
+ * For general, any recipe is build upon a list of parts.
  * A simple recipe contains just one part.
  * Other attributes: portions count, nutrition facts, picture(s)
- * 
+ *
  * Sample:
- * 
+ *
  * Michael's pan cake (2 pieces)
- * 
+ *
  * Preparation time: 5 min
  * Cooking time: 5 min
- * 
+ *
  * Ingredients
- * 
+ *
  * 2 tablespoon (heapened) of flour
  * 150 ml (apx.) milk
  * 1 egg
  * Toppings of choice
- * 
+ *
  * Directions
  * 1. Mix flour, milk and egg, giving a fluid paste
  * 2. Flow half into a big pan (28-30 cm)
@@ -47,12 +47,12 @@ import eu.jugcologne.foodeys.persistence.util.DbConst;
  * 5. Continue baking until both sides get golden-brown
  * 6. Prepare second pan cake
  * 7. For a sweet version, serve with marmelade, otherwise with warm tasty topping
- * 
+ *
  * This is not a real good recipe, but it shows some aspects of a simple recipe.
- * 
- * A more complex recipe may be composed of more parts or ohter recipes.
+ *
+ * A more complex recipe may be composed of more parts or other recipes.
  */
-@Entity(name=DbConst.Recipe)
+@Entity(name = DbConst.Recipe)
 public class Recipe extends AbstractEntity {
     private static final long serialVersionUID = 2476888974204976237L;
 
@@ -68,26 +68,26 @@ public class Recipe extends AbstractEntity {
     private Set<Ingredient> ingredients;
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public String getInstructions() {
-	return instructions;
+        return instructions;
     }
 
     public void setInstructions(String instructions) {
-	this.instructions = instructions;
+        this.instructions = instructions;
     }
 
     public Set<Ingredient> getIngredients() {
-	return ingredients;
+        return ingredients;
     }
 
     public void setIngredients(Set<Ingredient> ingredients) {
-	this.ingredients = ingredients;
+        this.ingredients = ingredients;
     }
 }

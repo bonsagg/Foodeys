@@ -1,7 +1,7 @@
 package eu.jugcologne.foodeys.persistence.util;
 
 public class DbConst {
-	public static final String Food = "T_FOOD"; 
-	public static final String Ingredient = "T_INGREDIENT"; 
-	public static final String Recipe = "T_RECIPE"; 
+	public static final String Food = "Food";
+	public static final String Ingredient = "Ingredient";
+	public static final String Recipe = "Recipe";
 }
