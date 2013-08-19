@@ -3,7 +3,7 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>foodeys-rest-api</artifactId>
+    <artifactId>foodeys-rest-distribution</artifactId>
 
     <parent>
         <groupId>eu.jugcologne.foodeys</groupId>
@@ -14,8 +14,20 @@
     <dependencies>
         <dependency>
             <groupId>eu.jugcologne.foodeys</groupId>
-            <artifactId>foodeys-persistence</artifactId>
+            <artifactId>foodeys-rest-impl</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

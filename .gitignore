@@ -6,3 +6,4 @@ Application/.idea/
 Application/.forge_settings
 *.iml
 **/target
+.idea/
