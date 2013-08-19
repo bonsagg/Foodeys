@@ -117,7 +117,7 @@
                     <deployables>
                         <deployable>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>jsf</artifactId>
+                            <artifactId>foodeys-jsf</artifactId>
                             <type>war</type>
                             <properties>
                                 <context>/foodeys-jsf</context>
