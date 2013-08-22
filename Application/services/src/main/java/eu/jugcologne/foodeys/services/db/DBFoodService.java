@@ -1,8 +1,9 @@
-package eu.jugcologne.foodeys.services.memory;
-
-import javax.ejb.Stateless;
+package eu.jugcologne.foodeys.services.db;
 
 import eu.jugcologne.foodeys.services.api.FoodService;
+
+import javax.ejb.Stateless;
+import java.util.List;
 
 /**
  * Service which provides methods and configurations specific to persistent Food Objects
@@ -11,6 +12,11 @@ import eu.jugcologne.foodeys.services.api.FoodService;
  *
  */
 @Stateless
-public class DBFoodService extends AbstractInMemoryService implements FoodService {
+public class DBFoodService extends AbstractDBService implements FoodService {
     private static final long serialVersionUID = -473372348203262950L;
+
+    @Override
+    public List<String> findAutocompleteSuggestions(String query) {
+        return null;
+    }
 }

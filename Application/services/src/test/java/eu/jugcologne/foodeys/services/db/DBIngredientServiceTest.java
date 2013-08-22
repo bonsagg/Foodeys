@@ -1,9 +1,11 @@
-package eu.jugcologne.foodeys.services.memory;
+package eu.jugcologne.foodeys.services.db;
 
 import eu.jugcologne.foodeys.persistence.model.AbstractEntity;
 import eu.jugcologne.foodeys.services.AbstractService;
 import eu.jugcologne.foodeys.services.api.IngredientService;
 import eu.jugcologne.foodeys.services.api.Service;
+import eu.jugcologne.foodeys.services.db.AbstractDBService;
+import eu.jugcologne.foodeys.services.db.DBIngredientService;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -24,7 +26,7 @@ public class DBIngredientServiceTest {
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClass(DBIngredientService.class)
-                .addClass(AbstractInMemoryService.class)
+                .addClass(AbstractDBService.class)
                 .addClass(AbstractService.class)
 
                 .addClass(IngredientService.class)

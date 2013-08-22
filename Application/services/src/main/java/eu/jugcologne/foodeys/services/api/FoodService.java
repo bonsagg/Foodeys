@@ -1,5 +1,7 @@
 package eu.jugcologne.foodeys.services.api;
 
+import java.util.List;
+
 /**
  * Interface which provides services specific to Food
  * 
@@ -7,5 +9,5 @@ package eu.jugcologne.foodeys.services.api;
  *
  */
 public interface FoodService extends Service {
-
+    List<String> findAutocompleteSuggestions(String query);
 }

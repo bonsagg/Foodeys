@@ -1,9 +1,11 @@
-package eu.jugcologne.foodeys.services.memory;
+package eu.jugcologne.foodeys.services.db;
 
 import eu.jugcologne.foodeys.persistence.model.AbstractEntity;
 import eu.jugcologne.foodeys.services.AbstractService;
-import eu.jugcologne.foodeys.services.api.RecipeService;
+import eu.jugcologne.foodeys.services.api.FoodService;
 import eu.jugcologne.foodeys.services.api.Service;
+import eu.jugcologne.foodeys.services.db.AbstractDBService;
+import eu.jugcologne.foodeys.services.db.DBFoodService;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -16,19 +18,18 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 @RunWith(Arquillian.class)
-public class DBRecipeServiceTest {
+public class DBFoodServiceTest {
     @Inject
-    private RecipeService recipeService;
+    private FoodService foodService;
 
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-
-.addClass(DBRecipeService.class)
-                .addClass(AbstractInMemoryService.class)
+                .addClass(DBFoodService.class)
+                .addClass(AbstractDBService.class)
                 .addClass(AbstractService.class)
 
-                .addClass(RecipeService.class)
+                .addClass(FoodService.class)
                 .addClass(Service.class)
 
                 .addClass(AbstractEntity.class)
@@ -39,6 +40,6 @@ public class DBRecipeServiceTest {
 
     @Test
     public void testIsDeployed() {
-        Assert.assertNotNull(recipeService);
+        Assert.assertNotNull(foodService);
     }
 }

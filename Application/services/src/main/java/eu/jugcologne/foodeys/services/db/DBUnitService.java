@@ -1,7 +1,8 @@
-package eu.jugcologne.foodeys.services.memory;
+package eu.jugcologne.foodeys.services.db;
+
+import eu.jugcologne.foodeys.services.api.UnitService;
 
 import javax.ejb.Stateless;
-import eu.jugcologne.foodeys.services.api.UnitService;
 
 /**
  * Service which provides methods and configurations specific to persistent Unit Objects
@@ -10,6 +11,6 @@ import eu.jugcologne.foodeys.services.api.UnitService;
  *
  */
 @Stateless
-public class DBUnitService extends AbstractInMemoryService implements UnitService {
+public class DBUnitService extends AbstractDBService implements UnitService {
     private static final long serialVersionUID = -473372348203262950L;
 }

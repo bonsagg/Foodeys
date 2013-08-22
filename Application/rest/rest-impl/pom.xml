@@ -22,5 +22,11 @@
             <artifactId>foodeys-services</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>3.0.2.Final</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

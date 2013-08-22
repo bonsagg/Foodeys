@@ -1,8 +1,8 @@
-package eu.jugcologne.foodeys.services.memory;
-
-import javax.ejb.Stateless;
+package eu.jugcologne.foodeys.services.db;
 
 import eu.jugcologne.foodeys.services.api.IngredientService;
+
+import javax.ejb.Stateless;
 
 /**
  * Service which provides methods and configurations specific to persistent Ingredient Objects
@@ -11,6 +11,6 @@ import eu.jugcologne.foodeys.services.api.IngredientService;
  *
  */
 @Stateless
-public class DBIngredientService extends AbstractInMemoryService implements IngredientService {
+public class DBIngredientService extends AbstractDBService implements IngredientService {
     private static final long serialVersionUID = -473372348203262950L;
 }
