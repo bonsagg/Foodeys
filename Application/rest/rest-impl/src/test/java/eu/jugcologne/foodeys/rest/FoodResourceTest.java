@@ -4,6 +4,7 @@ import eu.jugcologne.foodeys.FoodeysMarker;
 import eu.jugcologne.foodeys.persistence.model.Food;
 import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
 import eu.jugcologne.foodeys.rest.model.AutocompleteResponse;
+import eu.jugcologne.foodeys.rest.model.FoodResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -95,7 +96,7 @@ public class FoodResourceTest {
         Response response = target.request().get();
 
         Assert.assertEquals(Response.Status.OK, response.getStatusInfo());
-        Food tomato = response.readEntity(Food.class);
+        FoodResponse tomato = response.readEntity(FoodResponse.class);
         Assert.assertEquals("Tomato", tomato.getName());
     }
 

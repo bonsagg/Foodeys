@@ -4,6 +4,7 @@ import eu.jugcologne.foodeys.persistence.model.Food;
 import eu.jugcologne.foodeys.rest.api.FoodResource;
 import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
 import eu.jugcologne.foodeys.rest.model.AutocompleteResponse;
+import eu.jugcologne.foodeys.rest.model.FoodResponse;
 import eu.jugcologne.foodeys.services.api.FoodService;
 
 import javax.ejb.Stateless;
@@ -41,7 +42,7 @@ public class FoodResourceBean implements FoodResource {
             return Response.noContent().build();
         }
 
-        return Response.ok(food).build();
+        return Response.ok(new FoodResponse(food.getName())).build();
     }
 
     @Override
