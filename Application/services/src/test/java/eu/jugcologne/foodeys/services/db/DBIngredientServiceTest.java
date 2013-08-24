@@ -1,11 +1,7 @@
 package eu.jugcologne.foodeys.services.db;
 
-import eu.jugcologne.foodeys.persistence.model.AbstractEntity;
-import eu.jugcologne.foodeys.services.AbstractService;
+import eu.jugcologne.foodeys.FoodeysMarker;
 import eu.jugcologne.foodeys.services.api.IngredientService;
-import eu.jugcologne.foodeys.services.api.Service;
-import eu.jugcologne.foodeys.services.db.AbstractDBService;
-import eu.jugcologne.foodeys.services.db.DBIngredientService;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -25,14 +21,7 @@ public class DBIngredientServiceTest {
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addClass(DBIngredientService.class)
-                .addClass(AbstractDBService.class)
-                .addClass(AbstractService.class)
-
-                .addClass(IngredientService.class)
-                .addClass(Service.class)
-
-                .addClass(AbstractEntity.class)
+                .addPackages(true, FoodeysMarker.class.getPackage())
 
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");

@@ -1,8 +1,10 @@
 package eu.jugcologne.foodeys.services.db;
 
+import eu.jugcologne.foodeys.persistence.model.Food;
 import eu.jugcologne.foodeys.services.api.FoodService;
 
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
@@ -17,6 +19,15 @@ public class DBFoodService extends AbstractDBService implements FoodService {
 
     @Override
     public List<String> findAutocompleteSuggestions(String query) {
-        return null;
+        return em.createNamedQuery(Food.findAllStartingWith, String.class).setParameter("query", query + "%").getResultList();
+    }
+
+    @Override
+    public Food findFoodByName(String name) {
+        try {
+            return em.createNamedQuery(Food.findFoodByName, Food.class).setParameter("name", name).getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
     }
 }

@@ -108,4 +108,18 @@ public class AbstractEntity implements Serializable {
 
         return result;
     }
+
+    public void setCreatedOn(Date createdOn) {
+        if (this.createdOn != null) {
+            throw new PersistenceException("Cannot alter immutable createdOn of persistent object with id: " + id);
+        }
+        this.createdOn = createdOn;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        if (this.lastUpdate != null && lastUpdate.before(lastUpdate)) {
+            throw new PersistenceException("Cannot set last update to an earlier date of persistent object with id: " + id);
+        }
+        this.lastUpdate = lastUpdate;
+    }
 }

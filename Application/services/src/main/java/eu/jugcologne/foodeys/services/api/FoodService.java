@@ -1,5 +1,7 @@
 package eu.jugcologne.foodeys.services.api;
 
+import eu.jugcologne.foodeys.persistence.model.Food;
+
 import java.util.List;
 
 /**
@@ -10,4 +12,5 @@ import java.util.List;
  */
 public interface FoodService extends Service {
     List<String> findAutocompleteSuggestions(String query);
+    public Food findFoodByName(String name);
 }

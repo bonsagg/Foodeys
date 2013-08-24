@@ -1,9 +1,9 @@
 package eu.jugcologne.foodeys.rest.api;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
@@ -14,6 +14,20 @@ import javax.ws.rs.core.Response;
 @Path("/food/")
 public interface FoodResource {
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll();
+
+    @GET
+    @Path("/{name}/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFood(@PathParam("name") String name);
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addNewFood(AddFoodRequest addFoodRequest);
+
+    @GET
     @Path("/autocomplete/")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response autocomplete(@QueryParam("q") String query);
 }

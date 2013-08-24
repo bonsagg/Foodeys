@@ -1,8 +1,8 @@
 package eu.jugcologne.foodeys.services.api;
 
-import javax.persistence.EntityManager;
-
 import eu.jugcologne.foodeys.persistence.model.AbstractEntity;
+
+import javax.persistence.EntityManager;
 
 /**
  * Interface which provides basic services that are available to all specific Services

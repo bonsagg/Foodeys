@@ -15,4 +15,14 @@ public abstract class AbstractDBService extends AbstractService {
 
     @PersistenceContext
     protected EntityManager em;
+
+    @Override
+    public EntityManager getEm() {
+        return em;
+    }
+
+    @Override
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
 }

@@ -18,25 +18,20 @@ import java.util.List;
  */
 public abstract class AbstractService implements Serializable, Service {
     private static final long serialVersionUID = 989016797578684211L;
-    protected EntityManager em;
 
     @Override
-    public EntityManager getEm() {
-        return em;
-    }
+    public abstract EntityManager getEm();
 
     @Override
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
+    public abstract void setEm(EntityManager em);
 
     protected <T extends AbstractEntity> long count(final Class<T> type) {
-        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaBuilder qb = getEm().getCriteriaBuilder();
         CriteriaQuery<Long> cq = qb.createQuery(Long.class);
         cq.select(qb.count(cq.from(type)));
 
         try {
-            return em.createQuery(cq).getSingleResult();
+            return getEm().createQuery(cq).getSingleResult();
         } catch (NoResultException nre) {
             return 0;
         }
@@ -44,7 +39,7 @@ public abstract class AbstractService implements Serializable, Service {
 
     @Override
     public <T extends AbstractEntity> void delete(final T entity) {
-        em.remove(entity);
+        getEm().remove(entity);
     }
 
     protected <T extends AbstractEntity> T deleteById(final Class<T> type, final Long id) {
@@ -55,27 +50,27 @@ public abstract class AbstractService implements Serializable, Service {
     }
 
     protected <T extends AbstractEntity> List<T> findAll(final Class<T> type) {
-        CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(type);
+        CriteriaQuery<T> query = getEm().getCriteriaBuilder().createQuery(type);
         query.from(type);
 
-        return em.createQuery(query).getResultList();
+        return getEm().createQuery(query).getResultList();
     }
 
     @SuppressWarnings("unchecked")
     protected <T extends AbstractEntity> T findById(final Class<T> type, final Long id) {
         Class<?> clazz = getObjectClass(type);
 
-        return (T) em.find(clazz, id);
+        return (T) getEm().find(clazz, id);
     }
 
     @SuppressWarnings("unchecked")
     protected <T extends AbstractEntity> List<T> findByNamedQuery(final String namedQueryName) {
-        return em.createNamedQuery(namedQueryName).getResultList();
+        return getEm().createNamedQuery(namedQueryName).getResultList();
     }
 
     @SuppressWarnings("unchecked")
     protected <T extends AbstractEntity> List<T> findByNamedQuery(final String namedQueryName, final Object... params) {
-        Query query = em.createNamedQuery(namedQueryName);
+        Query query = getEm().createNamedQuery(namedQueryName);
         int i = 1;
 
         for (Object p : params) {
@@ -102,11 +97,11 @@ public abstract class AbstractService implements Serializable, Service {
     @Override
     public <T extends AbstractEntity> void save(T t) {
         if (t.isPersistent()) {
-            em.merge(t);
+            getEm().merge(t);
         } else {
-            em.persist(t);
+            getEm().persist(t);
         }
 
-        em.flush();
+        getEm().flush();
     }
 }

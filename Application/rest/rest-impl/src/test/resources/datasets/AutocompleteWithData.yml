@@ -1,0 +1,7 @@
+food:
+  - id: 1
+    name: Tomato
+    createdOn: 2013-08-24
+  - id: 2
+    name: Tamarillo
+    createdOn: 2013-08-24

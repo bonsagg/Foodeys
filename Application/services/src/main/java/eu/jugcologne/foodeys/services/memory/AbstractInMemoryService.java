@@ -1,8 +1,5 @@
 package eu.jugcologne.foodeys.services.memory;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import eu.jugcologne.foodeys.services.AbstractService;
 
 /**
@@ -14,6 +11,16 @@ public abstract class AbstractInMemoryService extends AbstractService {
     private static final long serialVersionUID = 989016797578684211L;
 
 //  TODO: Should @Inject the InMemory DB
-    @PersistenceContext
+    /*@PersistenceContext
     protected EntityManager em;
+
+    @Override
+    public EntityManager getEm() {
+        return em;
+    }
+
+    @Override
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }*/
 }
