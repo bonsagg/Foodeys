@@ -6,13 +6,19 @@
 * ```git clone https://github.com/JUGCologne/Foodeys.git```
 
 ## Glassfish 4
+If you have a Glassfish instance:
 * cd into Glassfish 4\bin directory
 * ```./asadmin start-domain```
 * ```./asadmin start-database```
 * cd into „Foodeys/Application“
 * ```mvn clean install```
-* ```mvn embedded-glassfish:run```
-* Checkout your browser at [http://localhost:8080/Foodeys](http://localhost:8080/Foodeys)
+* ```mvn -Dmaven.test.skip=true -pl jsf clean package cargo:redeploy```
+ 
+If you don´t have Glassfish:
+* cd into „Foodeys/Application“
+* ```mvn -Dmaven.test.skip=true -pl jsf clean package embedded-glassfish:run```
+
+Checkout your browser at [http://localhost:8080/foodeys-jsf](http://localhost:8080/foodeys-jsf)
 
 ## JBoss Wildfly 8
 * cd into Wildfly\bin directory
