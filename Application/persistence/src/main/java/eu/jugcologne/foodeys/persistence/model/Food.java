@@ -21,8 +21,6 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = Food.findFoodByName, query = "SELECT f FROM Food f WHERE f.name = :name")
 })
 @Entity(name = DbConst.Food)
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Food extends AbstractEntity {
     public static final String findAllStartingWith = "Food.findAllStartingWith";
     public static final String findFoodByName = "Food.findFoodByName";
