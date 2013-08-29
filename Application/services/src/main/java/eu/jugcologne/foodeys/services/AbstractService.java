@@ -5,6 +5,7 @@ import eu.jugcologne.foodeys.services.api.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,11 +20,8 @@ import java.util.List;
 public abstract class AbstractService implements Serializable, Service {
     private static final long serialVersionUID = 989016797578684211L;
 
-    @Override
-    public abstract EntityManager getEm();
-
-    @Override
-    public abstract void setEm(EntityManager em);
+    @PersistenceContext
+    protected EntityManager em;
 
     protected <T extends AbstractEntity> long count(final Class<T> type) {
         CriteriaBuilder qb = getEm().getCriteriaBuilder();
@@ -103,5 +101,13 @@ public abstract class AbstractService implements Serializable, Service {
         }
 
         getEm().flush();
+    }
+
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 }

@@ -1,9 +1,11 @@
 package eu.jugcologne.foodeys.services.db;
 
 import eu.jugcologne.foodeys.persistence.model.Food;
+import eu.jugcologne.foodeys.services.AbstractService;
 import eu.jugcologne.foodeys.services.api.FoodService;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Specializes;
 import javax.persistence.NoResultException;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
  *
  */
 @Stateless
-public class DBFoodService extends AbstractDBService implements FoodService {
+public class DBFoodService extends AbstractService implements FoodService {
     private static final long serialVersionUID = -473372348203262950L;
 
     @Override

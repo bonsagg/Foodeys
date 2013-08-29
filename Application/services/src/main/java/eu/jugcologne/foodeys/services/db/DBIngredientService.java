@@ -1,5 +1,6 @@
 package eu.jugcologne.foodeys.services.db;
 
+import eu.jugcologne.foodeys.services.AbstractService;
 import eu.jugcologne.foodeys.services.api.IngredientService;
 
 import javax.ejb.Stateless;
@@ -11,6 +12,6 @@ import javax.ejb.Stateless;
  *
  */
 @Stateless
-public class DBIngredientService extends AbstractDBService implements IngredientService {
+public class DBIngredientService extends AbstractService implements IngredientService {
     private static final long serialVersionUID = -473372348203262950L;
 }
