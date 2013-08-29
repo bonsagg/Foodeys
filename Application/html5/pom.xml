@@ -6,6 +6,10 @@
     <artifactId>foodeys-html5</artifactId>
     <packaging>war</packaging>
 
+    <properties>
+        <domain-name>foodeys-html5</domain-name>
+    </properties>
+
     <parent>
         <groupId>eu.jugcologne.foodeys</groupId>
         <artifactId>foodeys-parent</artifactId>
@@ -18,16 +22,120 @@
             <artifactId>foodeys-rest-impl</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.glassfish.embedded</groupId>
+                <artifactId>maven-embedded-glassfish-plugin</artifactId>
+                <version>3.1.2.2</version>
+
+                <configuration>
+                    <app>target/${project.artifactId}-${project.version}</app>
+                    <port>8080</port>
+                    <contextRoot>/foodeys-html5</contextRoot>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.main</groupId>
+                        <artifactId>simple-glassfish-api</artifactId>
+                        <version>4.0-b72</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish.main.extras</groupId>
+                        <artifactId>glassfish-embedded-all</artifactId>
+                        <version>4.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.json</groupId>
+                        <artifactId>javax.json-api</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish</groupId>
+                        <artifactId>jsonp-jaxrs</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish</groupId>
+                        <artifactId>javax.json</artifactId>
+                        <version>1.0.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish.jersey.core</groupId>
+                        <artifactId>jersey-server</artifactId>
+                        <version>2.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>7.3.Final</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.3</version>
+                <configuration>
+                    <container>
+                        <containerId>glassfish4x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.hostname>localhost</cargo.hostname>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password></cargo.remote.password>
+                            <cargo.remote.port>58629</cargo.remote.port>
+                            <cargo.glassfish.domain.name>/${domain-name}</cargo.glassfish.domain.name>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${domain-name}</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/${domain-name}</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.deployment</groupId>
+                        <artifactId>deployment-client</artifactId>
+                        <version>3.2-b06</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
