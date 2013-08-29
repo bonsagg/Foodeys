@@ -33,7 +33,7 @@ public class FoodResourceTest {
     @PersistenceContext
     private EntityManager em;
 
-    @Deployment
+    @Deployment(testable=false)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
@@ -43,7 +43,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testAutocompleteWithoutQuery(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/food/autocomplete/");
@@ -53,7 +52,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testAutocompleteWithoutData(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/food/autocomplete/");
@@ -63,7 +61,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testGetFoodByNameWithoutMatch(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/food/Tomato/");
@@ -73,7 +70,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testAddFood(@ArquillianResource URL base) throws Exception {
         String tomato = "Tomato";
         String tamarillo = "Tamarillo";
@@ -89,7 +85,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testGetFoodByNameWithMatch(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/food/Tomato/");
@@ -101,7 +96,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     //@UsingDataSet("datasets/AutocompleteWithData.yml")
     public void testAutocompleteWithData(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
