@@ -18,9 +18,9 @@ public interface FoodResource {
     public Response getAll();
 
     @GET
-    @Path("/{name}/")
+    @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFood(@PathParam("name") String name);
+    public Response getFood(@PathParam("id") long id);
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

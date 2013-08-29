@@ -23,11 +23,7 @@ public class DBFoodService extends AbstractDBService implements FoodService {
     }
 
     @Override
-    public Food findFoodByName(String name) {
-        try {
-            return em.createNamedQuery(Food.findFoodByName, Food.class).setParameter("name", name).getSingleResult();
-        } catch (NoResultException nre) {
-            return null;
-        }
+    public Food findFoodById(long id) {
+        return em.find(Food.class, id);
     }
 }

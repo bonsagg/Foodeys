@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface FoodService extends Service {
     List<String> findAutocompleteSuggestions(String query);
-    public Food findFoodByName(String name);
+    public Food findFoodById(long id);
 }

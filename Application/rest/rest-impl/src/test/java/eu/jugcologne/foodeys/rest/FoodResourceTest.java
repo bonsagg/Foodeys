@@ -61,9 +61,9 @@ public class FoodResourceTest {
     }
 
     @Test
-    public void testGetFoodByNameWithoutMatch(@ArquillianResource URL base) throws Exception {
+    public void testGetFoodByIdWithoutMatch(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/food/Tomato/");
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/food/1/");
         Response response = target.request().get();
 
         Assert.assertEquals(Response.Status.NO_CONTENT, response.getStatusInfo());
@@ -85,9 +85,9 @@ public class FoodResourceTest {
     }
 
     @Test
-    public void testGetFoodByNameWithMatch(@ArquillianResource URL base) throws Exception {
+    public void testGetFoodByIdWithMatch(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/food/Tomato/");
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/food/1/");
         Response response = target.request().get();
 
         Assert.assertEquals(Response.Status.OK, response.getStatusInfo());

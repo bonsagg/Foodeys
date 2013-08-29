@@ -35,14 +35,14 @@ public class FoodResourceBean implements FoodResource {
     }
 
     @Override
-    public Response getFood(@PathParam("name") String name) {
-        Food food = foodService.findFoodByName(name);
+    public Response getFood(@PathParam("id") long id) {
+        Food food = foodService.findFoodById(id);
 
         if(food == null) {
             return Response.noContent().build();
         }
 
-        return Response.ok(new FoodResponse(food.getName())).build();
+        return Response.ok(new FoodResponse(food.getId(), food.getName())).build();
     }
 
     @Override
