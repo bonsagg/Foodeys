@@ -1,10 +1,13 @@
 package eu.jugcologne.foodeys.rest.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.List;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AutocompleteResponse implements Serializable {
     private static final long serialVersionUID = 6244555924752842821L;
     private List<String> options;
@@ -13,7 +16,6 @@ public class AutocompleteResponse implements Serializable {
     }
 
     public AutocompleteResponse(List<String> options) {
-
         this.options = options;
     }
 

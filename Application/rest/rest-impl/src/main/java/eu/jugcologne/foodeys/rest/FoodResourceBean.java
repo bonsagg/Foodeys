@@ -35,8 +35,8 @@ public class FoodResourceBean implements FoodResource {
     }
 
     @Override
-    public Response getFood(@PathParam("id") long id) {
-        Food food = foodService.findFoodById(id);
+    public Response getFoodByID(@PathParam("id") long id) {
+        Food food = foodService.findByID(id);
 
         if(food == null) {
             return Response.noContent().build();
@@ -47,10 +47,11 @@ public class FoodResourceBean implements FoodResource {
 
     @Override
     public Response addNewFood(AddFoodRequest addFoodRequest) {
-        String name = addFoodRequest.getName();
-        foodService.save(new Food(name));
+        Food food = new Food(addFoodRequest.getName());
 
-        return Response.created(uriInfo.getAbsolutePathBuilder().path(name + "/").build()).build();
+        foodService.save(food);
+
+        return Response.created(uriInfo.getAbsolutePathBuilder().path(food.getId() + "/").build()).build();
     }
 
     @Override

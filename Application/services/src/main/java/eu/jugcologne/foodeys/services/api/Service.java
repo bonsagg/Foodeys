@@ -13,4 +13,5 @@ import javax.persistence.EntityManager;
 public interface Service {
     public abstract <T extends AbstractEntity> void delete(T entity);
     public abstract <T extends AbstractEntity> void save(T t);
+    public abstract <T extends AbstractEntity> T findByID(long id);
 }

@@ -20,7 +20,7 @@ public class DBIngredientServiceTest {
 
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class, "DBIngredientServiceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
 
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")

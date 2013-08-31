@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
  * @date 21.08.13 13:57
  */
 
-@Path("/food/")
+@Path("/foods/")
 public interface FoodResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -20,7 +20,7 @@ public interface FoodResource {
     @GET
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFood(@PathParam("id") long id);
+    public Response getFoodByID(@PathParam("id") long id);
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

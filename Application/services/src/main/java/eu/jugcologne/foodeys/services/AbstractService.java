@@ -24,12 +24,12 @@ public abstract class AbstractService implements Serializable, Service {
     protected EntityManager em;
 
     protected <T extends AbstractEntity> long count(final Class<T> type) {
-        CriteriaBuilder qb = getEm().getCriteriaBuilder();
+        CriteriaBuilder qb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = qb.createQuery(Long.class);
         cq.select(qb.count(cq.from(type)));
 
         try {
-            return getEm().createQuery(cq).getSingleResult();
+            return em.createQuery(cq).getSingleResult();
         } catch (NoResultException nre) {
             return 0;
         }
@@ -37,7 +37,7 @@ public abstract class AbstractService implements Serializable, Service {
 
     @Override
     public <T extends AbstractEntity> void delete(final T entity) {
-        getEm().remove(entity);
+        em.remove(entity);
     }
 
     protected <T extends AbstractEntity> T deleteById(final Class<T> type, final Long id) {
@@ -48,27 +48,27 @@ public abstract class AbstractService implements Serializable, Service {
     }
 
     protected <T extends AbstractEntity> List<T> findAll(final Class<T> type) {
-        CriteriaQuery<T> query = getEm().getCriteriaBuilder().createQuery(type);
+        CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(type);
         query.from(type);
 
-        return getEm().createQuery(query).getResultList();
+        return em.createQuery(query).getResultList();
     }
 
     @SuppressWarnings("unchecked")
     protected <T extends AbstractEntity> T findById(final Class<T> type, final Long id) {
         Class<?> clazz = getObjectClass(type);
 
-        return (T) getEm().find(clazz, id);
+        return (T) em.find(clazz, id);
     }
 
     @SuppressWarnings("unchecked")
     protected <T extends AbstractEntity> List<T> findByNamedQuery(final String namedQueryName) {
-        return getEm().createNamedQuery(namedQueryName).getResultList();
+        return em.createNamedQuery(namedQueryName).getResultList();
     }
 
     @SuppressWarnings("unchecked")
     protected <T extends AbstractEntity> List<T> findByNamedQuery(final String namedQueryName, final Object... params) {
-        Query query = getEm().createNamedQuery(namedQueryName);
+        Query query = em.createNamedQuery(namedQueryName);
         int i = 1;
 
         for (Object p : params) {
@@ -95,19 +95,11 @@ public abstract class AbstractService implements Serializable, Service {
     @Override
     public <T extends AbstractEntity> void save(T t) {
         if (t.isPersistent()) {
-            getEm().merge(t);
+            em.merge(t);
         } else {
-            getEm().persist(t);
+            em.persist(t);
         }
 
-        getEm().flush();
-    }
-
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
+        em.flush();
     }
 }

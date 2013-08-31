@@ -1,5 +1,6 @@
 package eu.jugcologne.foodeys.services.db;
 
+import eu.jugcologne.foodeys.persistence.model.AbstractEntity;
 import eu.jugcologne.foodeys.persistence.model.Food;
 import eu.jugcologne.foodeys.services.AbstractService;
 import eu.jugcologne.foodeys.services.api.FoodService;
@@ -25,7 +26,7 @@ public class DBFoodService extends AbstractService implements FoodService {
     }
 
     @Override
-    public Food findFoodById(long id) {
-        return em.find(Food.class, id);
+    public Food findByID(long id) {
+        return findById(Food.class, id);
     }
 }

@@ -6,6 +6,6 @@ package eu.jugcologne.foodeys.services.api;
  * @author Daniel Sachse <mail@wombatsoftware.de>
  *
  */
-public interface UnitService extends Service {
+public interface UnitService {
 
 }

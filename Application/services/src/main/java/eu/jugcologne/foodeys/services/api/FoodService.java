@@ -12,5 +12,4 @@ import java.util.List;
  */
 public interface FoodService extends Service {
     List<String> findAutocompleteSuggestions(String query);
-    public Food findFoodById(long id);
 }
