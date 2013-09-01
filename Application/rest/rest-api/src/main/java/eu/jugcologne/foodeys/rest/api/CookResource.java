@@ -12,8 +12,10 @@ import javax.ws.rs.core.Response;
  * @date 21.08.13 13:57
  */
 
-@Path("/cooks/")
+@Path(CookResource.cookURI)
 public interface CookResource {
+    public final String cookURI = "/cooks/";
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addNewCook(AddCookRequest addCookRequest);

@@ -1,6 +1,7 @@
 package eu.jugcologne.foodeys.rest;
 
 import eu.jugcologne.foodeys.FoodeysMarker;
+import eu.jugcologne.foodeys.rest.api.CookResource;
 import eu.jugcologne.foodeys.rest.api.model.AddCookRequest;
 import eu.jugcologne.foodeys.rest.model.CookResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -25,8 +26,6 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URL;
 
-// TODO: Find out why this sometimes fails the build on both servers ?!?!?
-
 @RunWith(Arquillian.class)
 public class CookResourceTest {
 
@@ -42,47 +41,51 @@ public class CookResourceTest {
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
-    /*
-    @Test
-    @RunAsClient
-    public void testGetCookByIdWithoutMatch(@ArquillianResource URL base) throws Exception {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/cooks/1/");
-        Response response = target.request().get();
-
-        Assert.assertEquals(Response.Status.NO_CONTENT, response.getStatusInfo());
-    }*/
-
-
     @Test
     @RunAsClient
     public void testAddCooks(@ArquillianResource URL base) throws Exception {
-        Response wombatResponse = addCook(base, "Wombat");
-        Response kubaResponse = addCook(base, "Kuba");
+        final String wombatName = "Wombat";
+        final String kubaName = "Kuba";
+
+        Response wombatResponse = requestCookWithID(base, 1L);
+        Response kubaResponse = requestCookWithID(base, 2L);
+
+        Assert.assertEquals(Response.Status.NO_CONTENT, wombatResponse.getStatusInfo());
+        Assert.assertEquals(Response.Status.NO_CONTENT, kubaResponse.getStatusInfo());
+
+        wombatResponse = addCook(base, wombatName);
+        kubaResponse = addCook(base, kubaName);
 
         Assert.assertEquals(Response.Status.CREATED, wombatResponse.getStatusInfo());
         Assert.assertEquals(Response.Status.CREATED, kubaResponse.getStatusInfo());
 
-        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + "/cooks/" + 1 + "/"), wombatResponse.getLocation());
-        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + "/cooks/" + 2 + "/"), kubaResponse.getLocation());
+        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + 1 + "/"), wombatResponse.getLocation());
+        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + 2 + "/"), kubaResponse.getLocation());
+
+        wombatResponse = requestCookWithID(base, 1L);
+        kubaResponse = requestCookWithID(base, 2L);
+
+        Assert.assertEquals(Response.Status.OK, wombatResponse.getStatusInfo());
+        Assert.assertEquals(Response.Status.OK, kubaResponse.getStatusInfo());
+
+        CookResponse wombatEntity = wombatResponse.readEntity(CookResponse.class);
+        CookResponse kubaEntity = kubaResponse.readEntity(CookResponse.class);
+
+        Assert.assertEquals(wombatName, wombatEntity.getName());
+        Assert.assertEquals(kubaName, kubaEntity.getName());
     }
 
-
-    /*@Test
-    @RunAsClient
-    public void testGetCookByIdWithMatch(@ArquillianResource URL base) throws Exception {
+    private Response requestCookWithID(URL base, long id) throws Exception {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/cooks/1/");
-        Response response = target.request().get();
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + id + "/");
 
-        Assert.assertEquals(Response.Status.OK, response.getStatusInfo());
-        CookResponse wombat = response.readEntity(CookResponse.class);
-        Assert.assertEquals("Wombat", wombat.getName());
-    }*/
+        return target.request().get();
+    }
 
     private Response addCook(URL base, String name) throws Exception {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/cooks/");
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI);
+
         return target.request().post(Entity.entity(new AddCookRequest(name), MediaType.APPLICATION_JSON_TYPE));
     }
 }

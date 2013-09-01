@@ -1,6 +1,7 @@
 package eu.jugcologne.foodeys.rest;
 
 import eu.jugcologne.foodeys.FoodeysMarker;
+import eu.jugcologne.foodeys.rest.api.FoodResource;
 import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
 import eu.jugcologne.foodeys.rest.model.AutocompleteResponse;
 import eu.jugcologne.foodeys.rest.model.FoodResponse;
@@ -28,13 +29,13 @@ import java.net.URL;
 import java.util.List;
 
 @RunWith(Arquillian.class)
-public class AFoodResourceTest {
+public class FoodResourceTest {
     @PersistenceContext
     private EntityManager em;
 
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "AFoodResourceTest.war")
+        return ShrinkWrap.create(WebArchive.class, "FoodResourceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
                 .addClass(RestApplication.class)
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
@@ -45,7 +46,7 @@ public class AFoodResourceTest {
     @RunAsClient
     public void testAutocompleteWithoutQuery(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/foods/autocomplete/");
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + "autocomplete/");
         Response response = target.request().get();
 
         Assert.assertEquals(Response.Status.BAD_REQUEST, response.getStatusInfo());
@@ -55,7 +56,7 @@ public class AFoodResourceTest {
     @RunAsClient
     public void testAutocompleteWithoutData(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/foods/autocomplete/");
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + "autocomplete/");
         Response response = target.queryParam("q", "To").request().get();
 
         Assert.assertEquals(Response.Status.NO_CONTENT, response.getStatusInfo());
@@ -63,37 +64,36 @@ public class AFoodResourceTest {
 
     @Test
     @RunAsClient
-    public void testGetFoodByIdWithoutMatch(@ArquillianResource URL base) throws Exception {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/foods/1/");
-        Response response = target.request().get();
-
-        Assert.assertEquals(Response.Status.NO_CONTENT, response.getStatusInfo());
-    }
-
-    @Test
-    @RunAsClient
     public void testAddFoods(@ArquillianResource URL base) throws Exception {
-        Response tomatoResponse = addFood(base, "Tomato");
-        Response tamarilloResponse = addFood(base, "Tamarillo");
+        final String tomato = "Tomato";
+        final String tamarillo = "Tamarillo";
+
+        Response tomatoResponse = requestFoodWithID(base, 1l);
+        Response tamarilloResponse = requestFoodWithID(base, 2l);
+
+        Assert.assertEquals(Response.Status.NO_CONTENT, tomatoResponse.getStatusInfo());
+        Assert.assertEquals(Response.Status.NO_CONTENT, tamarilloResponse.getStatusInfo());
+
+        tomatoResponse = addFood(base, tomato);
+        tamarilloResponse = addFood(base, tamarillo);
 
         Assert.assertEquals(Response.Status.CREATED, tomatoResponse.getStatusInfo());
         Assert.assertEquals(Response.Status.CREATED, tamarilloResponse.getStatusInfo());
 
-        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + "/foods/" + 1 + "/"), tomatoResponse.getLocation());
-        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + "/foods/" + 2 + "/"), tamarilloResponse.getLocation());
-    }
+        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + 1 + "/"), tomatoResponse.getLocation());
+        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + 2 + "/"), tamarilloResponse.getLocation());
 
-    @Test
-    @RunAsClient
-    public void testGetFoodByIdWithMatch(@ArquillianResource URL base) throws Exception {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/foods/1/");
-        Response response = target.request().get();
+        tomatoResponse = requestFoodWithID(base, 1l);
+        tamarilloResponse = requestFoodWithID(base, 2l);
 
-        Assert.assertEquals(Response.Status.OK, response.getStatusInfo());
-        FoodResponse tomato = response.readEntity(FoodResponse.class);
-        Assert.assertEquals("Tomato", tomato.getName());
+        Assert.assertEquals(Response.Status.OK, tomatoResponse.getStatusInfo());
+        Assert.assertEquals(Response.Status.OK, tamarilloResponse.getStatusInfo());
+
+        FoodResponse tomatoEntity = tomatoResponse.readEntity(FoodResponse.class);
+        FoodResponse tamarilloEntity = tamarilloResponse.readEntity(FoodResponse.class);
+
+        Assert.assertEquals(tomato, tomatoEntity.getName());
+        Assert.assertEquals(tamarillo, tamarilloEntity.getName());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class AFoodResourceTest {
     //@UsingDataSet("datasets/AutocompleteWithData.yml")
     public void testAutocompleteWithData(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/foods/autocomplete/");
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + "autocomplete/");
         Response response = target.queryParam("q", "T").request().get();
 
         Assert.assertEquals(Response.Status.OK, response.getStatusInfo());
@@ -113,9 +113,17 @@ public class AFoodResourceTest {
         Assert.assertEquals("Tomato", results.get(1));
     }
 
+    private Response requestFoodWithID(URL base, long id) throws Exception {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + id + "/");
+
+        return target.request().get();
+    }
+
     private Response addFood(URL base, String name) throws Exception {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + "/foods/");
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI);
+
         return target.request().post(Entity.entity(new AddFoodRequest(name), MediaType.APPLICATION_JSON_TYPE));
     }
 }

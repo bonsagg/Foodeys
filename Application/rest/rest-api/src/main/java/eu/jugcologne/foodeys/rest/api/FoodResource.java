@@ -11,8 +11,10 @@ import javax.ws.rs.core.Response;
  * @date 21.08.13 13:57
  */
 
-@Path("/foods/")
+@Path(FoodResource.foodURI)
 public interface FoodResource {
+    public final String foodURI = "/foods/";
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll();
