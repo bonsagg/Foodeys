@@ -49,6 +49,7 @@
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-persistence-api</artifactId>
             <version>1.0.0.Alpha6</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
@@ -68,28 +69,15 @@
 
     <profiles>
         <profile>
-            <id>arq-weld-embedded</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-                    <version>1.0.0.CR7</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.weld</groupId>
-                    <artifactId>weld-core</artifactId>
-                    <version>2.0.3.Final</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>arq-glassfish-remote</id>
+            <id>glassfish4-remote</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>environment</name>
+                    <value>glassfish4-remote</value>
+                </property>
             </activation>
+
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
@@ -105,7 +93,7 @@
                         <directory>src/main/resources</directory>
                     </resource>
                     <resource>
-                        <directory>src/main/resources-glassfish-remote</directory>
+                        <directory>src/main/resources-glassfish4-remote</directory>
                     </resource>
                 </resources>
 
@@ -114,7 +102,7 @@
                         <directory>src/test/resources</directory>
                     </testResource>
                     <testResource>
-                        <directory>src/test/resources-glassfish-remote</directory>
+                        <directory>src/test/resources-glassfish4-remote</directory>
                     </testResource>
                 </testResources>
 
@@ -125,7 +113,8 @@
                         <version>2.12</version>
                         <configuration>
                             <systemPropertyVariables>
-                                <java.util.logging.config.file>${project.build.testOutputDirectory}/logging.properties</java.util.logging.config.file>
+                                <java.util.logging.config.file>${project.build.testOutputDirectory}/logging.properties
+                                </java.util.logging.config.file>
                                 <derby.stream.error.file>${project.build.directory}/derby.log</derby.stream.error.file>
                             </systemPropertyVariables>
                         </configuration>
@@ -135,7 +124,13 @@
         </profile>
 
         <profile>
-            <id>jbossas-remote-wildfly-8</id>
+            <id>wildfly-remote</id>
+            <activation>
+                <property>
+                    <name>environment</name>
+                    <value>wildfly</value>
+                </property>
+            </activation>
 
             <repositories>
                 <repository>
@@ -197,7 +192,6 @@
                     <version>${wildfly-version}</version>
                     <scope>test</scope>
                 </dependency>
-
             </dependencies>
 
             <build>
@@ -206,7 +200,7 @@
                         <directory>src/main/resources</directory>
                     </resource>
                     <resource>
-                        <directory>src/main/resources-jboss-wildfly-remote</directory>
+                        <directory>src/main/resources-wildfly-remote</directory>
                     </resource>
                 </resources>
 
@@ -215,7 +209,7 @@
                         <directory>src/test/resources</directory>
                     </testResource>
                     <testResource>
-                        <directory>src/test/resources-jboss-wildfly-remote</directory>
+                        <directory>src/test/resources-wildfly-remote</directory>
                     </testResource>
                 </testResources>
             </build>
@@ -259,7 +253,15 @@
             <organization>Wombat Software Technologies</organization>
             <organizationUrl>http://www.wombatsoftware.de</organizationUrl>
             <roles>
-                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>Europe/Berlin</timezone>
+        </developer>
+
+        <developer>
+            <id>mmueller</id>
+            <name>Michael Mueller</name>
+            <roles>
                 <role>developer</role>
             </roles>
             <timezone>Europe/Berlin</timezone>

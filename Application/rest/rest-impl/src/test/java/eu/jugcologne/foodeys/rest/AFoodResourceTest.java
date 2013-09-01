@@ -28,13 +28,13 @@ import java.net.URL;
 import java.util.List;
 
 @RunWith(Arquillian.class)
-public class FoodResourceTest {
+public class AFoodResourceTest {
     @PersistenceContext
     private EntityManager em;
 
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "FoodResourceTest.war")
+        return ShrinkWrap.create(WebArchive.class, "AFoodResourceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
                 .addClass(RestApplication.class)
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
