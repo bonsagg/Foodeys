@@ -32,7 +32,7 @@ public class CookResourceTest {
     @PersistenceContext
     private EntityManager em;
 
-    @Deployment
+    @Deployment(testable = false)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "CookResourceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
@@ -42,7 +42,6 @@ public class CookResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testAddCooks(@ArquillianResource URL base) throws Exception {
         final String wombatName = "Wombat";
         final String kubaName = "Kuba";

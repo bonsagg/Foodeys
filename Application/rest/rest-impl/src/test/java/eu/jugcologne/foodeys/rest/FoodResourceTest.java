@@ -33,7 +33,7 @@ public class FoodResourceTest {
     @PersistenceContext
     private EntityManager em;
 
-    @Deployment
+    @Deployment(testable = false)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "FoodResourceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
@@ -43,7 +43,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testAutocompleteWithoutQuery(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + "autocomplete/");
@@ -53,7 +52,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testAutocompleteWithoutData(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + "autocomplete/");
@@ -63,7 +61,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     public void testAddFoods(@ArquillianResource URL base) throws Exception {
         final String tomato = "Tomato";
         final String tamarillo = "Tamarillo";
@@ -97,7 +94,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    @RunAsClient
     //@UsingDataSet("datasets/AutocompleteWithData.yml")
     public void testAutocompleteWithData(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
