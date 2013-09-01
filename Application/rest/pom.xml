@@ -3,32 +3,28 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>foodeys-rest-parent</artifactId>
-    <packaging>pom</packaging>
-
     <parent>
-        <groupId>eu.jugcologne.foodeys</groupId>
         <artifactId>foodeys-parent</artifactId>
+        <groupId>eu.jugcologne.foodeys</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
-
-    <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson-provider</artifactId>
-            <version>2.3.4.Final</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
+    <artifactId>foodeys-rest-parent</artifactId>
+    <packaging>pom</packaging>
     <modules>
         <module>rest-api</module>
         <module>rest-impl</module>
         <module>rest-distribution</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson-provider</artifactId>
+            <version>3.0.3.Final</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
