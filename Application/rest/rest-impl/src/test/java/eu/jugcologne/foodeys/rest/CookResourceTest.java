@@ -54,15 +54,6 @@ public class CookResourceTest {
 
     @Test
     @InSequence(1)
-    @UsingDataSet("datasets/prepareTestAddCooks.yml")
-    @Cleanup(phase = TestExecutionPhase.AFTER, strategy = CleanupStrategy.STRICT)
-    public void prepareTestAddCooks() {
-        Cook cook = cookService.findByID(1l);
-        Assert.assertEquals("Wombat", cook.getName());
-    }
-
-    @Test
-    @InSequence(2)
     @RunAsClient
     public void testAddCooks(@ArquillianResource URL base) throws Exception {
         final String wombatName = "Wombat";
