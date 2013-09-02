@@ -8,6 +8,7 @@ import eu.jugcologne.foodeys.rest.model.FoodResponse;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -94,7 +95,6 @@ public class FoodResourceTest {
     }
 
     @Test
-    //@UsingDataSet("datasets/AutocompleteWithData.yml")
     public void testAutocompleteWithData(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + FoodResource.foodURI + "autocomplete/");

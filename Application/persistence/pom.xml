@@ -55,7 +55,7 @@
             <activation>
                 <property>
                     <name>environment</name>
-                    <value>wildfly</value>
+                    <value>wildfly-remote</value>
                 </property>
             </activation>
 

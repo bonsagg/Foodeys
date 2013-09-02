@@ -1,12 +1,19 @@
 package eu.jugcologne.foodeys.rest;
 
 import eu.jugcologne.foodeys.FoodeysMarker;
+import eu.jugcologne.foodeys.persistence.model.Cook;
 import eu.jugcologne.foodeys.rest.api.CookResource;
 import eu.jugcologne.foodeys.rest.api.model.AddCookRequest;
 import eu.jugcologne.foodeys.rest.model.CookResponse;
+import eu.jugcologne.foodeys.services.api.CookService;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit.InSequence;
+import org.jboss.arquillian.persistence.Cleanup;
+import org.jboss.arquillian.persistence.CleanupStrategy;
+import org.jboss.arquillian.persistence.TestExecutionPhase;
+import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -15,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.client.Client;
@@ -32,7 +40,10 @@ public class CookResourceTest {
     @PersistenceContext
     private EntityManager em;
 
-    @Deployment(testable = false)
+    @Inject
+    private CookService cookService;
+
+    @Deployment(testable = true)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "CookResourceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
@@ -42,6 +53,17 @@ public class CookResourceTest {
     }
 
     @Test
+    @InSequence(1)
+    @UsingDataSet("datasets/prepareTestAddCooks.yml")
+    @Cleanup(phase = TestExecutionPhase.AFTER, strategy = CleanupStrategy.STRICT)
+    public void prepareTestAddCooks() {
+        Cook cook = cookService.findByID(1l);
+        Assert.assertEquals("Wombat", cook.getName());
+    }
+
+    @Test
+    @InSequence(2)
+    @RunAsClient
     public void testAddCooks(@ArquillianResource URL base) throws Exception {
         final String wombatName = "Wombat";
         final String kubaName = "Kuba";
@@ -58,11 +80,11 @@ public class CookResourceTest {
         Assert.assertEquals(Response.Status.CREATED, wombatResponse.getStatusInfo());
         Assert.assertEquals(Response.Status.CREATED, kubaResponse.getStatusInfo());
 
-        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + 1 + "/"), wombatResponse.getLocation());
-        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + 2 + "/"), kubaResponse.getLocation());
+        URI wombatLocation = wombatResponse.getLocation();
+        URI kubaLocation = kubaResponse.getLocation();
 
-        wombatResponse = requestCookWithID(base, 1L);
-        kubaResponse = requestCookWithID(base, 2L);
+        wombatResponse = requestCookWithURL(wombatLocation.toString());
+        kubaResponse = requestCookWithURL(kubaLocation.toString());
 
         Assert.assertEquals(Response.Status.OK, wombatResponse.getStatusInfo());
         Assert.assertEquals(Response.Status.OK, kubaResponse.getStatusInfo());
@@ -72,13 +94,20 @@ public class CookResourceTest {
 
         Assert.assertEquals(wombatName, wombatEntity.getName());
         Assert.assertEquals(kubaName, kubaEntity.getName());
+
+        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + wombatEntity.getId() + "/"), wombatLocation);
+        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + kubaEntity.getId() + "/"), kubaLocation);
+    }
+
+    private Response requestCookWithURL(String uri) throws Exception {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(uri);
+
+        return target.request().get();
     }
 
     private Response requestCookWithID(URL base, long id) throws Exception {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + id + "/");
-
-        return target.request().get();
+        return requestCookWithURL(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + id + "/");
     }
 
     private Response addCook(URL base, String name) throws Exception {
