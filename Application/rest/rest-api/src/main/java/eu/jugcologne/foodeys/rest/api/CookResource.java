@@ -16,6 +16,10 @@ import javax.ws.rs.core.Response;
 public interface CookResource {
     public final String cookURI = "/cooks/";
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll();
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addNewCook(AddCookRequest addCookRequest);

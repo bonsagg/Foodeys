@@ -28,6 +28,11 @@ public class CookResourceBean implements CookResource {
     private CookService cookService;
 
     @Override
+    public Response getAll() {
+        return null;
+    }
+
+    @Override
     public Response addNewCook(AddCookRequest addCookRequest) {
         Cook cook = new Cook(addCookRequest.getName());
 
