@@ -1,7 +1,73 @@
 HOST: http://www.google.com/
 
---- Foodeys ---
+--- Foodeys API Documentation ---
 
 ---
-Welcome to the our Foodeys API documentation. All comments can be written in (support [Markdown](http://daringfireball.net/projects/markdown/syntax) syntax)
+Foodeys API is based on REST principles, all you need to use it is your Foodeys account.
+The following documentation covers core resources that are used to manipulate with the main entities. First of all, read basic instructions to start using the API.
+
+# Allowed HTTP requests:
+
+| HTTP Method   | Purpose                             |
+| ------------- |-------------------------------------|
+| GET           | Get a resource or list of resources |
+| POST          | To create a resource                |
+| PUT           | To update a resource                |
+| DELETE        | To delete resource                  |
+
+# Description Of Usual Server Responses
+
+* 200 ```OK``` - the request was successful (some API calls may return 201 instead).
+* 201 ```Created``` - the request was successful and a resource was created.
+* 204 ```No Content``` - the request was successful but there is no representation to return (i.e. the response is empty).
+* 400 ```Bad Request``` - the request could not be understood or was missing required parameters.
+* 401 ```Unauthorized``` - authentication failed or user doesn't have permissions for requested operation.
+* 403 ```Forbidden``` - access denied.
+* 404 ```Not Found``` - resource was not found.
+* 405 ```Method Not Allowed``` - requested method is not supported for resource.
+
 ---
+
+-- Cook Resources --
+
+This resource lists all cooks in the system
+GET /cooks/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ "cooks": [
+  { "url": "/cooks/1/", "name":"Wombat" },
+  { "url": "/cooks/2/", "name":"Kuba" }
+] }
+
+This resource adds a new cook
+POST /cooks/
+> Accept: application/json
+> Content-Type: application/json
+{ "name": "Jamie Oliver", "email": "jamie@example.com"}
+< 201
+< Content-Type: application/json
+< Location: /cooks/3/
+
+
+This resource gets a cook by its ID
+GET /cooks/{id}/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ "name": "NameOfCook"}
+
+This resource performs a login for a cook. In the beginning of Foodeys it will be enough to know the name and email to login #quickanddirty
+POST /cooks/login/
+> Accept: application/json
+> Content-Type: application/json
+{ "name": "Jamie Oliver", "email": "jamie@example.com"}
+< 200
+< Content-Type: application/json
+{ "token": "TokenForCook"}
+
+-- Food Resources --
+
+-- Ingredient Resources --
+
+-- Recipe Resources --
