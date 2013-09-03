@@ -27,6 +27,11 @@ public interface RecipeResource {
     public Response addNewRecipe(AddRecipeRequest addRecipeRequest, @QueryParam("cookToken") String cookToken);
 
     @GET
+    @Path("/search/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchForRecipe(@QueryParam("food") List<String> foods);
+
+    @GET
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRecipe(@PathParam("id") String recipeID);
@@ -40,11 +45,6 @@ public interface RecipeResource {
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteRecipe(@PathParam("id") String recipeID, @QueryParam("cookToken") String cookToken);
-
-    @GET
-    @Path("/{id}/search/")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchForRecipe(@PathParam("id") String recipeID, @QueryParam("food") List<String> foods);
 
     @GET
     @Path("/{id}/ingredients/")

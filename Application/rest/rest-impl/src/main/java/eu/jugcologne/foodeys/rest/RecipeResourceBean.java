@@ -29,6 +29,11 @@ public class RecipeResourceBean implements RecipeResource {
     }
 
     @Override
+    public Response searchForRecipe(@QueryParam("food") List<String> foods) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     public Response getRecipe(@PathParam("id") String recipeID) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -40,11 +45,6 @@ public class RecipeResourceBean implements RecipeResource {
 
     @Override
     public Response deleteRecipe(@PathParam("id") String recipeID, @QueryParam("cookToken") String cookToken) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public Response searchForRecipe(@PathParam("id") String recipeID, @QueryParam("food") List<String> foods) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
