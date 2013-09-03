@@ -50,7 +50,7 @@ This resource adds a new cook
 POST /cooks/
 > Accept: application/json
 > Content-Type: application/json
-{ "name": "Jamie Oliver", "email": "jamie@example.com"}
+{ "name": "Jamie Oliver", "email": "jamie@example.com" }
 < 201
 < Content-Type: application/json
 < Location: /cooks/3/
@@ -61,18 +61,59 @@ GET /cooks/{id}/
 > Accept: application/json
 < 200
 < Content-Type: application/json
-{ "name": "NameOfCook"}
+{ "name": "NameOfCook" }
 
 This resource performs a login for a cook. In the beginning of Foodeys it will be enough to know the name and email to login #quickanddirty
 POST /cooks/login/
 > Accept: application/json
 > Content-Type: application/json
-{ "name": "Jamie Oliver", "email": "jamie@example.com"}
+{ "name": "Jamie Oliver", "email": "jamie@example.com" }
 < 200
 < Content-Type: application/json
-{ "token": "TokenForCook"}
+{ "token": "TokenForCook" }
 
 -- Food Resources --
+
+This resource lists all foods in the system
+GET /foods/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ "foods": [
+  { "url": "/foods/1/", "name":"Avocado" },
+  { "url": "/foods/2/", "name":"Kuba" }
+] }
+
+This resource gets a food by its ID
+GET /foods/{id}/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ "name": "NameOfFood"}
+
+This resource gets all recipes for a food (Response: TBD)
+GET /foods/{id}/recipes/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+This resource adds a new food
+POST /foods/
+> Accept: application/json
+> Content-Type: application/json
+{ "name": "Asparagus" }
+< 201
+< Content-Type: application/json
+< Location: /foods/3/
+
+
+This resource autocompletes 
+GET /foods/autocomplete/?q={query}
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ "options": ["Option1", "Option2"] }
 
 -- Ingredient Resources --
 
