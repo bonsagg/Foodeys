@@ -46,6 +46,11 @@ public class FoodResourceBean implements FoodResource {
     }
 
     @Override
+    public Response getRecipesForFood(@PathParam("id") long id) {
+        return null;
+    }
+
+    @Override
     public Response addNewFood(AddFoodRequest addFoodRequest) {
         Food food = new Food(addFoodRequest.getName());
 
