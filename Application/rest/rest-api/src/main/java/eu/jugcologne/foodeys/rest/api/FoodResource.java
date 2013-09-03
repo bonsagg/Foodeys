@@ -31,7 +31,7 @@ public interface FoodResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addNewFood(AddFoodRequest addFoodRequest);
+    public Response addNewFood(AddFoodRequest addFoodRequest, @QueryParam("userToken") String userToken);
 
     @GET
     @Path("/autocomplete/")
