@@ -24,7 +24,7 @@ public class RecipeResourceBean implements RecipeResource {
     }
 
     @Override
-    public Response addNewRecipe(AddRecipeRequest addRecipeRequest, @QueryParam("userToken") String userToken) {
+    public Response addNewRecipe(AddRecipeRequest addRecipeRequest, @QueryParam("cookToken") String cookToken) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -34,12 +34,12 @@ public class RecipeResourceBean implements RecipeResource {
     }
 
     @Override
-    public Response updateRecipe(UpdateRecipeRequest updateRecipeRequest, @PathParam("id") String recipeID, @QueryParam("userToken") String userToken) {
+    public Response updateRecipe(UpdateRecipeRequest updateRecipeRequest, @PathParam("id") String recipeID, @QueryParam("cookToken") String cookToken) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public Response deleteRecipe(@PathParam("id") String recipeID, @QueryParam("userToken") String userToken) {
+    public Response deleteRecipe(@PathParam("id") String recipeID, @QueryParam("cookToken") String cookToken) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -54,7 +54,7 @@ public class RecipeResourceBean implements RecipeResource {
     }
 
     @Override
-    public Response addNewIngredientToRecipe(AddIngredientRequest addIngredientRequest, @PathParam("id") String recipeID, @QueryParam("userToken") String userToken) {
+    public Response addNewIngredientToRecipe(AddIngredientRequest addIngredientRequest, @PathParam("id") String recipeID, @QueryParam("cookToken") String cookToken) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

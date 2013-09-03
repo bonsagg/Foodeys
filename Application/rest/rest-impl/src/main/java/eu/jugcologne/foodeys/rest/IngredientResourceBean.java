@@ -21,12 +21,12 @@ public class IngredientResourceBean implements IngredientResource {
     }
 
     @Override
-    public Response updateIngredient(UpdateIngredientRequest updateIngredientRequest, @PathParam("id") String ingredientID, @QueryParam("userToken") String userToken) {
+    public Response updateIngredient(UpdateIngredientRequest updateIngredientRequest, @PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public Response deleteIngredient(@PathParam("id") String ingredientID, @QueryParam("userToken") String userToken) {
+    public Response deleteIngredient(@PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
