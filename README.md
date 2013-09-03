@@ -33,5 +33,5 @@ The Jenkins server can be reached via [http://ci.wombatsoftware.de/](http://ci.w
 The Jenkins server polls Github for changes every 5 minutes. So be a little patient until you can see you commits building.
 
 # API Documentation
-The documentation our the Foodeys API is hosted on Apiary: http://docs.foodeys.apiary.io/
-Feel free to inspect, commment and improve!
+The documentation our the Foodeys API is hosted on Apiary: http://docs.foodeys.apiary.io/ .
+Feel free to inspect, comment and improve!
