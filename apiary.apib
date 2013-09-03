@@ -20,6 +20,7 @@ The following documentation covers core resources that are used to manipulate wi
 * 200 ```OK``` - the request was successful (some API calls may return 201 instead).
 * 201 ```Created``` - the request was successful and a resource was created.
 * 204 ```No Content``` - the request was successful but there is no representation to return (i.e. the response is empty).
+* 303 ```See Other``` - the request was successful but there is already an existing representation.
 * 400 ```Bad Request``` - the request could not be understood or was missing required parameters.
 * 401 ```Unauthorized``` - authentication failed or user doesn't have permissions for requested operation.
 * 403 ```Forbidden``` - access denied.
@@ -46,13 +47,15 @@ GET /cooks/
   { "url": "/cooks/2/", "name":"Kuba" }
 ] }
 
-This resource adds a new cook
+This resource adds a new cook (cook does not exist yet)
 POST /cooks/
 > Accept: application/json
 > Content-Type: application/json
 { "name": "Jamie Oliver", "email": "jamie@example.com" }
 < 201
-< Content-Type: application/json
+< Location: /cooks/3/
++++++
+< 303
 < Location: /cooks/3/
 
 
@@ -105,9 +108,14 @@ POST /foods/?{userToken}
 > Content-Type: application/json
 { "name": "Asparagus" }
 < 201
-< Content-Type: application/json
 < Location: /foods/3/
-
++++++
+< 303
+< Location: /foods/3/
++++++
+< 401
+< Content-Type: application/json
+{ "message": "You have not provided proper request token" }
 
 This resource autocompletes 
 GET /foods/autocomplete/?q={query}
@@ -132,11 +140,18 @@ PUT /ingredients/{id}/?{userToken}
 > Content-Type: application/json
 { "amount": "AmountOfFood", "unit": "UnitOfAmount" }
 < 200
-
++++++
+< 401
+< Content-Type: application/json
+{ "message": "You have not provided proper request token" }
 
 This resource deletes an ingredient
 DELETE /ingredients/{id}/?{userToken}
 > Accept: application/json
 < 204
++++++
+< 401
+< Content-Type: application/json
+{ "message": "You have not provided proper request token" }
 
 -- Recipe Resources --
