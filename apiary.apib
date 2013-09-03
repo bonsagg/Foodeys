@@ -53,10 +53,10 @@ POST /cooks/
 > Content-Type: application/json
 { "name": "Jamie Oliver", "email": "jamie@example.com" }
 < 201
-< Location: /cooks/3/
+< Location: /cooks/{id}/
 +++++
 < 303
-< Location: /cooks/3/
+< Location: /cooks/{id}/
 
 
 This resource gets a cook by its ID
@@ -103,22 +103,22 @@ GET /foods/{id}/recipes/
 
 
 This resource adds a new food
-POST /foods/?{userToken}
+POST /foods/{?cookToken}
 > Accept: application/json
 > Content-Type: application/json
 { "name": "Asparagus" }
 < 201
-< Location: /foods/3/
+< Location: /foods/{id}/
 +++++
 < 303
-< Location: /foods/3/
+< Location: /foods/{id}/
 +++++
 < 401
 < Content-Type: application/json
-{ "message": "You have not provided proper request token" }
+{ "message": "You have not provided proper cook token" }
 
 This resource autocompletes 
-GET /foods/autocomplete/?q={query}
+GET /foods/autocomplete/{?q}
 > Accept: application/json
 < 200
 < Content-Type: application/json
@@ -135,7 +135,7 @@ GET /ingredients/{id}/
 { "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "recipe_url": "RecipeURL" }
 
 This resource updates an ingredient
-PUT /ingredients/{id}/?{userToken}
+PUT /ingredients/{id}/{?cookToken}
 > Accept: application/json
 > Content-Type: application/json
 { "amount": "AmountOfFood", "unit": "UnitOfAmount" }
@@ -143,15 +143,92 @@ PUT /ingredients/{id}/?{userToken}
 +++++
 < 401
 < Content-Type: application/json
-{ "message": "You have not provided proper request token" }
+{ "message": "You have not provided proper cook token" }
 
 This resource deletes an ingredient
-DELETE /ingredients/{id}/?{userToken}
+DELETE /ingredients/{id}/{?cookToken}
 > Accept: application/json
 < 204
 +++++
 < 401
 < Content-Type: application/json
-{ "message": "You have not provided proper request token" }
+{ "message": "You have not provided proper cook token" }
+
 
 -- Recipe Resources --
+
+This resource lists all recipes in the system (Response: TBD)
+GET /recipes/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{}
+
+This resource adds a new recipe
+POST /recipes/{?cookToken}
+> Accept: application/json
+> Content-Type: application/json
+{ "name": "NameOfRecipe" }
+< 201
+< Location: /recipes/{id}/
++++++
+< 303
+< Location: /recipes/{id}/
++++++
+< 401
+< Content-Type: application/json
+{ "message": "You have not provided proper cook token" }
+
+This resources lists all recipes for specific food(s) (Response: TBD)
+GET /recipes/search/{?food,food}
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{}
+
+This resource gets a recipe by its ID
+GET /recipes/{id}/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ "name": "NameOfRecipe", "instructions": "InstructionsOfRecipe", "ingredients": [
+    { "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "ingredient_url": "IngredientURL" }
+]}
+
+This resource updates a recipe
+GET /recipes/{id}/{?cookToken}
+> Accept: application/json
+{ "name": "NameOfRecipe", "instructions" : "InstructionsOfRecipe"}
+< 204
++++++
+< 401
+< Content-Type: application/json
+{ "message": "You have not provided proper cook token" }
+
+This resource deletes a recipe by its ID
+DELETE /recipes/{id}/
+> Accept: application/json
+< 204
++++++
+< 401
+< Content-Type: application/json
+{ "message": "You have not provided proper cook token" }
+
+This resource gets all ingredients of a recipe
+GET /recipes/{id}/ingredients/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ "ingredients": [
+    { "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "ingredient_url": "IngredientURL" }
+]}
+
+This resource adds a new ingredient to a recipe
+POST /recipes/{id}/ingredients/
+> Accept: application/json
+{ "foodID": "IDOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount" }
+< 201
+< Location: /ingredients/{id}/
++++++
+< 303
+< Location: /ingredients/{id}/
