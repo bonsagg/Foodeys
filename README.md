@@ -31,3 +31,7 @@ Checkout your browser at [http://localhost:8080/foodeys-jsf](http://localhost:80
 # Build environment
 The Jenkins server can be reached via [http://ci.wombatsoftware.de/](http://ci.wombatsoftware.de/).
 The Jenkins server polls Github for changes every 5 minutes. So be a little patient until you can see you commits building.
+
+# API Documentation
+The documentation our the Foodeys API is hosted on Apiary: http://docs.foodeys.apiary.io/
+Feel free to inspect, commment and improve!
