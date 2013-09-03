@@ -72,6 +72,7 @@ POST /cooks/login/
 < Content-Type: application/json
 { "token": "TokenForCook" }
 
+
 -- Food Resources --
 
 This resource lists all foods in the system
@@ -89,7 +90,7 @@ GET /foods/{id}/
 > Accept: application/json
 < 200
 < Content-Type: application/json
-{ "name": "NameOfFood"}
+{ "name": "NameOfFood" }
 
 This resource gets all recipes for a food (Response: TBD)
 GET /foods/{id}/recipes/
@@ -99,7 +100,7 @@ GET /foods/{id}/recipes/
 
 
 This resource adds a new food
-POST /foods/
+POST /foods/?{userToken}
 > Accept: application/json
 > Content-Type: application/json
 { "name": "Asparagus" }
@@ -115,6 +116,27 @@ GET /foods/autocomplete/?q={query}
 < Content-Type: application/json
 { "options": ["Option1", "Option2"] }
 
+
 -- Ingredient Resources --
+
+This resource gets an ingredient by its ID
+GET /ingredients/{id}/
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "recipe_url": "RecipeURL" }
+
+This resource updates an ingredient
+PUT /ingredients/{id}/?{userToken}
+> Accept: application/json
+> Content-Type: application/json
+{ "amount": "AmountOfFood", "unit": "UnitOfAmount" }
+< 200
+
+
+This resource deletes an ingredient
+DELETE /ingredients/{id}/?{userToken}
+> Accept: application/json
+< 200
 
 -- Recipe Resources --
