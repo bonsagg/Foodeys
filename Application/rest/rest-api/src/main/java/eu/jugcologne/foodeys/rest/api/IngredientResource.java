@@ -23,10 +23,10 @@ public interface IngredientResource {
     @PUT
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateIngredient(UpdateIngredientRequest updateIngredientRequest, @PathParam("id") String ingredientID, @QueryParam("userToken") String userToken);
+    public Response updateIngredient(UpdateIngredientRequest updateIngredientRequest, @PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken);
 
     @DELETE
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteIngredient(@PathParam("id") String ingredientID, @QueryParam("userToken") String userToken);
+    public Response deleteIngredient(@PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken);
 }
