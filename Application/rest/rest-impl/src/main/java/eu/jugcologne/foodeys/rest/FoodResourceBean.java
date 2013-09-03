@@ -51,7 +51,7 @@ public class FoodResourceBean implements FoodResource {
     }
 
     @Override
-    public Response addNewFood(AddFoodRequest addFoodRequest) {
+    public Response addNewFood(AddFoodRequest addFoodRequest, @QueryParam("cookToken") String cookToken) {
         Food food = new Food(addFoodRequest.getName());
 
         foodService.save(food);
