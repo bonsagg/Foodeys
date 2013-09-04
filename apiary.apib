@@ -100,11 +100,16 @@ GET /foods/{id}/
 < Content-Type: application/json
 { "name": "NameOfFood" }
 
-This resource gets all recipes for a food (Response: TBD)
+This resource gets all recipes for a food
 GET /foods/{id}/recipes/
 > Accept: application/json
 < 200
 < Content-Type: application/json
+{ "recipes": [
+    { "name": "NameOfRecipe", "instructions": "InstructionsOfRecipe", "ingredients": [
+        { "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "ingredient_url": "IngredientURL" }
+    ]}
+]}
 
 
 This resource adds a new food
