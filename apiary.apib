@@ -76,7 +76,10 @@ POST /cooks/login/
 < 200
 < Content-Type: application/json
 { "token": "TokenForCook" }
-
+++++++
+< 400
+< Content-Type: application/json
+{ "message": "You have not provided proper cook token" }
 
 -- Food Resources --
 
@@ -164,7 +167,11 @@ GET /recipes/
 > Accept: application/json
 < 200
 < Content-Type: application/json
-{}
+{ "recipes": [
+    { "name": "NameOfRecipe", "instructions": "InstructionsOfRecipe", "ingredients": [
+        { "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "ingredient_url": "IngredientURL" }
+    ]}
+]}
 
 This resource adds a new recipe
 POST /recipes/{?cookToken}
