@@ -1,4 +1,4 @@
-package eu.jugcologne.foodeys.rest;
+package eu.jugcologne.foodeys.rest.model;
 
 import eu.jugcologne.foodeys.rest.model.CookResponse;
 

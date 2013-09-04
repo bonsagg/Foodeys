@@ -6,6 +6,7 @@ import eu.jugcologne.foodeys.rest.api.model.AddCookRequest;
 import eu.jugcologne.foodeys.rest.api.model.LoginCookRequest;
 import eu.jugcologne.foodeys.rest.model.CookResponse;
 import eu.jugcologne.foodeys.rest.model.CooksResponse;
+import eu.jugcologne.foodeys.rest.model.ExtendedCookResponse;
 import eu.jugcologne.foodeys.rest.model.LoginResponse;
 import eu.jugcologne.foodeys.services.api.CookService;
 
