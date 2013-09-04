@@ -85,9 +85,6 @@ public class CookResourceTest {
 
         Assert.assertEquals(wombatName, wombatEntity.getName());
         Assert.assertEquals(kubaName, kubaEntity.getName());
-
-        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + wombatEntity.getId() + "/"), wombatLocation);
-        Assert.assertEquals(new URI(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + kubaEntity.getId() + "/"), kubaLocation);
     }
 
     private Response requestCookWithURL(String uri) throws Exception {

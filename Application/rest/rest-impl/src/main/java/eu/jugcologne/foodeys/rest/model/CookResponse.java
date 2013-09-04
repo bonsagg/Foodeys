@@ -13,14 +13,12 @@ import java.io.Serializable;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CookResponse implements Serializable {
-    private long id;
     private String name;
 
     public CookResponse() {
     }
 
-    public CookResponse(long id, String name) {
-        this.id = id;
+    public CookResponse(String name) {
         this.name = name;
     }
 
@@ -30,13 +28,5 @@ public class CookResponse implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }

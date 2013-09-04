@@ -44,7 +44,7 @@ public class CookResourceBean implements CookResource {
         List<CookResponse> cookResponses = new ArrayList<>();
 
         for(Cook cook : cooks) {
-            cookResponses.add(new ExtendedCookResponse(cook.getId(), cook.getName(), buildURIForCook(cook).toString()));
+            cookResponses.add(new ExtendedCookResponse(cook.getName(), buildURIForCook(cook).toString()));
         }
 
         return Response.ok(new CooksResponse(cookResponses)).build();
@@ -67,7 +67,7 @@ public class CookResourceBean implements CookResource {
             return Response.noContent().build();
         }
 
-        return Response.ok(new CookResponse(id, cook.getName())).build();
+        return Response.ok(new CookResponse(cook.getName())).build();
     }
 
     @Override
