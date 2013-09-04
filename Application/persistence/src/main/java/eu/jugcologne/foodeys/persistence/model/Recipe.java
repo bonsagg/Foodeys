@@ -2,10 +2,7 @@ package eu.jugcologne.foodeys.persistence.model;
 
 import eu.jugcologne.foodeys.persistence.util.DbConst;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -52,8 +49,13 @@ import java.util.Set;
  * A more complex recipe may be composed of more parts or other recipes.
  */
 @Entity(name = DbConst.Recipe)
+@NamedQueries({
+        @NamedQuery(name = Recipe.findRecipeByFood, query = "SELECT r FROM Recipe r JOIN r.ingredients i WHERE i.food = :food")
+})
 public class Recipe extends AbstractEntity {
     private static final long serialVersionUID = 2476888974204976237L;
+
+    public static final String findRecipeByFood = "Recipe.findRecipeByFood";
 
     @Column(name = "name", nullable = false, length = 50)
     @NotNull

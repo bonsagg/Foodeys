@@ -3,6 +3,7 @@ package eu.jugcologne.foodeys.rest.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * @author Daniel Sachse
@@ -11,24 +12,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FoodResponse {
-    private long id;
+public class FoodResponse implements Serializable {
     private String name;
 
     public FoodResponse() {
     }
 
-    public FoodResponse(long id, String name) {
-        this.id = id;
+    public FoodResponse(String name) {
         this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {

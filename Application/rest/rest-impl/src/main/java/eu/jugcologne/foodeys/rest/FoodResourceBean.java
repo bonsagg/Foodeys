@@ -1,11 +1,17 @@
 package eu.jugcologne.foodeys.rest;
 
 import eu.jugcologne.foodeys.persistence.model.Food;
+import eu.jugcologne.foodeys.persistence.model.Ingredient;
+import eu.jugcologne.foodeys.persistence.model.Recipe;
 import eu.jugcologne.foodeys.rest.api.FoodResource;
+import eu.jugcologne.foodeys.rest.api.IngredientResource;
 import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
 import eu.jugcologne.foodeys.rest.model.AutocompleteResponse;
 import eu.jugcologne.foodeys.rest.model.FoodResponse;
+import eu.jugcologne.foodeys.rest.model.IngredientResponse;
+import eu.jugcologne.foodeys.rest.model.RecipeResponse;
 import eu.jugcologne.foodeys.services.api.FoodService;
+import eu.jugcologne.foodeys.services.api.RecipeService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -14,6 +20,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,48 +37,116 @@ public class FoodResourceBean implements FoodResource {
     @Inject
     private FoodService foodService;
 
+    @Inject
+    private RecipeService recipeService;
+
     @Override
     public Response getAll() {
-        return null;
+        // TODO: Write Test
+
+        List<Food> foods = foodService.findAllFoods();
+
+        if (foods == null || foods.isEmpty()) {
+            return Response.noContent().build();
+        }
+
+        return Response.ok(transformFoodsToFoodResponses(foods)).build();
     }
 
     @Override
     public Response getFoodByID(@PathParam("id") long id) {
         Food food = foodService.findByID(id);
 
-        if(food == null) {
+        if (food == null) {
             return Response.noContent().build();
         }
 
-        return Response.ok(new FoodResponse(food.getId(), food.getName())).build();
+        return Response.ok(new FoodResponse(food.getName())).build();
     }
 
     @Override
     public Response getRecipesForFood(@PathParam("id") long id) {
-        return null;
+        Food food = foodService.findByID(id);
+
+        if (food == null) {
+            // TODO: Return response message
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        List<Recipe> recipes = recipeService.findAllRecipesForFood(food);
+
+        return Response.ok(transformRecipesToRecipeResponses(recipes)).build();
     }
 
     @Override
     public Response addNewFood(AddFoodRequest addFoodRequest, @QueryParam("cookToken") String cookToken) {
-        Food food = new Food(addFoodRequest.getName());
+        // TODO: Write Test -> upper-, lowercase versions, etc.
+
+        String name = addFoodRequest.getName();
+        Food food = foodService.findFoodByName(name);
+
+        if (food != null) {
+            return Response.seeOther(buildURIForFood(food)).build();
+        }
+
+        food = new Food(name);
 
         foodService.save(food);
 
-        return Response.created(uriInfo.getAbsolutePathBuilder().path(food.getId() + "/").build()).build();
+        return Response.created(buildURIForFood(food)).build();
     }
 
     @Override
     public Response autocomplete(@QueryParam("q") String query) {
-        if(query == null) {
+        if (query == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
         List<String> suggestions = foodService.findAutocompleteSuggestions(query);
 
-        if(suggestions == null || suggestions.isEmpty()) {
+        if (suggestions == null || suggestions.isEmpty()) {
             return Response.noContent().build();
         }
 
         return Response.ok(new AutocompleteResponse(suggestions)).build();
+    }
+
+    private URI buildURIForFood(Food food) {
+        return uriInfo.getAbsolutePathBuilder().path(food.getId() + "/").build();
+    }
+
+    private List<FoodResponse> transformFoodsToFoodResponses(List<Food> foods) {
+        List<FoodResponse> foodResponses = new ArrayList<>();
+
+        for (Food food : foods) {
+            foodResponses.add(new FoodResponse(food.getName()));
+        }
+
+        return foodResponses;
+    }
+
+    private List<RecipeResponse> transformRecipesToRecipeResponses(List<Recipe> recipes) {
+        List<RecipeResponse> recipeResponses = new ArrayList<>();
+
+        for (Recipe recipe : recipes) {
+            recipeResponses.add(new RecipeResponse(recipe.getName(), recipe.getInstructions(), transformIngredientToIngredientResponses(new ArrayList(recipe.getIngredients()))));
+        }
+
+        return recipeResponses;
+    }
+
+    private List<IngredientResponse> transformIngredientToIngredientResponses(List<Ingredient> ingredients) {
+        List<IngredientResponse> ingredientResponses = new ArrayList<>();
+
+        for (Ingredient ingredient : ingredients) {
+            ingredientResponses.add(new IngredientResponse(ingredient.getFood().getName(), ingredient.getAmount(), ingredient.getUnit(), buildURIForIngredient(ingredient).toString()));
+        }
+
+        return ingredientResponses;
+    }
+
+    private URI buildURIForIngredient(Ingredient ingredient) {
+        //TODO: VALIDATE IF THE URI IS CORRECTLY BUILD
+        return uriInfo.getBaseUriBuilder().path(IngredientResource.ingredientURI + "/" + ingredient.getId() + "/").build();
     }
 }

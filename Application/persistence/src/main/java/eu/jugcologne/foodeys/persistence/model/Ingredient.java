@@ -19,6 +19,7 @@ import java.math.BigDecimal;
  *         whilst others may be converted approximately only,
  *         e.g. 2 eggs, 150 ml egg.
  */
+
 @Entity(name = DbConst.Ingredient)
 public class Ingredient extends AbstractEntity {
     private static final long serialVersionUID = -8705211020401289741L;
