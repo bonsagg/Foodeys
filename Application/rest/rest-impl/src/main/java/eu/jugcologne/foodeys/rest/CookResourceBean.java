@@ -5,6 +5,8 @@ import eu.jugcologne.foodeys.rest.api.CookResource;
 import eu.jugcologne.foodeys.rest.api.model.AddCookRequest;
 import eu.jugcologne.foodeys.rest.api.model.LoginCookRequest;
 import eu.jugcologne.foodeys.rest.model.CookResponse;
+import eu.jugcologne.foodeys.rest.model.CooksResponse;
+import eu.jugcologne.foodeys.rest.model.LoginResponse;
 import eu.jugcologne.foodeys.services.api.CookService;
 
 import javax.ejb.Stateless;
@@ -13,6 +15,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Daniel Sachse
@@ -29,16 +34,29 @@ public class CookResourceBean implements CookResource {
 
     @Override
     public Response getAll() {
-        return null;
+        // TODO: Write Test
+        List<Cook> cooks = cookService.findAllCooks();
+
+        if(cooks == null || cooks.isEmpty()) {
+            return Response.noContent().build();
+        }
+
+        List<CookResponse> cookResponses = new ArrayList<>();
+
+        for(Cook cook : cooks) {
+            cookResponses.add(new ExtendedCookResponse(cook.getId(), cook.getName(), buildURIForCook(cook).toString()));
+        }
+
+        return Response.ok(new CooksResponse(cookResponses)).build();
     }
 
     @Override
     public Response addNewCook(AddCookRequest addCookRequest) {
-        Cook cook = new Cook(addCookRequest.getName());
+        Cook cook = new Cook(addCookRequest.getName(), addCookRequest.getEmail());
 
         cookService.save(cook);
 
-        return Response.created(uriInfo.getAbsolutePathBuilder().path(cook.getId() + "/").build()).build();
+        return Response.created(buildURIForCook(cook)).build();
     }
 
     @Override
@@ -49,11 +67,29 @@ public class CookResourceBean implements CookResource {
             return Response.noContent().build();
         }
 
-        return Response.ok(new CookResponse(cook.getId(), cook.getName())).build();
+        return Response.ok(new CookResponse(id, cook.getName())).build();
     }
 
     @Override
     public Response loginCook(LoginCookRequest loginCookRequest) {
-        return null;
+        // TODO: Write Test
+        Cook cook = cookService.findCookByEmailAddress(loginCookRequest.getEmail());
+
+        if(cook == null) {
+            // TODO: Return response message
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        if(!cook.getName().equals(loginCookRequest.getName())) {
+            // TODO: Return response message
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        // TODO: Return a better api token
+        return Response.ok(new LoginResponse(String.valueOf(cook.getId()))).build();
+    }
+
+    private URI buildURIForCook(Cook cook) {
+        return uriInfo.getAbsolutePathBuilder().path(cook.getId() + "/").build();
     }
 }

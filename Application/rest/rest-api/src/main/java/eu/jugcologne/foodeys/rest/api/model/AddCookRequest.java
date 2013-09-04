@@ -8,10 +8,21 @@ import java.io.Serializable;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AddCookRequest extends AbstractCookRequest {
+    private String email;
+
     public AddCookRequest() {
     }
 
-    public AddCookRequest(String name) {
+    public AddCookRequest(String name, String email) {
         setName(name);
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

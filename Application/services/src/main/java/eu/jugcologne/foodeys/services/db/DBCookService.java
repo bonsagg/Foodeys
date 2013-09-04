@@ -7,6 +7,9 @@ import eu.jugcologne.foodeys.services.api.CookService;
 import eu.jugcologne.foodeys.services.api.IngredientService;
 
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
+import java.util.List;
 
 /**
  * Service which provides methods and configurations specific to persistent Cook Objects
@@ -22,5 +25,19 @@ public class DBCookService extends AbstractService implements CookService {
     @Override
     public Cook findByID(long id) {
         return findById(Cook.class, id);
+    }
+
+    @Override
+    public List<Cook> findAllCooks() {
+        return findAll(Cook.class);
+    }
+
+    @Override
+    public Cook findCookByEmailAddress(String email) {
+        try {
+            return em.createNamedQuery(Cook.findCookByEmail, Cook.class).getSingleResult();
+        } catch (NoResultException | NonUniqueResultException e) {
+            return null;
+        }
     }
 }

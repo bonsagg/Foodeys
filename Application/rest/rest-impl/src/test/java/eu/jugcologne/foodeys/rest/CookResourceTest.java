@@ -65,8 +65,8 @@ public class CookResourceTest {
         Assert.assertEquals(Response.Status.NO_CONTENT, wombatResponse.getStatusInfo());
         Assert.assertEquals(Response.Status.NO_CONTENT, kubaResponse.getStatusInfo());
 
-        wombatResponse = addCook(base, wombatName);
-        kubaResponse = addCook(base, kubaName);
+        wombatResponse = addCook(base, wombatName, "mail@wombatsoftware.de");
+        kubaResponse = addCook(base, kubaName, "jacob@wombatsoftware.de");
 
         Assert.assertEquals(Response.Status.CREATED, wombatResponse.getStatusInfo());
         Assert.assertEquals(Response.Status.CREATED, kubaResponse.getStatusInfo());
@@ -101,10 +101,10 @@ public class CookResourceTest {
         return requestCookWithURL(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + id + "/");
     }
 
-    private Response addCook(URL base, String name) throws Exception {
+    private Response addCook(URL base, String name, String email) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI);
 
-        return target.request().post(Entity.entity(new AddCookRequest(name), MediaType.APPLICATION_JSON_TYPE));
+        return target.request().post(Entity.entity(new AddCookRequest(name, email), MediaType.APPLICATION_JSON_TYPE));
     }
 }

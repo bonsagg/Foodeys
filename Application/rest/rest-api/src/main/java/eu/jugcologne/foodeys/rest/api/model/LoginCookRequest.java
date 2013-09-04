@@ -7,10 +7,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class LoginCookRequest extends AbstractCookRequest {
+    private String email;
+
     public LoginCookRequest() {
     }
 
-    public LoginCookRequest(String name) {
+    public LoginCookRequest(String name, String email) {
         setName(name);
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
