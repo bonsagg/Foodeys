@@ -62,8 +62,8 @@ public class CookResourceTest {
         Response wombatResponse = requestCookWithID(base, 1L);
         Response kubaResponse = requestCookWithID(base, 2L);
 
-        Assert.assertEquals(Response.Status.NO_CONTENT, wombatResponse.getStatusInfo());
-        Assert.assertEquals(Response.Status.NO_CONTENT, kubaResponse.getStatusInfo());
+        Assert.assertEquals(Response.Status.NOT_FOUND, wombatResponse.getStatusInfo());
+        Assert.assertEquals(Response.Status.NOT_FOUND, kubaResponse.getStatusInfo());
 
         wombatResponse = addCook(base, wombatName, "mail@wombatsoftware.de");
         kubaResponse = addCook(base, kubaName, "jacob@wombatsoftware.de");

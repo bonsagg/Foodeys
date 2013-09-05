@@ -69,8 +69,8 @@ public class FoodResourceTest {
         Response tomatoResponse = requestFoodWithID(base, 1l);
         Response tamarilloResponse = requestFoodWithID(base, 2l);
 
-        Assert.assertEquals(Response.Status.NO_CONTENT, tomatoResponse.getStatusInfo());
-        Assert.assertEquals(Response.Status.NO_CONTENT, tamarilloResponse.getStatusInfo());
+        Assert.assertEquals(Response.Status.NOT_FOUND, tomatoResponse.getStatusInfo());
+        Assert.assertEquals(Response.Status.NOT_FOUND, tamarilloResponse.getStatusInfo());
 
         tomatoResponse = addFood(base, tomato);
         tamarilloResponse = addFood(base, tamarillo);
