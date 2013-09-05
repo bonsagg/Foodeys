@@ -53,6 +53,7 @@ public class CookResourceBean implements CookResource {
 
     @Override
     public Response addNewCook(AddCookRequest addCookRequest) {
+        // TODO: Check for exisiting cook
         Cook cook = new Cook(addCookRequest.getName(), addCookRequest.getEmail());
 
         cookService.save(cook);
@@ -65,7 +66,7 @@ public class CookResourceBean implements CookResource {
         Cook cook = cookService.findByID(id);
 
         if(cook == null) {
-            return Response.noContent().build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         return Response.ok(new CookResponse(cook.getName())).build();

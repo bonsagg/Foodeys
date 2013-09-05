@@ -68,6 +68,17 @@ public class Recipe extends AbstractEntity {
     @OneToMany(orphanRemoval = true, mappedBy = "recipe", cascade = CascadeType.ALL)
     private Set<Ingredient> ingredients;
 
+    @ManyToOne(optional = false)
+    private Cook cook;
+
+    public Recipe() {
+    }
+
+    public Recipe(String name, Cook cook) {
+        this.name = name;
+        this.cook = cook;
+    }
+
     public String getName() {
         return name;
     }
@@ -90,5 +101,13 @@ public class Recipe extends AbstractEntity {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Cook getCook() {
+        return cook;
+    }
+
+    public void setCook(Cook cook) {
+        this.cook = cook;
     }
 }

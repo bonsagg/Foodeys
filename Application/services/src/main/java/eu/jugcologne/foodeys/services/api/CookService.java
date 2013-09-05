@@ -11,4 +11,5 @@ import java.util.List;
 public interface CookService extends Service {
     List<Cook> findAllCooks();
     Cook findCookByEmailAddress(String email);
+    Cook findCookByToken(String token);
 }

@@ -34,25 +34,25 @@ public interface RecipeResource {
     @GET
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRecipe(@PathParam("id") String recipeID);
+    public Response getRecipeByID(@PathParam("id") long recipeID);
 
     @PUT
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateRecipe(UpdateRecipeRequest updateRecipeRequest, @PathParam("id") String recipeID, @QueryParam("cookToken") String cookToken);
+    public Response updateRecipe(UpdateRecipeRequest updateRecipeRequest, @PathParam("id") long recipeID, @QueryParam("cookToken") String cookToken);
 
     @DELETE
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteRecipe(@PathParam("id") String recipeID, @QueryParam("cookToken") String cookToken);
+    public Response deleteRecipe(@PathParam("id") long recipeID, @QueryParam("cookToken") String cookToken);
 
     @GET
     @Path("/{id}/ingredients/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllIngredientsForRecipe(@PathParam("id") String recipeID);
+    public Response getAllIngredientsForRecipe(@PathParam("id") long recipeID);
 
     @POST
     @Path("/{id}/ingredients/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addNewIngredientToRecipe(AddIngredientRequest addIngredientRequest, @PathParam("id") String recipeID, @QueryParam("cookToken") String cookToken);
+    public Response addNewIngredientToRecipe(AddIngredientRequest addIngredientRequest, @PathParam("id") long recipeID, @QueryParam("cookToken") String cookToken);
 }

@@ -39,6 +39,16 @@ public class Ingredient extends AbstractEntity {
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
+    public Ingredient() {
+    }
+
+    public Ingredient(BigDecimal amount, Recipe recipe, Food food, Unit unit) {
+        this.amount = amount;
+        this.recipe = recipe;
+        this.food = food;
+        this.unit = unit;
+    }
+
     public Recipe getRecipe() {
         return recipe;
     }

@@ -1,10 +1,15 @@
 package eu.jugcologne.foodeys.rest.api;
 
+import eu.jugcologne.foodeys.persistence.model.Ingredient;
+import eu.jugcologne.foodeys.rest.api.model.IngredientResponse;
 import eu.jugcologne.foodeys.rest.api.model.UpdateIngredientRequest;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Daniel Sachse
@@ -18,7 +23,7 @@ public interface IngredientResource {
     @GET
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getIngredient(@PathParam("id") String ingredientID);
+    public Response getIngredientByID(@PathParam("id") long ingredientID);
 
     @PUT
     @Path("/{id}/")
@@ -29,4 +34,9 @@ public interface IngredientResource {
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteIngredient(@PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken);
+
+    List<IngredientResponse> transformIngredientsToIngredientResponses(List<Ingredient> ingredients);
+    List<IngredientResponse> transformIngredientsToIngredientResponses(Set<Ingredient> ingredients);
+
+    URI buildURIForIngredient(Ingredient ingredient);
 }

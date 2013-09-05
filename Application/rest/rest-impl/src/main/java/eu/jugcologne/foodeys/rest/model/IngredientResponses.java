@@ -15,34 +15,14 @@ import java.util.List;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RecipeResponse implements Serializable {
-    private String name;
-    private String instructions;
+public class IngredientResponses implements Serializable {
     private List<IngredientResponse> ingredients;
 
-    public RecipeResponse() {
+    public IngredientResponses() {
     }
 
-    public RecipeResponse(String name, String instructions, List<IngredientResponse> ingredients) {
-        this.name = name;
-        this.instructions = instructions;
+    public IngredientResponses(List<IngredientResponse> ingredients) {
         this.ingredients = ingredients;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getInstructions() {
-        return instructions;
-    }
-
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
     }
 
     public List<IngredientResponse> getIngredients() {

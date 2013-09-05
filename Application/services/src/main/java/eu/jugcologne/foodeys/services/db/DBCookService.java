@@ -40,4 +40,9 @@ public class DBCookService extends AbstractService implements CookService {
             return null;
         }
     }
+
+    @Override
+    public Cook findCookByToken(String token) {
+        return findByID(Long.valueOf(token));
+    }
 }

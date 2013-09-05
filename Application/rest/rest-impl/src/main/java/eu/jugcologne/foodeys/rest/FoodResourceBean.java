@@ -8,7 +8,7 @@ import eu.jugcologne.foodeys.rest.api.IngredientResource;
 import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
 import eu.jugcologne.foodeys.rest.model.AutocompleteResponse;
 import eu.jugcologne.foodeys.rest.model.FoodResponse;
-import eu.jugcologne.foodeys.rest.model.IngredientResponse;
+import eu.jugcologne.foodeys.rest.api.model.IngredientResponse;
 import eu.jugcologne.foodeys.rest.model.RecipeResponse;
 import eu.jugcologne.foodeys.services.api.FoodService;
 import eu.jugcologne.foodeys.services.api.RecipeService;
@@ -40,6 +40,9 @@ public class FoodResourceBean implements FoodResource {
     @Inject
     private RecipeService recipeService;
 
+    @Inject
+    private IngredientResource ingredientResource;
+
     @Override
     public Response getAll() {
         // TODO: Write Test
@@ -58,7 +61,7 @@ public class FoodResourceBean implements FoodResource {
         Food food = foodService.findByID(id);
 
         if (food == null) {
-            return Response.noContent().build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         return Response.ok(new FoodResponse(food.getName())).build();
@@ -130,24 +133,9 @@ public class FoodResourceBean implements FoodResource {
         List<RecipeResponse> recipeResponses = new ArrayList<>();
 
         for (Recipe recipe : recipes) {
-            recipeResponses.add(new RecipeResponse(recipe.getName(), recipe.getInstructions(), transformIngredientToIngredientResponses(new ArrayList(recipe.getIngredients()))));
+            recipeResponses.add(new RecipeResponse(recipe.getName(), recipe.getInstructions(), ingredientResource.transformIngredientsToIngredientResponses(recipe.getIngredients())));
         }
 
         return recipeResponses;
-    }
-
-    private List<IngredientResponse> transformIngredientToIngredientResponses(List<Ingredient> ingredients) {
-        List<IngredientResponse> ingredientResponses = new ArrayList<>();
-
-        for (Ingredient ingredient : ingredients) {
-            ingredientResponses.add(new IngredientResponse(ingredient.getFood().getName(), ingredient.getAmount(), ingredient.getUnit(), buildURIForIngredient(ingredient).toString()));
-        }
-
-        return ingredientResponses;
-    }
-
-    private URI buildURIForIngredient(Ingredient ingredient) {
-        //TODO: VALIDATE IF THE URI IS CORRECTLY BUILD
-        return uriInfo.getBaseUriBuilder().path(IngredientResource.ingredientURI + "/" + ingredient.getId() + "/").build();
     }
 }

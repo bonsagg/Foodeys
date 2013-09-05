@@ -1,4 +1,4 @@
-package eu.jugcologne.foodeys.rest.model;
+package eu.jugcologne.foodeys.rest.api.model;
 
 import eu.jugcologne.foodeys.persistence.model.Unit;
 

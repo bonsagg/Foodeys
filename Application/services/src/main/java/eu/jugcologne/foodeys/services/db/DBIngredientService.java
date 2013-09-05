@@ -1,6 +1,5 @@
 package eu.jugcologne.foodeys.services.db;
 
-import eu.jugcologne.foodeys.persistence.model.AbstractEntity;
 import eu.jugcologne.foodeys.persistence.model.Ingredient;
 import eu.jugcologne.foodeys.services.AbstractService;
 import eu.jugcologne.foodeys.services.api.IngredientService;
