@@ -1,11 +1,15 @@
 package eu.jugcologne.foodeys.rest;
 
+import eu.jugcologne.foodeys.persistence.model.Cook;
 import eu.jugcologne.foodeys.persistence.model.Ingredient;
 import eu.jugcologne.foodeys.rest.api.IngredientResource;
 import eu.jugcologne.foodeys.rest.api.model.IngredientResponse;
 import eu.jugcologne.foodeys.rest.api.model.UpdateIngredientRequest;
+import eu.jugcologne.foodeys.services.api.CookService;
+import eu.jugcologne.foodeys.services.api.IngredientService;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -26,19 +30,74 @@ public class IngredientResourceBean implements IngredientResource {
     @Context
     private UriInfo uriInfo;
 
+    @Inject
+    private IngredientService ingredientService;
+
+    @Inject
+    private CookService cookService;
+
     @Override
     public Response getIngredientByID(@PathParam("id") long ingredientID) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Ingredient ingredient = ingredientService.findByID(ingredientID);
+
+        if(ingredient == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(new IngredientResponse(ingredient.getFood().getName(), ingredient.getAmount(), ingredient.getUnit(), buildURIForIngredient(ingredient).toString())).build();
     }
 
     @Override
-    public Response updateIngredient(UpdateIngredientRequest updateIngredientRequest, @PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Response updateIngredient(UpdateIngredientRequest updateIngredientRequest, @PathParam("id") long ingredientID, @QueryParam("cookToken") String cookToken) {
+        Cook cook = cookService.findCookByToken(cookToken);
+
+        if(cook == null) {
+            // TODO: Return response message
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        Ingredient ingredient = ingredientService.findByID(ingredientID);
+
+        if(ingredient == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if(!cook.equals(ingredient.getRecipe().getCook())) {
+            // TODO: Return response message
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        ingredient.setAmount(updateIngredientRequest.getAmount());
+        ingredient.setUnit(updateIngredientRequest.getUnit());
+
+        ingredientService.save(ingredient);
+
+        return Response.noContent().build();
     }
 
     @Override
-    public Response deleteIngredient(@PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Response deleteIngredient(@PathParam("id") long ingredientID, @QueryParam("cookToken") String cookToken) {
+        Cook cook = cookService.findCookByToken(cookToken);
+
+        if(cook == null) {
+            // TODO: Return response message
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        Ingredient ingredient = ingredientService.findByID(ingredientID);
+
+        if(ingredient == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if(!cook.equals(ingredient.getRecipe().getCook())) {
+            // TODO: Return response message
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        ingredientService.delete(ingredient);
+
+        return Response.noContent().build();
     }
 
     @Override

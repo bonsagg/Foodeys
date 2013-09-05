@@ -28,12 +28,12 @@ public interface IngredientResource {
     @PUT
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateIngredient(UpdateIngredientRequest updateIngredientRequest, @PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken);
+    public Response updateIngredient(UpdateIngredientRequest updateIngredientRequest, @PathParam("id") long ingredientID, @QueryParam("cookToken") String cookToken);
 
     @DELETE
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteIngredient(@PathParam("id") String ingredientID, @QueryParam("cookToken") String cookToken);
+    public Response deleteIngredient(@PathParam("id") long ingredientID, @QueryParam("cookToken") String cookToken);
 
     List<IngredientResponse> transformIngredientsToIngredientResponses(List<Ingredient> ingredients);
     List<IngredientResponse> transformIngredientsToIngredientResponses(Set<Ingredient> ingredients);
