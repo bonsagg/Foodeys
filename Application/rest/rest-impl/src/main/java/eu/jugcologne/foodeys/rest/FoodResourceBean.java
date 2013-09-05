@@ -9,6 +9,7 @@ import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
 import eu.jugcologne.foodeys.rest.model.AutocompleteResponse;
 import eu.jugcologne.foodeys.rest.model.FoodResponse;
 import eu.jugcologne.foodeys.rest.api.model.IngredientResponse;
+import eu.jugcologne.foodeys.rest.model.FoodsResponse;
 import eu.jugcologne.foodeys.rest.model.RecipeResponse;
 import eu.jugcologne.foodeys.services.api.FoodService;
 import eu.jugcologne.foodeys.services.api.RecipeService;
@@ -53,7 +54,7 @@ public class FoodResourceBean implements FoodResource {
             return Response.noContent().build();
         }
 
-        return Response.ok(transformFoodsToFoodResponses(foods)).build();
+        return Response.ok(new FoodsResponse(transformFoodsToFoodResponses(foods))).build();
     }
 
     @Override

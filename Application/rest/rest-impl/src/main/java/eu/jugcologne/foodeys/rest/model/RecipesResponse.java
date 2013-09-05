@@ -13,13 +13,13 @@ import java.util.List;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RecipeResponses implements Serializable {
+public class RecipesResponse implements Serializable {
     private List<RecipeResponse> recipes;
 
-    public RecipeResponses() {
+    public RecipesResponse() {
     }
 
-    public RecipeResponses(List<RecipeResponse> recipes) {
+    public RecipesResponse(List<RecipeResponse> recipes) {
         this.recipes = recipes;
     }
 
