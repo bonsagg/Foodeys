@@ -35,7 +35,7 @@ public class DBCookService extends AbstractService implements CookService {
     @Override
     public Cook findCookByEmailAddress(String email) {
         try {
-            return em.createNamedQuery(Cook.findCookByEmail, Cook.class).getSingleResult();
+            return em.createNamedQuery(Cook.findCookByEmail, Cook.class).setParameter("email", email).getSingleResult();
         } catch (NoResultException | NonUniqueResultException e) {
             return null;
         }

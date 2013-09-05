@@ -35,14 +35,13 @@ public class CookResourceBean implements CookResource {
 
     @Override
     public Response getAll() {
-        // TODO: Write Test
         List<Cook> cooks = cookService.findAllCooks();
 
         if(cooks == null || cooks.isEmpty()) {
             return Response.noContent().build();
         }
 
-        List<CookResponse> cookResponses = new ArrayList<>();
+        List<ExtendedCookResponse> cookResponses = new ArrayList<>();
 
         for(Cook cook : cooks) {
             cookResponses.add(new ExtendedCookResponse(cook.getName(), buildURIForCook(cook).toString()));
@@ -53,8 +52,13 @@ public class CookResourceBean implements CookResource {
 
     @Override
     public Response addNewCook(AddCookRequest addCookRequest) {
-        // TODO: Check for exisiting cook
-        Cook cook = new Cook(addCookRequest.getName(), addCookRequest.getEmail());
+        Cook cook = cookService.findCookByEmailAddress(addCookRequest.getEmail());
+
+        if(cook != null) {
+            return Response.seeOther(buildURIForCook(cook)).build();
+        }
+
+        cook = new Cook(addCookRequest.getName(), addCookRequest.getEmail());
 
         cookService.save(cook);
 
@@ -74,7 +78,6 @@ public class CookResourceBean implements CookResource {
 
     @Override
     public Response loginCook(LoginCookRequest loginCookRequest) {
-        // TODO: Write Test
         Cook cook = cookService.findCookByEmailAddress(loginCookRequest.getEmail());
 
         if(cook == null) {

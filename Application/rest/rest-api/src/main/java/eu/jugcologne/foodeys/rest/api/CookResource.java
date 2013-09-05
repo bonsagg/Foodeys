@@ -32,5 +32,6 @@ public interface CookResource {
     @POST
     @Path("/login/")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response loginCook(LoginCookRequest loginCookRequest);
 }

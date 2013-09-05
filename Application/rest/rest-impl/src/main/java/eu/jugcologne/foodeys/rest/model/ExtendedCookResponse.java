@@ -16,6 +16,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ExtendedCookResponse extends CookResponse {
     private String url;
 
+    public ExtendedCookResponse() {
+    }
+
     public ExtendedCookResponse(String name, String url) {
         super(name);
         this.url = url;

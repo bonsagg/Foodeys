@@ -1,19 +1,16 @@
 package eu.jugcologne.foodeys.rest;
 
 import eu.jugcologne.foodeys.FoodeysMarker;
-import eu.jugcologne.foodeys.persistence.model.Cook;
 import eu.jugcologne.foodeys.rest.api.CookResource;
 import eu.jugcologne.foodeys.rest.api.model.AddCookRequest;
+import eu.jugcologne.foodeys.rest.api.model.LoginCookRequest;
 import eu.jugcologne.foodeys.rest.model.CookResponse;
+import eu.jugcologne.foodeys.rest.model.CooksResponse;
 import eu.jugcologne.foodeys.services.api.CookService;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
-import org.jboss.arquillian.persistence.Cleanup;
-import org.jboss.arquillian.persistence.CleanupStrategy;
-import org.jboss.arquillian.persistence.TestExecutionPhase;
-import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -74,6 +71,10 @@ public class CookResourceTest {
         URI wombatLocation = wombatResponse.getLocation();
         URI kubaLocation = kubaResponse.getLocation();
 
+        Response secondWombatResponse = addCook(base, wombatName, "mail@wombatsoftware.de");
+        Assert.assertEquals(Response.Status.SEE_OTHER, secondWombatResponse.getStatusInfo());
+        Assert.assertEquals(wombatLocation, secondWombatResponse.getLocation());
+
         wombatResponse = requestCookWithURL(wombatLocation.toString());
         kubaResponse = requestCookWithURL(kubaLocation.toString());
 
@@ -85,6 +86,40 @@ public class CookResourceTest {
 
         Assert.assertEquals(wombatName, wombatEntity.getName());
         Assert.assertEquals(kubaName, kubaEntity.getName());
+    }
+
+    @Test
+    @InSequence(2)
+    @RunAsClient
+    public void testGetAllCooks(@ArquillianResource URL base) throws Exception {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI);
+
+        Response response = target.request().get();
+        Assert.assertEquals(Response.Status.OK, response.getStatusInfo());
+
+        CooksResponse cooksResponse = response.readEntity(CooksResponse.class);
+
+        Assert.assertEquals(2, cooksResponse.getCooks().size());
+    }
+
+    @Test
+    @InSequence(3)
+    @RunAsClient
+    public void testLoginCook(@ArquillianResource URL base) throws Exception {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + "login/");
+
+        Response response = target.request().post(Entity.entity(new LoginCookRequest("Wombat", "mail@wombatsoftware.de"), MediaType.APPLICATION_JSON_TYPE));
+        Assert.assertEquals(Response.Status.OK, response.getStatusInfo());
+        response.close();
+
+        response = target.request().post(Entity.entity(new LoginCookRequest("Wombat", "FakeEmail@example.com"), MediaType.APPLICATION_JSON_TYPE));
+        Assert.assertEquals(Response.Status.BAD_REQUEST, response.getStatusInfo());
+        response.close();
+
+        response = target.request().post(Entity.entity(new LoginCookRequest("WrongName", "mail@wombatsoftware.de"), MediaType.APPLICATION_JSON_TYPE));
+        Assert.assertEquals(Response.Status.BAD_REQUEST, response.getStatusInfo());
     }
 
     private Response requestCookWithURL(String uri) throws Exception {

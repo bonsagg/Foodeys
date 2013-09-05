@@ -14,20 +14,20 @@ import java.util.List;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CooksResponse implements Serializable {
-    private List<CookResponse> cooks;
+    private List<ExtendedCookResponse> cooks;
 
     public CooksResponse() {
     }
 
-    public CooksResponse(List<CookResponse> cooks) {
+    public CooksResponse(List<ExtendedCookResponse> cooks) {
         this.cooks = cooks;
     }
 
-    public List<CookResponse> getCooks() {
+    public List<ExtendedCookResponse> getCooks() {
         return cooks;
     }
 
-    public void setCooks(List<CookResponse> cooks) {
+    public void setCooks(List<ExtendedCookResponse> cooks) {
         this.cooks = cooks;
     }
 }
