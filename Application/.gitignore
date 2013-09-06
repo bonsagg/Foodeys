@@ -1,9 +1,0 @@
-/target
-.project
-.classpath
-.settings/
-src/main/.DS_Store
-src/test/.DS_Store
-bin/
-.DS_Store
-/faces-config.NavData
