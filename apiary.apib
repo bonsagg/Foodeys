@@ -107,7 +107,7 @@ GET /foods/{id}/recipes/
 < 200
 < Content-Type: application/json
 { "recipes": [
-    { "name": "NameOfRecipe", "instructions": "InstructionsOfRecipe", "ingredients": [
+    { "name": "NameOfRecipe", "instructions": "InstructionsOfRecipe", "recipe_url": "RecipeURL", "ingredients": [
         { "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "ingredient_url": "IngredientURL" }
     ]}
 ]}
@@ -173,7 +173,7 @@ GET /recipes/
 < 200
 < Content-Type: application/json
 { "recipes": [
-    { "name": "NameOfRecipe", "instructions": "InstructionsOfRecipe", "ingredients": [
+    { "name": "NameOfRecipe", "instructions": "InstructionsOfRecipe", "recipe_url": "RecipeURL", "ingredients": [
         { "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "ingredient_url": "IngredientURL" }
     ]}
 ]}
@@ -198,7 +198,11 @@ GET /recipes/search/{?food,food}
 > Accept: application/json
 < 200
 < Content-Type: application/json
-{}
+{ "recipes": [
+    { "name": "NameOfRecipe", "instructions": "InstructionsOfRecipe", "recipe_url": "RecipeURL", "ingredients": [
+        { "food": "NameOfFood", "amount": "AmountOfFood", "unit": "UnitOfAmount", "ingredient_url": "IngredientURL" }
+    ]}
+]}
 
 This resource gets a recipe by its ID
 GET /recipes/{id}/
