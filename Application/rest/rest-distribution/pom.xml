@@ -45,7 +45,7 @@
                         <configuration>
                             <app>target/${project.artifactId}-${project.version}</app>
                             <port>8080</port>
-                            <contextRoot>/foodeys-html5</contextRoot>
+                            <contextRoot>/${domain-name}</contextRoot>
                         </configuration>
 
                         <dependencies>

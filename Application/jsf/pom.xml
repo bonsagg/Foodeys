@@ -56,7 +56,7 @@
                 <configuration>
                     <app>target/${project.artifactId}-${project.version}</app>
                     <port>8080</port>
-                    <contextRoot>/foodeys-jsf</contextRoot>
+                    <contextRoot>/${domain-name}</contextRoot>
                 </configuration>
 
                 <dependencies>
