@@ -1,0 +1,25 @@
+#sign_up1 {
+	
+	margin-bottom: 20px;
+    height: 270px;
+}
+
+
+.welImage
+{
+    height: 100%;
+}
+
+.welImage img
+{
+    width: 15%;
+    float: left;
+    margin-top: -226px;
+    height: 97%;
+}
+
+
+#features
+{
+	margin-top: 40px;
+}
