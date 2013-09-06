@@ -8,7 +8,7 @@
 		<input tagauto-complete  ng-model="search" ng-change="autoComplete()"class="span10" id="searchField" type="text">
 		<br/>asdasds
 		<p><input type="text" id="taglist" ng-model="searchquery"/></p>
-        <button class="btn" type="button" fast-click="queryRecipies()">Search!</button>
+        <button class="btn" type="button" fast-click="queryRecipes()">Search!</button>
 	</div>
 	
 	
@@ -21,15 +21,15 @@
 			</tr>
 		</thead>
 		<tbody>
-             <tr ng-repeat="recipe in recipies">
+             <tr ng-repeat="recipe in recipes">
                 <td>{{ recipe.name }}</td>
                 <td>{{ recipe.instructions }}</td>
-                <td> <a fast-click="openRecipieDetails(  recipe.recipe_url)" >edit</a>  <a fast-click="deleteRecipie( recipe.recipe_url)" >delete</a>  </td>
+                <td> <a fast-click="openRecipeDetails(  recipe.recipe_url)" >edit</a>  <a fast-click="deleteRecipe( recipe.recipe_url)" >delete</a>  </td>
             </tr>
 		</tbody>
 	</table>
 	
 	
-	<a fast-click="openRecipieDetails('')">New Recipe</a>
+	<a fast-click="openRecipeDetails('')">New Recipe</a>
 
 </div>

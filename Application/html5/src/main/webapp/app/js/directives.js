@@ -2,7 +2,7 @@
 
 /* Directives */
 
-angular.module('foodies.directives', []).
+angular.module('foodeys.directives', []).
   directive('appVersion', ['version', function(version) {
     return function(scope, elm, attrs) {
       elm.text(version);

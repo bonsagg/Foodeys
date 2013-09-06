@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-angular.module('foodies.controllers', []);
+angular.module('foodeys.controllers', []);
 ;
   
 var hostURL = "http://foodeys.apiary.io/";
@@ -16,42 +16,42 @@ function LoginController($scope, $location, $timeout,restClient){
 	// DATA MOCKUP
 	$scope.loginName = "derkuba@kuba.cu";
 	$scope.pw = "kuba";
-	
+
 	var method = 'POST';
-	var url = hostURL +  'cooks/login/'; 
-	
+	var url = hostURL +  'cooks/login/';
+
 	$scope.submitted = false;
-	
+
 	$scope.login = function(login){
 		$scope.submitted = true;
-        
+
 		if(login.$valid){
 			var name = $scope.loginName;
 			var pw = $scope.pw;
-			
+
 			var jsonData = {
 					"name" : pw,
 					"email" : name
 			};
-		
+
 			jsonData = JSON.stringify(jsonData);
-			
+
 			console.log(name + " " + pw);
-		
+
 			restClient.query(url, method, jsonData).then(function(response) {
-					
+
 				if(response.status == 200 ){
 					cookToken = response.data.token;
-					
+
 					$location.url('/main');
 				}
-					
+
 				if(response.status == 401 ){
 					$scope.errorText = response.data.errorResponse.message;
 					$scope.submitted = false;
 				}
 			});
-		} 
+		}
 	}
 }
 
@@ -328,7 +328,7 @@ function RecipeController($scope, $location, restClient, foodFactory, recipeFact
     getAllFood();
     getRecipes();
     
-	$scope.queryRecipies = function(){
+	$scope.queryRecipes = function(){
 		var foodList =  $("#taglist").val();
 		if(foodList.length > 0 ){
 			var splittedList = foodList.split(",");
@@ -352,8 +352,8 @@ function RecipeController($scope, $location, restClient, foodFactory, recipeFact
 		
 		restClient.query(url, method).then(function(response) {
 			if(response.status == 200){
-				$scope.recipies = response.data.recipes;
-				recipeFactory.setList($scope.recipies);
+				$scope.recipes = response.data.recipes;
+				recipeFactory.setList($scope.recipes);
 			}
 			if(response.status == 400){
 				$scope.errorText  = response.data.errorResponse.message;
@@ -380,7 +380,7 @@ function RecipeController($scope, $location, restClient, foodFactory, recipeFact
 	} // getAllIngredients
 	
 	
-	$scope.deleteRecipie = function(query){
+	$scope.deleteRecipe = function(query){
 	
 		var method = 'DELETE';
 		var url = hostURL + 'recipes/' + query; 
@@ -462,10 +462,10 @@ function RecipeController($scope, $location, restClient, foodFactory, recipeFact
 	
 	
 	
-	$scope.openRecipieDetails = function(url){
+	$scope.openRecipeDetails = function(url){
 		console.log(url);
 		recipeDetailString = url;
-		$location.path("/recipie");
+		$location.path("/recipe");
 	};
 	
 }
@@ -491,8 +491,8 @@ function RecipeDetailController($scope, $location, restClient, foodFactory){
 		
 		restClient.query(url, method).then(function(response) {
 			if(response.status == 200){
-				$scope.recipieDetail = response.data;
-				$scope.title = 	$scope.recipieDetail.name;
+				$scope.recipeDetail = response.data;
+				$scope.title = 	$scope.recipeDetail.name;
 			}
 			if(response.status == 400){
 				$scope.errorText  = response.data.errorResponse.message;
@@ -552,10 +552,10 @@ function RecipeDetailController($scope, $location, restClient, foodFactory){
 		
 		//edit
 		if(recipeDetailString.length>0){
-			updateRecipe($scope.recipieDetail)
+			updateRecipe($scope.recipeDetail)
 		}else{
 		// new
-			addRecipe( $scope.recipieDetail.name);
+			addRecipe( $scope.recipeDetail.name);
 		}
 	}
 	
