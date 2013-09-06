@@ -1,0 +1,36 @@
+<!-- REGISTER -->
+<div id="register" ng-controller="RegisterController">
+	
+	<div id="content">
+		<h2>
+			 Register
+		</h2>
+		
+		<form name="registerForm">
+			<div ng-bind="error" class="error"></div>
+			<span class="error" ng-show="submit && registerForm.$error.email">The entered email ist not valid</span>
+
+			<div class="fieldCont">
+				<label for="textinput2">
+					Name
+				</label>
+				<input id="textinput2" name="name"   type="text" ng-model="name" required>
+				<span class="error" ng-show="submit && registerForm.name.$error.required">This field is required</span>
+			</div>
+			
+			<div class="fieldCont">
+				<label for="textinput1">
+					Email
+				</label>
+				<input id="textinput1" name="regEmail"   type="email" ng-model="registerName" required>
+				<span class="error" ng-show="submit && registerForm.regEmail.$error.required">This field is required</span>
+			</div>
+			
+			<div class="buttonbar">
+				<a class="button full" fast-click="register(registerForm)">
+					Register
+				</a>
+			</div>
+		</form>
+	</div>
+</div>

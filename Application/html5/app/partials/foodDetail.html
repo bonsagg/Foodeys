@@ -1,0 +1,29 @@
+<div id="content">
+
+	<h1> 
+			New Food
+	</h1>
+
+
+	<form name="foodForm">
+			<div ng-bind="error" class="error"></div>
+			<span class="error" ng-show="submit && registerForm.$error.email">The entered email ist not valid</span>
+
+			<div class="fieldCont">
+				<label for="textinput">
+					Name
+				</label>
+				<input id="textinput" name="name"   type="text" ng-model="name" required>
+			</div>
+			
+		
+			
+			
+			<div class="buttonbar">
+				<a class="button full" fast-click="register(registerForm)">
+					Save
+				</a>
+			</div>
+		</form>
+
+</div>

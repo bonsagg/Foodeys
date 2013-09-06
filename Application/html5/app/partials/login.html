@@ -1,0 +1,41 @@
+<!-- Login -->
+<div id="login" ng-controller="LoginController">
+		
+	<div id="content">
+		<h2>
+			 Login
+		</h2>
+		
+		<div ng-bind="errorText" class="error"></div>
+		<form name="loginForm" novalidate>
+			
+			 <span class="error" ng-show="submitted && loginForm.mail.$error.email">The entered email ist not valid</span>
+			
+			<div class="fieldCont">
+				<label class="label" for="textinput1">
+					Email
+				</label>
+				<div class="inCt">
+					<input  id="textinput1" name="mail" type="email" ng-model="loginName" required>
+				</div>
+				<span class="error" ng-show="submitted && loginForm.mail.$error.required">This field is required</span>
+			</div>
+			<div class="fieldCont">
+				<label class="labels" for="textinput2">
+					Password
+				</label>
+				<div class="inCt">
+					<input id="textinput2" name="pw" type="password" ng-model="pw" required>
+				</div>
+					<span class="error" ng-show="submitted && loginForm.pw.$error.required">This field is required</span>
+			</div>
+			
+			<div class="buttonbar">
+				<a class="button full" fast-click="login(loginForm)">
+					Login
+				</a>
+			</div>
+		</form>
+	</div>
+
+</div>

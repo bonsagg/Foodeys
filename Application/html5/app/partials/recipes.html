@@ -1,0 +1,35 @@
+<div id="content">
+
+	<h1> 
+			Recipes
+	</h1>
+
+	<div class="input-append">
+		<input tagauto-complete  ng-model="search" ng-change="autoComplete()"class="span10" id="searchField" type="text">
+		<br/>asdasds
+		<p><input type="text" id="taglist" ng-model="searchquery"/></p>
+        <button class="btn" type="button" fast-click="queryRecipies()">Search!</button>
+	</div>
+	
+	
+	<table>
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Instructions</td>
+				<td>Action</td>
+			</tr>
+		</thead>
+		<tbody>
+             <tr ng-repeat="recipe in recipies">
+                <td>{{ recipe.name }}</td>
+                <td>{{ recipe.instructions }}</td>
+                <td> <a fast-click="openRecipieDetails(  recipe.recipe_url)" >edit</a>  <a fast-click="deleteRecipie( recipe.recipe_url)" >delete</a>  </td>
+            </tr>
+		</tbody>
+	</table>
+	
+	
+	<a fast-click="openRecipieDetails('')">New Recipe</a>
+
+</div>

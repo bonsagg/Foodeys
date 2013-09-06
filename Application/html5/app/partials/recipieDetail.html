@@ -1,0 +1,68 @@
+<div id="content">
+
+	<a href="#"><--Back</a>
+
+	<h1> 
+			Recipe <span ng-bind="title"></span>
+	</h1>
+
+	<form name="recipeForm">
+			<div ng-bind="error" class="error"></div>
+			
+			<div class="fieldCont">
+				<label for="textinput">
+					Name
+				</label>
+				<input id="textinput" name="name"   type="text" ng-model="recipieDetail.name" required ng-blur="saveRecipe()">
+			</div>
+			
+			<div ng-show="editable">
+			<div class="fieldCont">
+				<label for="textinput1">
+					Instructions
+				</label>
+				<input id="textinput1" name="regEmail"   type="text" ng-model="recipieDetail.instructions" required ng-blur="saveRecipe()">
+			</div>
+			
+			<table>
+				<thead>
+					<tr>
+						<td>Amount</td>
+						<td>Food</td>
+						<td>Action</td>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			
+			
+			<div class="fieldCont">
+				<div ng-bind="errorTextFood" class="error"></div>
+				<label for="foodInput">
+					Food
+				</label>
+				<input auto-complete id="foodInput" name="regEmail"   type="text" required ng-model="recipeFood">
+				<label for="amountInput">
+					Amount
+				</label>
+				<input id="amountInput" name="regEmail"   type="text" required ng-model="recipeFoodAmount">
+				<button class="btn" type="button" fast-click="addFoodtoDetailList()">add +</button>
+			</div>
+			
+			
+			<div class="buttonbar">
+				<a class="button full" fast-click="register(registerForm)">
+					Save
+				</a>
+			</div>
+			
+			<a class="button full" fast-click="")>
+				New Ingredient
+			</a>
+			
+			</div>
+		</form>
+
+</div>
