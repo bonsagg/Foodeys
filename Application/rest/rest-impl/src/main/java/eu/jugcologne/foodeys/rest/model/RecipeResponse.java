@@ -18,14 +18,16 @@ import java.util.List;
 public class RecipeResponse implements Serializable {
     private String name;
     private String instructions;
+    private String recipe_url;
     private List<IngredientResponse> ingredients;
 
     public RecipeResponse() {
     }
 
-    public RecipeResponse(String name, String instructions, List<IngredientResponse> ingredients) {
+    public RecipeResponse(String name, String instructions, String recipe_url, List<IngredientResponse> ingredients) {
         this.name = name;
         this.instructions = instructions;
+        this.recipe_url = recipe_url;
         this.ingredients = ingredients;
     }
 
@@ -51,5 +53,13 @@ public class RecipeResponse implements Serializable {
 
     public void setIngredients(List<IngredientResponse> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getRecipe_url() {
+        return recipe_url;
+    }
+
+    public void setRecipe_url(String recipe_url) {
+        this.recipe_url = recipe_url;
     }
 }

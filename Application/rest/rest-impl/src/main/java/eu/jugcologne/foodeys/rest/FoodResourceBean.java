@@ -5,6 +5,7 @@ import eu.jugcologne.foodeys.persistence.model.Ingredient;
 import eu.jugcologne.foodeys.persistence.model.Recipe;
 import eu.jugcologne.foodeys.rest.api.FoodResource;
 import eu.jugcologne.foodeys.rest.api.IngredientResource;
+import eu.jugcologne.foodeys.rest.api.RecipeResource;
 import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
 import eu.jugcologne.foodeys.rest.model.AutocompleteResponse;
 import eu.jugcologne.foodeys.rest.model.FoodResponse;
@@ -43,6 +44,9 @@ public class FoodResourceBean implements FoodResource {
 
     @Inject
     private IngredientResource ingredientResource;
+
+    @Inject
+    private RecipeResource recipeResource;
 
     @Override
     public Response getAll() {
@@ -134,7 +138,7 @@ public class FoodResourceBean implements FoodResource {
         List<RecipeResponse> recipeResponses = new ArrayList<>();
 
         for (Recipe recipe : recipes) {
-            recipeResponses.add(new RecipeResponse(recipe.getName(), recipe.getInstructions(), ingredientResource.transformIngredientsToIngredientResponses(recipe.getIngredients())));
+            recipeResponses.add(new RecipeResponse(recipe.getName(), recipe.getInstructions(), recipeResource.buildURIForRecipe(recipe).toString(), ingredientResource.transformIngredientsToIngredientResponses(recipe.getIngredients())));
         }
 
         return recipeResponses;

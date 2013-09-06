@@ -1,5 +1,6 @@
 package eu.jugcologne.foodeys.rest.api;
 
+import eu.jugcologne.foodeys.persistence.model.Recipe;
 import eu.jugcologne.foodeys.rest.api.model.AddIngredientRequest;
 import eu.jugcologne.foodeys.rest.api.model.AddRecipeRequest;
 import eu.jugcologne.foodeys.rest.api.model.UpdateRecipeRequest;
@@ -7,6 +8,7 @@ import eu.jugcologne.foodeys.rest.api.model.UpdateRecipeRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -55,4 +57,6 @@ public interface RecipeResource {
     @Path("/{id}/ingredients/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addNewIngredientToRecipe(AddIngredientRequest addIngredientRequest, @PathParam("id") long recipeID, @QueryParam("cookToken") String cookToken);
+
+    URI buildURIForRecipe(Recipe recipe);
 }
