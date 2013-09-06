@@ -11,6 +11,7 @@ import eu.jugcologne.foodeys.rest.api.model.AddRecipeRequest;
 import eu.jugcologne.foodeys.rest.api.model.UpdateRecipeRequest;
 import eu.jugcologne.foodeys.rest.model.IngredientResponses;
 import eu.jugcologne.foodeys.rest.model.RecipeResponse;
+import eu.jugcologne.foodeys.rest.model.RecipesResponse;
 import eu.jugcologne.foodeys.services.api.CookService;
 import eu.jugcologne.foodeys.services.api.FoodService;
 import eu.jugcologne.foodeys.services.api.IngredientService;
@@ -66,7 +67,7 @@ public class RecipeResourceBean implements RecipeResource {
             recipeResponses.add(new RecipeResponse(recipe.getName(), recipe.getInstructions(), buildURIForRecipe(recipe).toString(), ingredientResource.transformIngredientsToIngredientResponses(recipe.getIngredients())));
         }
 
-        return null;
+        return Response.ok(new RecipesResponse(recipeResponses)).build();
     }
 
     @Override
