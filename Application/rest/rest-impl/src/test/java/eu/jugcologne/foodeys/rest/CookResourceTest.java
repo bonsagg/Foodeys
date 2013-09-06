@@ -8,7 +8,6 @@ import eu.jugcologne.foodeys.rest.model.CookResponse;
 import eu.jugcologne.foodeys.rest.model.CooksResponse;
 import eu.jugcologne.foodeys.services.api.CookService;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -40,7 +39,7 @@ public class CookResourceTest {
     @Inject
     private CookService cookService;
 
-    @Deployment(testable = true)
+    @Deployment(testable = false)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "CookResourceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
@@ -51,7 +50,6 @@ public class CookResourceTest {
 
     @Test
     @InSequence(1)
-    @RunAsClient
     public void testAddCooks(@ArquillianResource URL base) throws Exception {
         final String wombatName = "Wombat";
         final String kubaName = "Kuba";
@@ -90,7 +88,6 @@ public class CookResourceTest {
 
     @Test
     @InSequence(2)
-    @RunAsClient
     public void testGetAllCooks(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI);
@@ -105,7 +102,6 @@ public class CookResourceTest {
 
     @Test
     @InSequence(3)
-    @RunAsClient
     public void testLoginCook(@ArquillianResource URL base) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(base.toURI() + RestApplication.REST_PATH + CookResource.cookURI + "login/");
