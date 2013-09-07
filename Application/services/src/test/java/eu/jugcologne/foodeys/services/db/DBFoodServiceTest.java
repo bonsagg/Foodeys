@@ -115,7 +115,7 @@ public class DBFoodServiceTest {
     }
 
     @Test
-    @InSequence(4)
+    @InSequence(5)
     @UsingDataSet("datasets/DBFoodServiceTest.yml")
     public void testFindByID() {
         Food tomato = foodService.findByID(1l);
