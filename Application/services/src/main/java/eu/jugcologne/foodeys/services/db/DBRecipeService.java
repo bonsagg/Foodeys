@@ -30,6 +30,6 @@ public class DBRecipeService extends AbstractService implements RecipeService {
 
     @Override
     public List<Recipe> findAllRecipesForFood(Food food) {
-        return em.createNamedQuery(Recipe.findRecipeByFood, Recipe.class).getResultList();
+        return em.createNamedQuery(Recipe.findRecipeByFood, Recipe.class).setParameter("food", food).getResultList();
     }
 }
