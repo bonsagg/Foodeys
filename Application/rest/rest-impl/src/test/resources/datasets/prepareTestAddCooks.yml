@@ -1,9 +1,0 @@
-cook:
-  - id: 1
-    name: Wombat
-    createdOn: 2013-08-24
-    version: 0
-  - id: 2
-    name: Kuba
-    createdOn: 2013-08-24
-    version: 0
