@@ -1,0 +1,11 @@
+cook:
+  - id: 1
+    name: Wombat
+    email: mail@wombatsoftware.de
+    createdOn: 2013-08-24
+    version: 0
+  - id: 2
+    name: Kuba
+    email: jacob@wombatsoftware.de
+    createdOn: 2013-08-24
+    version: 0
