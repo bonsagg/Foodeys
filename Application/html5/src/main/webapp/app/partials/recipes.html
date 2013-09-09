@@ -24,12 +24,13 @@
              <tr ng-repeat="recipe in recipes">
                 <td>{{ recipe.name }}</td>
                 <td>{{ recipe.instructions }}</td>
-                <td> <a fast-click="openRecipeDetails(  recipe.recipe_url)" >edit</a>  <a fast-click="deleteRecipe( recipe.recipe_url)" >delete</a>  </td>
+                <td> <a href="#recipe/{{recipe.recipe_url}}" >detail</a>  <a fast-click="deleteRecipe( recipe)" >delete</a>  </td>
             </tr>
 		</tbody>
 	</table>
 	
 	
-	<a fast-click="openRecipeDetails('')">New Recipe</a>
+	<a href="#editRecipe">New Recipe</a>,
+	<a fast-click="openRecipeDetails('')">New Food</a>
 
 </div>

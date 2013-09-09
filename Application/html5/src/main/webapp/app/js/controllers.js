@@ -4,7 +4,10 @@
 angular.module('foodeys.controllers', []);
 ;
   
-var hostURL = "http://foodeys.apiary.io/";
+var apiary =  "http://foodeys.apiary.io/";
+var host = "http://api.foodeys.io/";
+  
+var hostURL =	apiary;
 var cookToken = "";
 
 var foodList=[];
@@ -247,7 +250,6 @@ function FoodController($scope, $location, restClient){
 
 function IngredientController($scope, $location, restClient){
 
-
 	function getIngredient(id){
 	
 		var method = 'GET';
@@ -298,17 +300,14 @@ function IngredientController($scope, $location, restClient){
 		});
 	} // updateIngredient
 	
-	function deleteIngredient(){
+	function deleteIngredient(id){
 	
 		var method = 'DELETE';
 		var url = hostURL + '/ingredients/' + id + "/?cookToken="+ cookToken; 
-		restClient.query(url, method, jsonData).then(function(response) {
+		restClient.query(url, method).then(function(response) {
 
 			if(response.status == 200 ){
 				
-					 // TODO 
-					 
-					 
 					//$location.url('/main');
 			}
 					
@@ -317,9 +316,8 @@ function IngredientController($scope, $location, restClient){
 			}
 		});
 	} // deleteIngredient
-}
 
-var recipeDetailString = "";
+}
 
 function RecipeController($scope, $location, restClient, foodFactory, recipeFactory){
 
@@ -379,66 +377,29 @@ function RecipeController($scope, $location, restClient, foodFactory, recipeFact
 		});
 	} // getAllIngredients
 	
-	
-	$scope.deleteRecipe = function(query){
-	
+
+	function deleteRecipe(recipe){
 		var method = 'DELETE';
-		var url = hostURL + 'recipes/' + query; 
+		var url = hostURL + 'recipes/' + recipe.recipe_url; 
 		restClient.query(url, method).then(function(response) {
 
-			if(response.status == 200 ){
+			if(response.status == 204 ){
 
 				console.log(response);
+
+				
 			}
 					
 			if(response.status != 200){
-				$scope.errorText = response.data.errorResponse.message;
+				console.log(response);
+				if(response.data.length > 0){
+					$scope.errorText = response.data.errorResponse.message;
+				}
 			}
 		});
 	} // deleteIngredient
 
-	function getIngredientsByRecipe(){
-		var method = 'GET';
-		var url = hostURL + 'recipes/'+ id+'/ingredients/'; 
-		
-		restClient.query(url, method).then(function(response) {
-			if(response.status == 200){
-				
-				var ingredient = response.data;
-			
-			}
-			if(response.status == 400){
-				$scope.errorText  = response.data.errorResponse.message;
-			}
-		});
-	} // getIngredientsByRecipe
 	
-	function addIngredientsToRecipe( foodID, amount, unit){
-		var method = 'POST';
-		var url = hostURL + 'recipes/'+ id+'/ingredients/'; 
-		
-		var jsonData = {
-			"foodID" : foodID,
-			"amount": amount,
-			"unit": unit
-		};
-			
-		jsonData = JSON.stringify(jsonData);
-		
-		restClient.query(url, method, jsonData).then(function(response) {
-			if(response.status == 200){
-				
-				var ingredient = response.data;
-			
-			}
-			if(response.status == 400){
-				$scope.errorText  = response.data.errorResponse.message;
-			}
-		});
-	
-	}
-    
-
     function getAllFood(){
 	
 		var method = 'GET';
@@ -460,30 +421,36 @@ function RecipeController($scope, $location, restClient, foodFactory, recipeFact
 		});
 	} // getAllFood
 	
+	$scope.deleteRecipe = function(recipe){
 	
-	
-	$scope.openRecipeDetails = function(url){
-		console.log(url);
-		recipeDetailString = url;
-		$location.path("/recipe");
-	};
-	
+		console.log($scope.recipes);
+		deleteRecipe(recipe);
+		var index=$scope.recipes.indexOf(recipe);
+		$scope.recipes.splice(index,1); 
+	}
 }
 
+function RecipeDetailController($scope, $location, $routeParams, restClient, foodFactory){
 
-function RecipeDetailController($scope, $location, restClient, foodFactory){
 
-	$scope.editable = false;
+	$scope.hasRight = false;
 
 	$scope.title = "";
 	
 	$scope.foodList = foodFactory.getList();
 
-	if(recipeDetailString.length>0){
-		getRecipe(recipeDetailString);
-		$scope.editable = true;
+		console.log($routeParams.length);
+		console.log($routeParams);
+	
+	if($routeParams != undefined){
+		console.log($routeParams.length );
+		getRecipe($routeParams.recipeID);
 	}
 	
+	if(cookToken ==""){
+		$scope.hasRight = true;
+	}
+		
 	function getRecipe(id){
 	
 		var method = 'GET';
@@ -493,6 +460,8 @@ function RecipeDetailController($scope, $location, restClient, foodFactory){
 			if(response.status == 200){
 				$scope.recipeDetail = response.data;
 				$scope.title = 	$scope.recipeDetail.name;
+				
+				getIngredientsByRecipe(id);
 			}
 			if(response.status == 400){
 				$scope.errorText  = response.data.errorResponse.message;
@@ -551,7 +520,7 @@ function RecipeDetailController($scope, $location, restClient, foodFactory){
 	$scope.saveRecipe = function(){
 		
 		//edit
-		if(recipeDetailString.length>0){
+		if($routeParams != undefined ){
 			updateRecipe($scope.recipeDetail)
 		}else{
 		// new
@@ -573,6 +542,60 @@ function RecipeDetailController($scope, $location, restClient, foodFactory){
 			
 		}
 	};
+	
+	function getIngredientsByRecipe(id){
+		var method = 'GET';
+		var url = hostURL + 'recipes/'+ id+'/ingredients/'; 
+		
+		restClient.query(url, method).then(function(response) {
+			if(response.status == 200){
+				
+				$scope.ingredients = response.data.ingredients;
+			}
+			if(response.status == 400){
+				$scope.errorText  = response.data.errorResponse.message;
+			}
+		});
+	} // getIngredientsByRecipe
+	
+	function addIngredientsToRecipe( foodID, amount, unit){
+		var method = 'POST';
+		var url = hostURL + 'recipes/'+ recipeDetailString +'/ingredients/'; 
+		
+		var jsonData = {
+			"foodID" : foodID,
+			"amount": amount,
+			"unit": unit
+		};
+			
+		jsonData = JSON.stringify(jsonData);
+		
+		restClient.query(url, method, jsonData).then(function(response) {
+			if(response.status == 200){
+				
+				var ingredient = response.data;
+			
+			}
+			if(response.status == 400){
+				$scope.errorText  = response.data.errorResponse.message;
+			}
+		});
+	}
+	
+	$scope.deleteIngredient = function(ingre){
+		//ingre.ingredient_url
+		 // TODO 
+		var index=$scope.ingredients.indexOf(ingre);
+		$scope.ingredients.splice(index,1); 
+	};
+	
+	$scope.openRecipeDetailsEdit = function(url){
+		console.log(url);
+		recipeDetailString = url;
+		$location.path("/editRecipe");
+	};
+	
+
 }
 
 

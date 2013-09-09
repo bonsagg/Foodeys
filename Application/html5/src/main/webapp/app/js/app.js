@@ -9,7 +9,10 @@ angular.module('foodeys', ['foodeys.filters', 'foodeys.services', 'foodeys.direc
 		$routeProvider.when('/login', {templateUrl: 'app/partials/login.html', controller: 'LoginController'});
 		$routeProvider.when('/register', {templateUrl: 'app/partials/register.html', controller: 'RegisterController'});
 		
-		$routeProvider.when('/recipe', {templateUrl: 'app/partials/recipeDetail.html', controller: 'RecipeDetailController'});
+		$routeProvider.when('/recipe/:recipeID', {templateUrl: 'app/partials/recipeDetail.html', controller: 'RecipeDetailController'});
+		$routeProvider.when('/editRecipe/:recipeID', {templateUrl: 'app/partials/recipeDetailInput.html', controller: 'RecipeDetailController'});
+		$routeProvider.when('/editRecipe', {templateUrl: 'app/partials/recipeDetailInput.html', controller: 'RecipeDetailController'});
+		
 		$routeProvider.when('/ingredient', {templateUrl: 'app/partials/ingredientsDetail.html', controller: 'RecipeController'});
 		$routeProvider.when('/food', {templateUrl: 'app/partials/foodDetail.html', controller: 'RecipeController'});
 		
