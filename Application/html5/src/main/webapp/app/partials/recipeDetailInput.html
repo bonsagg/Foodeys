@@ -14,58 +14,56 @@
 				<label for="textinput">
 					Name
 				</label>
-				<input id="textinput" name="name"   type="text" ng-model="recipeDetail.name" required ng-blur="saveRecipe()">
+				<input id="textinput" name="name"   type="text" ng-model="recipeDetail.name" required ng-blur="saveRecipeName()">
 			</div>
 			
 			<div ng-show="editable">
-			<div class="fieldCont">
-				<label for="textinput1">
-					Instructions
-				</label>
-				<input id="textinput1" name="regEmail"   type="text" ng-model="recipeDetail.instructions" required ng-blur="saveRecipe()">
-			</div>
-			
-			<table>
-				<thead>
-					<tr>
-						<td>Food</td>
-						<td>Amount</td>
-						<td>Unit</td>
-						<td>Action</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="ing in ingredients">
-						<td>{{ ing.food }}</td>
-						<td>{{ ing.amount }}</td>
-						<td>{{ ing.unit }}</td>
-						<td> <a fast-click="openRecipeDetails(  ing.ingredient_url)" >edit</a>  <a fast-click="deleteIngredient( ing)" >delete</a>  </td>
-					</tr>
-				</tbody>
-			</table>
-			
-			
-			<div class="fieldCont" >
-				<div ng-bind="errorTextFood" class="error"></div>
-				<label for="foodInput">
-					Food
-				</label>
-				<input auto-complete id="foodInput" name="foodInput" ng-model="ingr.recipeFood">
+				<div class="fieldCont">
+					<label for="textinput1">
+						Instructions
+					</label>
+					<input id="textinput1" name="instructions"   type="text" ng-model="recipeDetail.instructions" required ng-blur="saveRecipeInstructions()">
+				</div>
 				
-				<label for="amountInput">
-					Amount
-				</label>
-				<input id="amountInput" name="amountInput"  type="number" ng-model="ingr.recipeFoodAmount">
+				<table>
+					<thead>
+						<tr>
+							<td>Food</td>
+							<td>Amount</td>
+							<td>Unit</td>
+							<td>Action</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="ing in ingredients">
+							<td>{{ ing.food }}</td>
+							<td>{{ ing.amount }}</td>
+							<td>{{ ing.unit }}</td>
+							<td> <a fast-click="openRecipeDetails(  ing.ingredient_url)" >edit</a>  <a fast-click="deleteIngredient( ing)" >delete</a>  </td>
+						</tr>
+					</tbody>
+				</table>
 				
-				<label for="unitInput">
-					Unit
-				</label>
-				<input id="unitInput" name="unitInput"  type="text" ng-model="ingr.recipeFoodUnit">
 				
-				<button class="btn" type="button" fast-click="addIngredient(ingr)">add +</button>
-			</div>
-			
-
+				<div class="fieldCont" >
+					<div ng-bind="errorTextFood" class="error"></div>
+					<label for="foodInput">
+						Food
+					</label>
+					<input auto-complete id="foodInput" name="foodInput" ng-model="ingr.recipeFood">
+					
+					<label for="amountInput">
+						Amount
+					</label>
+					<input id="amountInput" name="amountInput"  type="number" ng-model="ingr.recipeFoodAmount">
+					
+					<label for="unitInput">
+						Unit
+					</label>
+					<input id="unitInput" name="unitInput"  type="text" ng-model="ingr.recipeFoodUnit">
+					
+					<button class="btn" type="button" fast-click="addIngredient(ingr)">add +</button>
+				</div>
 			</div>
 		</form>
 
