@@ -6,30 +6,27 @@
 			Recipe <span ng-bind="title"></span>
 	</h1>
 
-		<div ng-bind="error" class="error"></div>
+	<div ng-bind="error" class="error"></div>
+	
+	<p><div ng-bind="recipeDetail.name"></div> </p>
+	<p>{{recipeDetail.instructions}} </p>
+	
+	<table>
+		<thead>
+			<tr>
+				<td>Food</td>
+				<td>Amount</td>
+				<td>Unit</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ing in ingredients">
+				<td>{{ ing.food }}</td>
+				<td>{{ ing.amount }}</td>
+				<td>{{ ing.unit }}</td>
+			</tr>
+		</tbody>
+	</table>
 		
-		<p><div ng-bind="recipeDetail.name"></div> </p>
-		<p>{{recipeDetail.instructions}} </p>
-		
-		<table>
-			<thead>
-				<tr>
-					<td>Food</td>
-					<td>Amount</td>
-					<td>Unit</td>
-					<td>Action</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="ing in ingredients">
-					<td>{{ ing.food }}</td>
-					<td>{{ ing.amount }}</td>
-					<td>{{ ing.unit }}</td>
-					<td> <a fast-click="openRecipeDetails(  ing.ingredient_url)" >edit</a>  <a fast-click="deleteIngredient( ing)" >delete</a>  </td>
-				</tr>
-			</tbody>
-		</table>
-			
-			
-		<button class="btn" type="button" fast-click="openRecipeDetailsEdit( recipeDetail.recipe_url)" ng-show="hasRight">EDIT</button>
+	<button class="btn" type="button" fast-click="openRecipeDetailsEdit(  recipeID )" ng-show="hasRight">EDIT</button>
 </div>

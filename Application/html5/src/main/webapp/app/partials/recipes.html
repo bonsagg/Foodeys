@@ -5,9 +5,9 @@
 	</h1>
 
 	<div class="input-append">
-		<input tagauto-complete  ng-model="search" ng-change="autoComplete()"class="span10" id="searchField" type="text">
+		<input tagauto-complete class="span10" id="searchField" type="text">
 		<br/>asdasds
-		<p><input type="text" id="taglist" ng-model="searchquery"/></p>
+		<p><input type="text" id="taglist" taglist ng-model="searchquery" class="tagClass"/></p>
         <button class="btn" type="button" fast-click="queryRecipes()">Search!</button>
 	</div>
 	
@@ -31,6 +31,6 @@
 	
 	
 	<a href="#newRecipe">New Recipe</a>,
-	<a fast-click="openRecipeDetails('')">New Food</a>
+	<a href="#food">New Food</a>
 
 </div>

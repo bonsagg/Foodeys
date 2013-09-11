@@ -270,7 +270,7 @@ angular.module('foodeys.services', []).
 				return responseData;
 			},
 			
-			addIngredientsToRecipe: function(id) {
+			addIngredientsToRecipe: function(id, jsonData) {
 						
 				var method = 'POST';
 				var _url = url + id+'/ingredients/'; 
@@ -295,8 +295,6 @@ angular.module('foodeys.services', []).
 	
 		var url = hostURL + 'foods/'; 
 		
-		var deferred = $q.defer();
-		
 		return {
 	
 			get: function(id) {
@@ -304,26 +302,26 @@ angular.module('foodeys.services', []).
 				var method = 'GET';
 				url += id;
 				
-				restClient.query(url, method).then(function(response) {
+				var responseData = restClient.query(url, method).then(function(response) {
 					if(response.status == 200){
-						deferred.resolve(response.data);
+						return response.data;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 	
 			getAll: function() {
 			
 				var method = 'GET';
 				
-				restClient.query(url, method).then(function(response) {
+				var responseData = restClient.query(url, method).then(function(response) {
 					if(response.status == 200){
-						deferred.resolve(response.data.foods);
+						return response.data.foods;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 			
 			getAllFoodForRecipe: function( id ) {
@@ -331,13 +329,13 @@ angular.module('foodeys.services', []).
 				var method = 'GET';
 				url += id + '/recipes'
 				
-				restClient.query(url, method).then(function(response) {
+				var responseData = restClient.query(url, method).then(function(response) {
 					if(response.status == 200){
-						
+						return response;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 			
 			search: function(query) {
@@ -345,27 +343,27 @@ angular.module('foodeys.services', []).
 				var method = 'GET';
 				url = 'autocomplete/' + query ; 
 		
-				restClient.query(url, method).then(function(response) {
+				var responseData = restClient.query(url, method).then(function(response) {
 					if(response.status == 200){
-						
+						return response;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 			
-			addFood: function(jsonData) {
+			addFood: function(cookToken, jsonData) {
 			
 				var method = 'POST';
 				url += '?cookToken=' + cookToken; 
 				
-				restClient.query(url, method, jsonData).then(function(response) {
+				var responseData = restClient.query(url, method, jsonData).then(function(response) {
 					if(response.status == 200){
-						
+						return response;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 			
 			
@@ -386,43 +384,43 @@ angular.module('foodeys.services', []).
 				var method = 'GET';
 				url += id;
 				
-				restClient.query(url, method).then(function(response) {
+				var responseData = restClient.query(url, method).then(function(response) {
 					if(response.status == 200){
-						deferred.resolve(response.data.foods);
+						return response.data.foods;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 			
 			update: function(cookToken, jsonData) {
 				var method = 'PUT';
 				url +=  id + "/?cookToken="+ cookToken; 
 				
-				restClient.query(url, method, jsonData).then(function(response) {
+				var responseData = restClient.query(url, method, jsonData).then(function(response) {
 
 					if(response.status == 200 ){
-					 	deferred.resolve(response);
+					 	return response;
 					}
 					
 					if(response.status == 401 ){
 						$scope.errorText = response.data.errorResponse.message;
 					}
 				});
-				return deferred.promise;
+				return responseData;
 			},
 			del: function(id, cookToken) {
 			
 				var method = 'DELETE';
 				url +=  id + "/?cookToken="+ cookToken; 
 				
-				restClient.query(url, method).then(function(response) {
+				var responseData = restClient.query(url, method).then(function(response) {
 					if(response.status == 200){
-						deferred.resolve(response.data.foods);
+						return response.data.foods;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 		}
 	})

@@ -1,29 +1,44 @@
 <div id="content">
 
+	<a href="#"><--Back</a>
+
 	<h1> 
 			New Food
 	</h1>
 
 
 	<form name="foodForm">
-			<div ng-bind="error" class="error"></div>
-			<span class="error" ng-show="submit && registerForm.$error.email">The entered email ist not valid</span>
+		<div ng-bind="error" class="error"></div>
+		<span class="error" ng-show="submit && registerForm.$error.email">The entered email ist not valid</span>
 
-			<div class="fieldCont">
-				<label for="textinput">
-					Name
-				</label>
-				<input id="textinput" name="name"   type="text" ng-model="name" required>
-			</div>
-			
+		<div class="fieldCont">
+			<label for="textinput">
+				Name
+			</label>
+			<input id="textinput" name="name"   type="text" ng-model="food.name" required>
+		</div>
+					
+		<div class="buttonbar">
+			<button class="btn" type="button" fast-click="addFoodtoDetailList(  food )">add</button>		
+		</div>
+	</form>
+
 		
-			
-			
-			<div class="buttonbar">
-				<a class="button full" fast-click="register(registerForm)">
-					Save
-				</a>
-			</div>
-		</form>
-
+		
+	<table>
+		<thead>
+			<tr>
+				<td>Food</td>
+				<td>Aktion</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="food in foods">
+				<td>{{ food.name }}</td>
+				<td><a fast-click="deleteFood( food)" >remove</a>  </td>
+			</tr>
+		</tbody>
+	</table>
+		
+		
 </div>

@@ -39,7 +39,7 @@
 							<td>{{ ing.food }}</td>
 							<td>{{ ing.amount }}</td>
 							<td>{{ ing.unit }}</td>
-							<td> <a fast-click="openRecipeDetails(  ing.ingredient_url)" >edit</a>  <a fast-click="deleteIngredient( ing)" >delete</a>  </td>
+							<td><a fast-click="deleteIngredient( ing)" >delete</a>  </td>
 						</tr>
 					</tbody>
 				</table>
@@ -62,7 +62,7 @@
 					</label>
 					<input id="unitInput" name="unitInput"  type="text" ng-model="ingr.recipeFoodUnit">
 					
-					<button class="btn" type="button" fast-click="addIngredient(ingr)">add +</button>
+					<button class="btn" type="button" fast-click="addFoodtoDetailList(ingr)">add +</button>
 				</div>
 			</div>
 		</form>

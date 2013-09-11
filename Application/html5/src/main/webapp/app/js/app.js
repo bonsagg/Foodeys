@@ -14,7 +14,7 @@ angular.module('foodeys', ['foodeys.filters', 'foodeys.services', 'foodeys.direc
 		$routeProvider.when('/newRecipe', {templateUrl: 'app/partials/recipeDetailInput.html', controller: 'NewRecipeController'});
 		
 		$routeProvider.when('/ingredient', {templateUrl: 'app/partials/ingredientsDetail.html', controller: 'RecipeController'});
-		$routeProvider.when('/food', {templateUrl: 'app/partials/foodDetail.html', controller: 'RecipeController'});
+		$routeProvider.when('/food', {templateUrl: 'app/partials/foodDetail.html', controller: 'FoodController'});
 		
     }])
   .config(['$httpProvider', function($httpProvider) {

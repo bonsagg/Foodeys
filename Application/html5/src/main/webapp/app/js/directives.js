@@ -19,21 +19,31 @@ angular.module('foodeys.directives', []).
         };
     })
     
+	.directive('taglist', function() {
+		return function($scope, element, attrs) {
+			console.log("init taglist ------------");
+		
+				element.tagsInput({
+					'defaultText':'',
+					'interactive':true,
+				});
+		};
+		
+	})
     
   .directive('tagautoComplete', function($timeout) {
     return function(scope, iElement, iAttrs) {
-    
-            $("#taglist").tagsInput({
-            'defaultText':'',
-            'interactive':false,
-            });
-            
+                
             iElement.autocomplete({
                 source: scope.foodList,
                 select: function() {
                     $timeout(function() {
                       //iElement.trigger('input');
-                      $("#taglist").addTag(iElement.val());
+					  
+					  var tagID = $(".tagClass").attr("id");
+					  console.log(tagID);
+                      $("#"+tagID).addTag(iElement.val());
+					
                        iElement.val("");
                     }, 0);
                 }

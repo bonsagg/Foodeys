@@ -108,20 +108,10 @@ function CookController($scope, $location, cook){
 
 function FoodController($scope, $location, food){
 
-	function addFood(name, email){
-	
-		var jsonData = {
-				"name" : name,
-			};
-			
-		jsonData = JSON.stringify(jsonData);
-			
-		food.add(jsonData).then(function(data) {
-			
-		});
-		
-	} // addCook
-	
+	cookToken = "asdasd";
+
+	getAllFood();
+
 	function getFood(id){
 		
 		food.get(id).then(function(data) {
@@ -130,6 +120,31 @@ function FoodController($scope, $location, food){
 	
 	} // getFood
 	
+	function getAllFood(){
+		
+		food.getAll().then(function(data) {
+			$scope.foods = data;
+		});
+	
+	} // getAllFood
+	
+
+	function addFood(name, email){
+	
+		var jsonData = {
+				"name" : name,
+			};
+			
+		jsonData = JSON.stringify(jsonData);
+			
+		food.addFood(jsonData).then(function(data) {
+			
+		});
+		
+	} // addFood
+	
+
+	
 	
 	function getAllRecipesForFood(id){
 	
@@ -137,7 +152,7 @@ function FoodController($scope, $location, food){
 			
 		});
 
-	} // getAllRecipes
+	} // getAllRecipesForFood
 	
 	
 	function searchFood(query){
@@ -146,7 +161,36 @@ function FoodController($scope, $location, food){
 			
 		});
 		
-	} // getAllFood
+	} // searchFood
+	
+	$scope.deleteFood = function(food){
+	
+		// FEHLT deleteRecipe(recipe);
+		var index=$scope.foods.indexOf(food);
+		$scope.foods.splice(index,1); 
+	}
+	
+	$scope.addFoodtoDetailList = function(food){
+		console.log(food);
+		if( food == undefined){
+			$scope.errorTextFood = "Please enter Food and Amount";
+			return;
+		}else{
+			console.log("else" + food.name);
+		
+			var jsonData = {
+				"name" : food.name
+			};
+			
+			jsonData = JSON.stringify(jsonData);
+			
+			var trHtml = "<tr><td>"+ food.name + "</td><td><a fast-click=removeRecipeListItem()>remove</a></td></tr>";
+			$("tbody").append(trHtml);
+			addFood(cookToken, jsonData );
+			
+			food.name = "";
+		}
+	};
 }
 
 
@@ -183,7 +227,7 @@ function IngredientController($scope, $location, ingredient){
 
 }
 
-function RecipeController($scope, $location, restClient, recipe, food){
+function RecipeController($scope, $location, restClient, recipe, food, foodFactory){
 
 	$scope.foodList = [];
 
@@ -226,7 +270,7 @@ function RecipeController($scope, $location, restClient, recipe, food){
 				$scope.foodList.push(foods[i].name);
 			}  
 		});
-		
+		foodFactory.setList($scope.foodList);
 	} // getAllFood
 	
 	$scope.deleteRecipe = function(recipe){
@@ -261,13 +305,10 @@ function RecipeDetailController($scope, $location, $routeParams, recipe, foodFac
 	$scope.title = "";
 	
 	$scope.foodList = foodFactory.getList();
-
+	
+	$scope.recipeID = $routeParams.recipeID;
+	
 	getRecipe($routeParams.recipeID);
-	
-	
-	$scope.safeApplyd = function() {
-		console.log("asdasdasd");
-	};
 	
 	if(cookToken ==""){
 		$scope.hasRight = true;
@@ -297,8 +338,6 @@ function RecipeDetailController($scope, $location, $routeParams, recipe, foodFac
 				$scope.ingredients  = asyncData;
 			}
 		});
-		
-		
 	} // getIngredientsByRecipe
 	
 	$scope.openRecipeDetailsEdit = function(url){
@@ -307,12 +346,18 @@ function RecipeDetailController($scope, $location, $routeParams, recipe, foodFac
 	
 }
 
-function EditRecipeDetailController($scope, $location,  $routeParams, recipe, foodFactory){
+function EditRecipeDetailController($scope, $location,  $routeParams, recipe, food, foodFactory){
 	
 	$scope.foodList = foodFactory.getList();
-
+	if($scope.foodList.length == 0){
+		getAllFood();
+	}
+	
+	$scope.recipeID = $routeParams.recipeID;
+	
 	getRecipe($routeParams.recipeID);
 	
+	$scope.editable = true;
 	
 	function getRecipe(id){
 		
@@ -330,7 +375,7 @@ function EditRecipeDetailController($scope, $location,  $routeParams, recipe, fo
 	function getIngredientsByRecipe(id){
 		
 		recipe.getIngredientsByRecipe(id).then(function(data) {
-				
+				$scope.ingredients = data;
 		});
 		
 	} // getIngredientsByRecipe
@@ -349,16 +394,16 @@ function EditRecipeDetailController($scope, $location,  $routeParams, recipe, fo
 		
 	} // updateRecipe
 	
-	function addIngredientsToRecipe(id, foodID, amount, unit){
+	function addIngredientsToRecipe(recipeId, food, amount, unit){
 
 		var jsonData = {
-			"foodID" : foodID,
+			"foodID" : food,
 			"amount": amount,
 			"unit": unit
 		};
 			
 		jsonData = JSON.stringify(jsonData);
-		recipe.addIngredientsToRecipe(id, jsonData).then(function(data) {
+		recipe.addIngredientsToRecipe(recipeId, jsonData).then(function(data) {
 				
 		});
 		
@@ -383,21 +428,35 @@ function EditRecipeDetailController($scope, $location,  $routeParams, recipe, fo
 		}
 	}
 		
-	$scope.addFoodtoDetailList = function(){
-
-		if( $scope.recipeFood == undefined || $scope.recipeFoodAmount == undefined){
-			$scope.errorTextFood = "Please enter Food and Amount";
-				console.log("ja");
-		}else{
-			console.log("else" + $scope.recipeFood  + " "+ $scope.recipeFoodAmount);
+	$scope.addFoodtoDetailList = function(ingr){
 		
-			var trHtml = "<tr><td>"+ $scope.recipeFood + "</td><td> " + $scope.recipeFoodAmount + "</td> <td><a fast-click=removeRecipeListItem()>remove</a></td></tr>";
+		if( ingr.recipeFood == undefined || ingr.recipeFoodAmount == undefined || ingr.recipeFoodUnit == undefined){
+			$scope.errorTextFood = "Please enter Food and Amount";
+		}else{
+			console.log("else" + ingr.recipeFood  + " "+ ingr.recipeFoodAmount);
+		
+			var trHtml = "<tr><td>"+ ingr.recipeFood + "</td><td> " + ingr.recipeFoodAmount + "</td><td> " + ingr.recipeFoodUnit + "</td> <td><a fast-click=removeRecipeListItem()>remove</a></td></tr>";
 			$("tbody").append(trHtml);
+			addIngredientsToRecipe($scope.recipeID, ingr.recipeFoodAmount,  ingr.recipeFood,  ingr.recipeFoodUnit );
 			
+			ingr.recipeFood = "";
+			ingr.recipeFoodAmount = "";
+			ingr.recipeFoodUnit = "";
 		}
 	};
 	
+	function getAllFood(){
 	
+		$scope.foodList = [];
+		
+		food.getAll().then(function(foods) {
+		
+			for(var i=0;i<foods.length;i++){
+				$scope.foodList.push(foods[i].name);
+			}  
+		});
+		foodFactory.setList($scope.foodList);
+	} // getAllFood
 	
 }
 
