@@ -1,10 +1,8 @@
 <div id="content">
 
-	<a href="#"><--Back</a>
-
-	<h1> 
-			Recipe <span ng-bind="title"></span>
-	</h1>
+	<div class="page-header">
+		<h1>Recipe <span ng-bind="title"></span></h1>
+	</div>
 
 	<form name="recipeForm">
 			
@@ -25,13 +23,13 @@
 					<input id="textinput1" name="instructions"   type="text" ng-model="recipeDetail.instructions" required ng-blur="saveRecipeInstructions()">
 				</div>
 				
-				<table>
+				<table id="hor-minimalist-b" style="width:100%;">
 					<thead>
 						<tr>
-							<td>Food</td>
-							<td>Amount</td>
-							<td>Unit</td>
-							<td>Action</td>
+							<th>Food</th>
+							<th>Amount</th>
+							<th>Unit</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -44,26 +42,35 @@
 					</tbody>
 				</table>
 				
-				
-				<div class="fieldCont" >
-					<div ng-bind="errorTextFood" class="error"></div>
+		  <div class="row marginTop">
+            <div class="span10">
+            
+              <div class="span3 minMargin">
+                <div ng-bind="errorTextFood" class="error"></div>
 					<label for="foodInput">
 						Food
 					</label>
-					<input auto-complete id="foodInput" name="foodInput" ng-model="ingr.recipeFood">
-					
+					<input auto-complete id="foodInput" name="foodInput"  type="text" ng-model="ingr.recipeFood">
+     
+              </div>
+              <div class="span3 minMargin">
 					<label for="amountInput">
 						Amount
 					</label>
 					<input id="amountInput" name="amountInput"  type="number" ng-model="ingr.recipeFoodAmount">
-					
+              
+              </div>
+              <div class="span3 minMargin">
 					<label for="unitInput">
-						Unit
+							Unit
 					</label>
 					<input id="unitInput" name="unitInput"  type="text" ng-model="ingr.recipeFoodUnit">
-					
-					<button class="btn" type="button" fast-click="addFoodtoDetailList(ingr)">add +</button>
-				</div>
+              </div>              
+            </div>
+			  
+          </div>
+				 	<button class="btn" type="button" fast-click="addFoodtoDetailList(ingr)">add +</button>
+				
 			</div>
 		</form>
 
