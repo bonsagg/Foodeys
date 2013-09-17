@@ -60,11 +60,9 @@ angular.module('foodeys.services', []).
 	})
 
 	
-	.factory('cook', function($q, $rootScope, restClient) {
+	.factory('cook', function($rootScope, restClient) {
 	
 		var url = hostURL + 'cooks/'; 
-		
-		var deferred = $q.defer();
 		
 		return {
 	
@@ -73,26 +71,28 @@ angular.module('foodeys.services', []).
 				var method = 'POST';
 				url += 'login/';
 		
-				restClient.query(url, method, jsonData).then(function(response) {
+				var responseData = restClient.query(url, method, jsonData).then(function(response) {
 
 					if(response.status == 200 ){
-						deferred.resolve(response.data.token);
+						return response.data.token;
 					}
 				});
+				
+				return responseData;
 			},
 			
 			register: function(jsonData) {
 	
 				var method = 'POST';
 		
-				restClient.query(url, method, jsonData).then(function(response) {
+				var responseData = restClient.query(url, method, jsonData).then(function(response) {
 
-					if(response.status == 200 ){
-						deferred.resolve(response.data.token);
+					if(response.status == 201 ){
+						return true;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 	
 			get: function(id) {
@@ -100,13 +100,13 @@ angular.module('foodeys.services', []).
 				var method = 'GET';
 				url += id;
 				
-				restClient.query(url, method).then(function(response) {
+				var responseData = restClient.query(url, method).then(function(response) {
 					if(response.status == 200){
-						deferred.resolve(response.data.cooks);
+						return response.data.cooks;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
 	
 	
@@ -114,35 +114,22 @@ angular.module('foodeys.services', []).
 			
 				var method = 'GET';
 				
-				restClient.query(url, method).then(function(response) {
+				var responseData = restClient.query(url, method).then(function(response) {
 					if(response.status == 200){
-						deferred.resolve(response.data.cooks);
+						return response.data.cooks;
 					}
 				});
 				
-				return deferred.promise;
+				return responseData;
 			},
-			
-			addCook: function( jsonData) {
-			
-				var method = 'POST';
-				
-				restClient.query(url, method, jsonData).then(function(response) {
-					if(response.status == 200){
-						deferred.resolve(response.data.cooks);
-					}
-				});
-				
-				return deferred.promise;
-			},
-			
+		
 			
 		}
 	
 	})
 	
 	
-	.factory('recipe', function($q,$rootScope, restClient) {
+	.factory('recipe', function($rootScope, restClient) {
 		
 		var url = hostURL + 'recipes/'; 
 		
@@ -291,7 +278,7 @@ angular.module('foodeys.services', []).
 		
 	})
 	
-	.factory('food', function($q, $rootScope, restClient) {
+	.factory('food', function( $rootScope, restClient) {
 	
 		var url = hostURL + 'foods/'; 
 		
@@ -371,7 +358,7 @@ angular.module('foodeys.services', []).
 	
 	})
 	
-	.factory('ingredient', function($q, $rootScope, restClient) {
+	.factory('ingredient', function( $rootScope, restClient) {
 	
 		var url = hostURL + 'ingredients/'; 
 		
@@ -437,6 +424,20 @@ angular.module('foodeys.services', []).
 		};
     
 		return foodService;
+	})
+	
+	.factory('cookTokenFactory', function() {
+		var cookToken = "";
+		var cookTokenService = {};
+    
+		cookTokenService.setToken = function(token) {
+			cookToken = token;
+		};
+		cookTokenService.getToken = function() {
+			return cookToken;
+		};
+    
+		return cookTokenService;
 	})
 	
 	.factory('recipeFactory', function() {

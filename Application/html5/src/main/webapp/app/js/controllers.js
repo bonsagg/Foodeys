@@ -3,11 +3,8 @@
 /* Controllers */
 angular.module('foodeys.controllers', []);
 ;
-  
 
-var cookToken = "";
-
-function LoginController($scope, $location, $timeout,restClient){
+function LoginController($scope, $location, $timeout,cook, cookTokenFactory){
 
 	$scope.errorText = "";
 
@@ -30,18 +27,21 @@ function LoginController($scope, $location, $timeout,restClient){
 			};
 
 			jsonData = JSON.stringify(jsonData);
+			
+			$scope.getCookToken = cook.login(jsonData);
 
-			cook.login(jsonData).then(function(data) {
-				cookToken = data;
-				$location.url('/main');
+			$scope.$watch('getCookToken', function(asyncData) {
+			if(angular.isDefined(asyncData)) {
+				cookTokenFactory.setToken(asyncData);
+				$location.path('/');
+				}
 			});
-
 		}
 	}
 }
 
 
-function RegisterController($scope, $location, restClient){
+function RegisterController($scope, $location, cook){
 
 	$scope.errorText = "";
 
@@ -59,11 +59,14 @@ function RegisterController($scope, $location, restClient){
 			};
 		
 			jsonData = JSON.stringify(jsonData);
-			
-			cook.register(jsonData).then(function(data) {
-				cookToken = data;
-				$location.url('/login');
-			});	
+		
+			$scope.registerCook = cook.register(jsonData);
+
+			$scope.$watch('registerCook', function(asyncData) {
+			if(angular.isDefined(asyncData)) {
+				$location.path('/login');
+				}
+			});
 		}
 	}
 }
@@ -104,11 +107,7 @@ function CookController($scope, $location, cook){
 	} // getCook
 }
 
-
-
-function FoodController($scope, $location, food){
-
-	cookToken = "asdasd";
+function FoodController($scope, $location, food, cookTokenFactory){
 
 	getAllFood();
 
@@ -186,7 +185,7 @@ function FoodController($scope, $location, food){
 			
 			var trHtml = "<tr><td>"+ food.name + "</td><td><a fast-click=removeRecipeListItem()>remove</a></td></tr>";
 			$("tbody").append(trHtml);
-			addFood(cookToken, jsonData );
+			addFood(cookTokenFactory.getToken(), jsonData );
 			
 			food.name = "";
 		}
@@ -194,7 +193,7 @@ function FoodController($scope, $location, food){
 }
 
 
-function IngredientController($scope, $location, ingredient){
+function IngredientController($scope, $location, ingredient, cookTokenFactory){
 
 	function getIngredient(id){
 	
@@ -213,28 +212,38 @@ function IngredientController($scope, $location, ingredient){
 		
 		jsonData = JSON.stringify(jsonData);
 		
-		ingredient.update(cookToken, jsonData).then(function(data) {
+		ingredient.update(cookTokenFactory.getToken(), jsonData).then(function(data) {
 			// TODO
 		});
 		
 	} // updateIngredient
 	
 	function deleteIngredient(id){
-		ingredient.del(id, cookToken).then(function(data) {
+		ingredient.del(id, cookTokenFactory.getToken()).then(function(data) {
 			// TODO
 		});
 	} // deleteIngredient
 
 }
 
-function RecipeController($scope, $location, restClient, recipe, food, foodFactory){
+function RecipeController($scope, $location, restClient, recipe, food, foodFactory, cookTokenFactory){
+
+	$scope.loggedIn = false;
 
 	$scope.foodList = [];
 
     getAllFood();
     getRecipes();
     
-
+	if(cookTokenFactory.getToken() == "" || cookTokenFactory.getToken() == undefined){
+	
+		console.log("coooook not defined" + cookTokenFactory.getToken());
+		$scope.loggedIn = false;
+	}else{
+		$scope.loggedIn = true;
+		console.log("coooook exists " + cookTokenFactory.getToken() + " " +$scope.loggedIn  );
+	}
+	
 	function getRecipes(){
 	
 		recipe.getAll().then(function(data) {
@@ -296,11 +305,19 @@ function RecipeController($scope, $location, restClient, recipe, food, foodFacto
 			getRecipes();
 		}
 	};
+	
+	$scope.logout = function(){
+		console.log("logooout");
+		cookTokenFactory.setToken("");
+		
+		$scope.loggedIn = false;
+		$location.url('/#');
+	};
+	
+	
 }
 
-function RecipeDetailController($scope, $location, $routeParams, recipe, foodFactory){
-
-	$scope.hasRight = false;
+function RecipeDetailController($scope, $location, $routeParams, recipe, foodFactory, cookTokenFactory){
 
 	$scope.title = "";
 	
@@ -310,8 +327,10 @@ function RecipeDetailController($scope, $location, $routeParams, recipe, foodFac
 	
 	getRecipe($routeParams.recipeID);
 	
-	if(cookToken ==""){
-		$scope.hasRight = true;
+	if(cookTokenFactory.getToken() == "" || cookTokenFactory.getToken() == undefined){
+		$scope.loggedIn = true;
+	}else{
+		$scope.loggedIn = false;
 	}
 		
 	function getRecipe(id){
@@ -346,7 +365,15 @@ function RecipeDetailController($scope, $location, $routeParams, recipe, foodFac
 	
 }
 
-function EditRecipeDetailController($scope, $location,  $routeParams, recipe, food, foodFactory){
+function EditRecipeDetailController($scope, $location,  $routeParams, recipe, food, foodFactory, cookTokenFactory){
+	
+	
+	if(cookTokenFactory.getToken() == "" || cookTokenFactory.getToken() == undefined){
+		$scope.loggedIn = true;
+	}else{
+		$scope.loggedIn = false;
+	}
+		
 	
 	$scope.foodList = foodFactory.getList();
 	if($scope.foodList.length == 0){
@@ -388,7 +415,7 @@ function EditRecipeDetailController($scope, $location,  $routeParams, recipe, fo
 			};
 			
 		jsonData = JSON.stringify(jsonData);
-		recipe.updateRecipe(cookToken, jsonData, recipeItem.recipe_url).then(function(data) {
+		recipe.updateRecipe(cookTokenFactory.getToken(), jsonData, recipeItem.recipe_url).then(function(data) {
 				$scope.recipes = data;
 		});
 		
@@ -460,15 +487,21 @@ function EditRecipeDetailController($scope, $location,  $routeParams, recipe, fo
 	
 }
 
-function NewRecipeController($scope, $location,  recipe, foodFactory){
+function NewRecipeController($scope, $location,  recipe, foodFactory, cookTokenFactory){
 
 	$scope.hasRight = false;
-	var cookToken = "TEST";
-
 	$scope.title = "New Recipe";
 	$scope.foodList = foodFactory.getList();
 	$scope.editable = false;
 	
+
+
+	if(cookTokenFactory.getToken() == undefined || cookTokenFactory.getToken() == ''){
+			$location.url('/login');
+			$scope.loggedIn = false;
+	}else{
+			$scope.loggedIn = true;
+	}
 	
 	$scope.saveRecipeName = function(){
 		
@@ -493,7 +526,7 @@ function NewRecipeController($scope, $location,  recipe, foodFactory){
 			
 		jsonData = JSON.stringify(jsonData);
 		
-		recipe.updateRecipe(cookToken, jsonData, recipeItem.recipe_url).then(function(data) {
+		recipe.updateRecipe(cookTokenFactory.getToken(), jsonData, recipeItem.recipe_url).then(function(data) {
 				$scope.recipes = data;
 		});
 		
@@ -506,7 +539,7 @@ function NewRecipeController($scope, $location,  recipe, foodFactory){
 			};
 			
 		jsonData = JSON.stringify(jsonData);
-		recipe.addRecipe(cookToken, jsonData).then(function(data) {
+		recipe.addRecipe(cookTokenFactory.getToken(), jsonData).then(function(data) {
 				$scope.recipes = data;
 		});
 		

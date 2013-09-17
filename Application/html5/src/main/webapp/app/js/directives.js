@@ -21,11 +21,9 @@ angular.module('foodeys.directives', []).
     
 	.directive('taglist', function() {
 		return function($scope, element, attrs) {
-			console.log("init taglist ------------");
-		
 				element.tagsInput({
 					'defaultText':'',
-					'interactive':true,
+					'interactive':false,
 				});
 		};
 		
@@ -65,7 +63,6 @@ angular.module('foodeys.directives', []).
             });
     };
 })
-
 
 .directive('ngBlur', function() {
   return function( scope, elem, attrs ) {
