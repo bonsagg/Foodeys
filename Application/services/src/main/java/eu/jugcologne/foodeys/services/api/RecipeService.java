@@ -14,4 +14,5 @@ import java.util.List;
 public interface RecipeService extends Service {
     List<Recipe> findAllRecipes();
     List<Recipe> findAllRecipesForFood(Food food);
+    List<Recipe> findAllRecipesByFoodNames(List<String> query);
 }

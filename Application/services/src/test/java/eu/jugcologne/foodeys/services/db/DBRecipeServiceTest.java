@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(Arquillian.class)
@@ -94,5 +95,45 @@ public class DBRecipeServiceTest {
         Assert.assertEquals(tomatoSoup2, tomatoSoup1);
         Assert.assertEquals(tomatoSoup3, tomatoSoup2);
         Assert.assertEquals(tomatoSoup1, tomatoSoup3);
+    }
+
+    @Test
+    @InSequence(5)
+    @UsingDataSet("datasets/DBRecipeServiceTest.yml")
+    public void findAllRecipesByFoodNamesWithOneRecipe() {
+        Food tomato = foodService.findByID(1l);
+        Food salt = foodService.findByID(2l);
+        Food pepper = foodService.findByID(3l);
+
+        List<String> foods = new ArrayList<>();
+        foods.add("Tomato");
+
+        List<Recipe> results = recipeService.findAllRecipesByFoodNames(foods);
+
+        Assert.assertEquals(1, results.size());
+        Recipe tomatoSoup = results.get(0);
+
+        Assert.assertEquals("Tomato Soup", tomatoSoup.getName());
+    }
+
+    @Test
+    @InSequence(6)
+    @UsingDataSet("datasets/DBRecipeServiceTestWithMultipleRecipes.yml")
+    public void findAllRecipesByFoodNamesWithMultipleRecipe() {
+        Food tomato = foodService.findByID(1l);
+        Food salt = foodService.findByID(2l);
+        Food pepper = foodService.findByID(3l);
+
+        List<String> foods = new ArrayList<>();
+        foods.add("Tomato");
+
+        List<Recipe> results = recipeService.findAllRecipesByFoodNames(foods);
+
+        Assert.assertEquals(2, results.size());
+        Recipe tomatoSoup = results.get(0);
+        Recipe tomatoMash = results.get(1);
+
+        Assert.assertEquals("Tomato Soup", tomatoSoup.getName());
+        Assert.assertEquals("Tomato Mash", tomatoMash.getName());
     }
 }

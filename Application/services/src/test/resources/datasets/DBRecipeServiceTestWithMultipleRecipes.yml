@@ -1,0 +1,64 @@
+cook:
+  - id: 1
+    name: Wombat
+    email: mail@wombatsoftware.de
+    createdOn: 2013-08-24
+    version: 0
+
+food:
+  - id: 1
+    name: Tomato
+    createdOn: 2013-08-24
+    version: 0
+  - id: 2
+    name: Salt
+    createdOn: 2013-08-24
+    version: 0
+  - id: 3
+    name: Pepper
+    createdOn: 2013-08-24
+    version: 0
+
+recipe:
+  - id: 1
+    name: Tomato Soup
+    instructions: Cook tomatoes, add salt and pepper
+    cook_id: 1
+    createdOn: 2013-08-24
+    version: 0
+  - id: 2
+    name: Tomato Mash
+    instructions: Cook tomatoes, add salt and pepper
+    cook_id: 1
+    createdOn: 2013-08-24
+    version: 0
+
+ingredient:
+  - id: 1
+    amount: 5
+    unit: PIECE
+    food_id: 1
+    recipe_id: 1
+    createdOn: 2013-08-24
+    version: 0
+  - id: 2
+    amount: 1
+    unit: PORTION
+    food_id: 2
+    recipe_id: 1
+    createdOn: 2013-08-24
+    version: 0
+  - id: 3
+    amount: 1
+    unit: PORTION
+    food_id: 3
+    recipe_id: 1
+    createdOn: 2013-08-24
+    version: 0
+  - id: 4
+    amount: 5
+    unit: PIECE
+    food_id: 1
+    recipe_id: 2
+    createdOn: 2013-08-24
+    version: 0

@@ -50,12 +50,14 @@ import java.util.Set;
  */
 @Entity(name = DbConst.Recipe)
 @NamedQueries({
-        @NamedQuery(name = Recipe.findRecipeByFood, query = "SELECT r FROM Recipe r JOIN r.ingredients i WHERE i.food = :food")
+        @NamedQuery(name = Recipe.findRecipeByFood, query = "SELECT r FROM Recipe r JOIN r.ingredients i WHERE i.food = :food"),
+        @NamedQuery(name = Recipe.findAllRecipesByFoodNames, query = "SELECT r FROM Recipe r JOIN r.ingredients i JOIN i.food f WHERE f.name IN :foodNames")
 })
 public class Recipe extends AbstractEntity {
     private static final long serialVersionUID = 2476888974204976237L;
 
     public static final String findRecipeByFood = "Recipe.findRecipeByFood";
+    public static final String findAllRecipesByFoodNames = "Recipe.findAllRecipesByFoodNames";
 
     @Column(name = "name", nullable = false, length = 50)
     @NotNull

@@ -88,7 +88,19 @@ public class RecipeResourceBean implements RecipeResource {
 
     @Override
     public Response searchForRecipe(@QueryParam("food") List<String> foods) {
-        return null;
+        List<Recipe> recipes = recipeService.findAllRecipesByFoodNames(foods);
+
+        if(recipes == null || recipes.isEmpty()) {
+            return Response.noContent().build();
+        }
+
+        List<RecipeResponse> recipeResponses = new ArrayList<>();
+
+        for (Recipe recipe : recipes) {
+            recipeResponses.add(new RecipeResponse(recipe.getName(), recipe.getInstructions(), buildURIForRecipe(recipe).toString(), ingredientResource.transformIngredientsToIngredientResponses(recipe.getIngredients())));
+        }
+
+        return Response.ok(new RecipesResponse(recipeResponses)).build();
     }
 
     @Override
