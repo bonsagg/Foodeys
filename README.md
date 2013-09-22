@@ -21,12 +21,13 @@ If you don´t have Glassfish:
 Checkout your browser at [http://localhost:8080/foodeys-jsf](http://localhost:8080/foodeys-jsf)
 
 ## JBoss Wildfly 8
+
 * cd into Wildfly\bin directory
 * ```sh standalone.sh```
 * cd into „Foodeys/Application“
-* ```mvn clean install -Pjbossas-remote-wildfly-8```
-* ```mvn jboss-as:deploy -Pjbossas-remote-wildfly-8```
-* Checkout your browser at [http://localhost:8080/Foodeys](http://localhost:8080/Foodeys)
+* ```mvn clean install -Denvironment=wildfly-remote```
+* ```mvn -Dmaven.test.skip=true -pl html5 clean package cargo:redeploy```
+* Checkout your browser at [http://localhost:8080/foodeys-html5](http://localhost:8080/Foodeys)
 
 # Build environment
 The Jenkins server can be reached via [http://ci.wombatsoftware.de/](http://ci.wombatsoftware.de/).
