@@ -95,6 +95,6 @@ public class CookResourceBean implements CookResource {
     }
 
     private URI buildURIForCook(Cook cook) {
-        return uriInfo.getAbsolutePathBuilder().path(cook.getId() + "/").build();
+        return uriInfo.getBaseUriBuilder().path(CookResource.cookURI+ cook.getId() + "/").build();
     }
 }

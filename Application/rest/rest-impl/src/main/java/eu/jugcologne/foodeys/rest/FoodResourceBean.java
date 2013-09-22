@@ -121,7 +121,7 @@ public class FoodResourceBean implements FoodResource {
     }
 
     private URI buildURIForFood(Food food) {
-        return uriInfo.getAbsolutePathBuilder().path(food.getId() + "/").build();
+        return uriInfo.getBaseUriBuilder().path(FoodResource.foodURI + food.getId() + "/").build();
     }
 
     private List<FoodResponse> transformFoodsToFoodResponses(List<Food> foods) {

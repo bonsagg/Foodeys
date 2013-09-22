@@ -213,7 +213,6 @@ public class RecipeResourceBean implements RecipeResource {
     }
 
     public URI buildURIForRecipe(Recipe recipe) {
-        //TODO: VALIDATE IF THE URI IS CORRECTLY BUILD
-        return uriInfo.getAbsolutePathBuilder().path(RecipeResource.recipeURI + "/" + recipe.getId() + "/").build();
+        return uriInfo.getBaseUriBuilder().path(RecipeResource.recipeURI + recipe.getId() + "/").build();
     }
 }

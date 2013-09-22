@@ -117,7 +117,6 @@ public class IngredientResourceBean implements IngredientResource {
     }
 
     public URI buildURIForIngredient(Ingredient ingredient) {
-        //TODO: VALIDATE IF THE URI IS CORRECTLY BUILD
-        return uriInfo.getAbsolutePathBuilder().path(IngredientResource.ingredientURI + "/" + ingredient.getId() + "/").build();
+        return uriInfo.getBaseUriBuilder().path(IngredientResource.ingredientURI + ingredient.getId() + "/").build();
     }
 }
