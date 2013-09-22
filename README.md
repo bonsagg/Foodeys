@@ -25,9 +25,9 @@ Checkout your browser at [http://localhost:8080/foodeys-jsf](http://localhost:80
 * cd into Wildfly\bin directory
 * ```sh standalone.sh```
 * cd into „Foodeys/Application“
-* ```mvn clean install -Denvironment=wildfly-remote```
-* ```mvn -Dmaven.test.skip=true -pl html5 clean package cargo:redeploy```
-* Checkout your browser at [http://localhost:8080/foodeys-html5](http://localhost:8080/Foodeys)
+* ```mvn -Denvironment=wildfly-remote clean install```
+* ```mvn -Denvironment=wildfly-remote -Dmaven.test.skip=true -pl html5 clean package cargo:redeploy```
+* Checkout your browser at [http://localhost:8080/foodeys-html5](http://localhost:8080/foodeys-html5)
 
 # Build environment
 The Jenkins server can be reached via [http://ci.wombatsoftware.de/](http://ci.wombatsoftware.de/).
