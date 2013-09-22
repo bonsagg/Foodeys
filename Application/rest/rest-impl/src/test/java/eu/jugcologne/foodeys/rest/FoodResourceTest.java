@@ -6,6 +6,7 @@ import eu.jugcologne.foodeys.rest.api.model.AddFoodRequest;
 import eu.jugcologne.foodeys.rest.model.AutocompleteResponse;
 import eu.jugcologne.foodeys.rest.model.FoodResponse;
 import eu.jugcologne.foodeys.rest.model.FoodsResponse;
+import eu.jugcologne.foodeys.services.importer.DefaultDataImporter;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -39,6 +40,8 @@ public class FoodResourceTest {
         return ShrinkWrap.create(WebArchive.class, "FoodResourceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
                 .addClass(RestApplication.class)
+                .deleteClass(DefaultDataImporter.class)
+
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }

@@ -6,6 +6,7 @@ import eu.jugcologne.foodeys.persistence.model.Recipe;
 import eu.jugcologne.foodeys.persistence.model.Unit;
 import eu.jugcologne.foodeys.services.api.IngredientService;
 import eu.jugcologne.foodeys.services.api.RecipeService;
+import eu.jugcologne.foodeys.services.importer.DefaultDataImporter;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -32,6 +33,7 @@ public class DBIngredientServiceTest {
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "DBIngredientServiceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
+                .deleteClass(DefaultDataImporter.class)
 
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");

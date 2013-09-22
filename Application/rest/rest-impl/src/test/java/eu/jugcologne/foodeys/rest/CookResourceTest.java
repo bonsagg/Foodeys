@@ -7,6 +7,7 @@ import eu.jugcologne.foodeys.rest.api.model.LoginCookRequest;
 import eu.jugcologne.foodeys.rest.model.CookResponse;
 import eu.jugcologne.foodeys.rest.model.CooksResponse;
 import eu.jugcologne.foodeys.services.api.CookService;
+import eu.jugcologne.foodeys.services.importer.DefaultDataImporter;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -44,6 +45,8 @@ public class CookResourceTest {
         return ShrinkWrap.create(WebArchive.class, "CookResourceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
                 .addClass(RestApplication.class)
+                .deleteClass(DefaultDataImporter.class)
+
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }

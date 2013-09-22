@@ -3,6 +3,7 @@ package eu.jugcologne.foodeys.services.db;
 import eu.jugcologne.foodeys.FoodeysMarker;
 import eu.jugcologne.foodeys.persistence.model.Cook;
 import eu.jugcologne.foodeys.services.api.CookService;
+import eu.jugcologne.foodeys.services.importer.DefaultDataImporter;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -26,6 +27,7 @@ public class DBCookServiceTest {
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "DBCookServiceTest.war")
                 .addPackages(true, FoodeysMarker.class.getPackage())
+                .deleteClass(DefaultDataImporter.class)
 
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
