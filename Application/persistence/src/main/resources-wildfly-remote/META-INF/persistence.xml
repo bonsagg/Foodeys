@@ -8,13 +8,12 @@
            data source, the example data source is just for proofs of concept! -->
         <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
         <properties>
-            <!-- Bind entity manager factory to JNDI at java:jboss/myEntityManagerFactory -->
-            <property name="jboss.entity.manager.factory.jndi.name" value="java:jboss/myEntityManagerFactory"/>
-            <property name="jboss.entity.manager.jndi.name" value="java:/myEntityManager"/>
+            <!-- Bind entity manager factory to JNDI at java:jboss/foodeysEntityManagerFactory -->
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:jboss/foodeysEntityManagerFactory"/>
+            <property name="jboss.entity.manager.jndi.name" value="java:/foodeysEntityManager"/>
 
             <!-- Drop and re-create the database schema on startup -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
